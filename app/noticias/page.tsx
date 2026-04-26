@@ -1,9 +1,9 @@
 import Image from "next/image";
 
-export default function Home() {
+export default function NewsPage() {
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black ">
-      <h1>home page</h1>
+      <h1>Notícias</h1>
     </div>
   );
 }
