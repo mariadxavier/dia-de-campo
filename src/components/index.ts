@@ -1,0 +1,12 @@
+export { default as Header } from "./Header";
+export { default as Image } from "./Image"; 
+export { default as Footer } from "./Footer";
+export { default as Copyright } from "./Copyright";
+export { default as SiteMap } from "./SiteMap";
+export { default as SocialMediaLink } from "./SocialMediaLink";
+export { default as NewsletterForm } from "./NewsletterForm";
+export { default as NavLink } from "./NavLink";
+export { default as Button } from "./Button";
+export { default as AdBanner } from "./AdBanner";
+export { default as HomeHighlights } from "./HomeHighlights";
+export { default as SectionTitle } from "./SectionTitle";
