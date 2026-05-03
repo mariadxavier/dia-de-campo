@@ -98,8 +98,8 @@ export default function HomeHighligths() {
           src={currentItem.imageSrc}
           alt={currentItem.title}
           width={1000}
-          height={700}
-          className="w-full h-[700px]"
+          height={602}
+          className="w-full h-[602px]"
         />
 
         <div className="absolute bottom-8 left-[84px] flex flex-col gap-4 py-6 px-9 text-(--color-black) bg-(--color-white) max-w-[610px]">

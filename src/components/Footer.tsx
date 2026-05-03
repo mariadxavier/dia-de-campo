@@ -3,7 +3,7 @@ import { NewsletterForm, SiteMap, Copyright, AdBanner } from "@/src/components";
 export default function Footer() {
   return (
     <footer className="bg-(--color-green)">
-      <AdBanner bgColor="--color-dark-green" />
+      <AdBanner bgColor="--color-dark-green" refSection="footer" />
       <div>
         <div className="flex justify-between p-4 gap-8">
           <div className="w-1/2 flex flex-col py-4 gap-9 items-end">

@@ -8,7 +8,7 @@ export default function Header() {
 
   return (
     <>
-      <AdBanner bgColor="--color-white-shell" />
+      <AdBanner bgColor="--color-white-shell" refSection="top" />
       <header className="bg-white w-full flex justify-evenly items-center p-4">
         <div>
           <Image src={logo.src} alt="Logo" width={'197px'} height={'75px'} />
