@@ -1,10 +1,4 @@
-export type HighlightItem = {
-  id: number;
-  title: string;
-  description: string;
-  imageSrc: string;
-  categoryName: string;
-};
+import { PodcastEmbedKind } from "./Content";
 
 export type HomeSectionNews = {
     coverImage: string;
@@ -22,8 +16,6 @@ export type HomeSectionCeasaPrices = {
   priceVariation: number;
   priceVariationIcon: string;
 };
-
-export type PodcastEmbedKind = "audio" | "spotify" | "youtube";
 
 export type HomeSectionPodcast = {
   episode: string;
