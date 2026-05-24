@@ -1,14 +1,24 @@
-// TODO: adaptar para conexão real API de preços CEASA
-export type ExternalCeasaPriceItem = {
-    id?: string;
-    uf: string;
-    productTitle: string;
-    slug: string;
-    price: number;
-    priceVariation: number;
-  };
-  
-export type ExternalCeasaPricesResponse = ExternalCeasaPriceItem[] | { data: ExternalCeasaPriceItem[] };
+export type CeasaPriceRow = {
+  id: string;
+  city: string;
+  ibge_city_code: string | null;
+  uf: string;
+  ceasa_name: string;
+  product_name: string;
+  product_slug: string;
+  unity: string | null;
+  price_date: string;
+  daily_price: number;
+  previous_price: number | null;
+  price_variation: number | null;
+  created_at: string;
+  updated_at: string;
+};
 
-export type CeasaPriceItem = { link: string } & ExternalCeasaPriceItem;
-  
+export type ExternalCeasaPrice = Omit<
+  CeasaPriceRow,
+  "id" | "created_at" | "updated_at"
+>;
+
+export type ExternalCeasaPricesResponse =
+  ExternalCeasaPrice[];

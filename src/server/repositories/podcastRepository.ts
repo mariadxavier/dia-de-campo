@@ -4,7 +4,7 @@ import {
   paginate,
   sortByFeaturedThenPublished,
 } from "@/src/server/utils/sortWithFeatured";
-import type { PodcastEpisodeRow } from "@/src/types/database";
+import type { PodcastEpisodeRow } from "@/src/types";
 
 export async function findPublishedPodcastEpisodes(
   limit: number,
