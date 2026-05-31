@@ -15,13 +15,17 @@ export type HomeSectionCeasaPrices = {
   price: number;
   priceVariation: number;
   priceVariationIcon: string;
+  unity: string;
 };
 
 export type HomeSectionPodcast = {
+  episodeNumber: string;
   episode: string;
   title: string;
   description: string;
   embedUrl: string;
   embedKind: PodcastEmbedKind;
   link: string;
+  author: string;
+  duration: `${number}min`
 };

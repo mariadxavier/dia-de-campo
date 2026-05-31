@@ -1,5 +1,5 @@
 "use client";
-import type { PodcastEmbedKind } from "@/src/types/Home";
+import type { PodcastEmbedKind } from "@/src/types";
 import { toSpotifyEmbedUrl, toYouTubeEmbedUrl } from "@/src/util/podcastEmbedUrl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -103,16 +103,16 @@ function DirectAudioPlayer({
         ref={audioRef}
         src={src}
         preload="metadata"
-        className="pointer-events-none absolute h-px w-px opacity-0"
+        className="pointer-events-none absolute h-px w-px opacity-"
         aria-hidden
       />
       <button
         type="button"
         onClick={toggle}
-        className="absolute inset-0 flex cursor-pointer items-center justify-center border-0 bg-transparent p-0 outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#b0b3b8]"
+        className="bg-(--color-gray) absolute inset-0 flex cursor-pointer items-center justify-center border-0 p-0 outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#b0b3b8]"
         aria-label={playing ? "Pausar" : "Reproduzir episódio"}
       >
-        <span className="relative flex h-[72px] w-[72px] items-center justify-center">
+        <span className="relative flex h-[140px] w-full items-center justify-center">
           <svg
             className="absolute text-[#7a7d82]"
             width="56"

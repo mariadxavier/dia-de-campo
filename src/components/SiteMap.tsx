@@ -1,36 +1,32 @@
-import Link from "next/link";
-import PageDefinitions from "../helpers/PageDefinitions";
-import { SocialMediaLink } from "@/src/components";
+import Link from 'next/link';
+import PageDefinitions from '../helpers/PageDefinitions';
 
 export default function SiteMap() {
   const mainPages = PageDefinitions.getMainPages();
   const institutionalPages = PageDefinitions.getinstitutionalPages();
   const columns = [
-    { title: "Sitemap", pages: mainPages },
-    { title: "Institucional", pages: institutionalPages },
+    { title: 'Portal', pages: mainPages },
+    { title: 'Serviços', pages: institutionalPages },
   ];
 
   return (
-    <div className="w-1/2">
-      <div className="flex text-(--color-text-gray) w-full">
-        {columns &&
-          columns.map((column, idx) => (
-            <div key={idx} className="flex flex-col gap-5 w-1/2">
-              <h3 className="font-bold text-sm">{column.title.toLocaleUpperCase()}</h3>
-              <nav aria-label="Mapa do Site">
-                <ul className="flex flex-col gap-3">
-                  {column.pages &&
-                    column.pages.map((page, idx) => (
-                      <li key={idx}>
-                        <Link href={page.href}>{page.name}</Link>
-                      </li>
-                    ))}
-                </ul>
-              </nav>
-              {columns.length -1 === idx && <SocialMediaLink />}
-            </div>
-          ))}
-      </div>
+    <div className="flex flex-col gap-6 text-(--color-gray) w-full">
+      {columns &&
+        columns.map((column, idx) => (
+          <div key={idx} className="flex flex-col gap-2">
+            <h3 className="font-bold text-sm text-(--color-white)">{column.title}</h3>
+            <nav aria-label="Mapa do Site">
+              <ul className="flex flex-col gap-2 font-xs">
+                {column.pages &&
+                  column.pages.map((page, idx) => (
+                    <li key={idx}>
+                      <Link href={page.href}>{page.name}</Link>
+                    </li>
+                  ))}
+              </ul>
+            </nav>
+          </div>
+        ))}
     </div>
   );
 }

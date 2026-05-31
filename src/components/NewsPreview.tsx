@@ -1,29 +1,27 @@
-import { Image } from "@/src/components";
-import Highlights from "../helpers/Highlights";
-import Link from "next/link";
+import { Article, LinkButton } from '@/src/components';
+import FeaturedContent from '../helpers/FeaturedContent';
 export default function NewsPreview() {
-  const newsHighlights = Highlights.getHighlightNews();
+  const newsHighlights = FeaturedContent.getHighlightNews();
   return (
     <>
       {newsHighlights &&
         newsHighlights.map((news, idx) => (
-          <Link href={news.link} key={idx}>
-            <article className="flex flex-col gap-2">
-              <Image
-                src={news.coverImage}
-                alt={news.title}
-                width={328}
-                height={246}
-                className="min-w-[328px] h-[246px]"
-              />
-              <h3 className="text-(--color-yellow) font-bold text-xs">
-                {news.categoryName}
-              </h3>
-              <h2 className="font-bold text-lg/5">{news.title}</h2>
-              <p className="text-sm">{news.shortDescription}</p>
-            </article>
-          </Link>
+          <Article
+            key={idx}
+            title={news.title}
+            link={news.link}
+            coverType='image'
+            src={news.coverImage}
+            badge={news.categoryName}
+            footnote='10 mai 2026 • 5 min'
+          />
         ))}
+      <LinkButton
+        href="/noticias"
+        className="flex items-center justify-center p-3.5 rounded-full bg-(--color-white-shell) text-(--color-green)"
+      >
+        <h3>Ver todas as notícias →</h3>
+      </LinkButton>
     </>
   );
 }

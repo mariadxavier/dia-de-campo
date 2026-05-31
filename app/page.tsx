@@ -1,40 +1,64 @@
 import {
-  AdBanner,
   CeasaPreview,
+  ClassifiedsPreview,
   HomeHighlights,
   HomeSection,
   NewsPreview,
+  PartnerPreview,
   PodcastPreview,
-} from "@/src/components";
+  TechnicalContentPreview,
+} from '@/src/components';
 
 export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-center justify-center">
       <HomeHighlights />
       <HomeSection
-        sectionTitle="Notícias e conteúdo técnico"
+        sectionTitle="Últimas do Mercado"
         sectionLink="/noticias"
-        hasDivisor
+        sectionSubtitle="Cobertura editorial do setor"
+        sectionLinkTitle="Ver todas as notícias"
       >
         <NewsPreview />
       </HomeSection>
-      <AdBanner refSection="mid-content" />
       <HomeSection
-        sectionTitle="Preços CEASA & Mercado"
+        sectionTitle="Preços CEASA"
         sectionLink="/precos-ceasa"
-        hasDivisor={false}
-        bgColor="--color-white-shell"
+        sectionLinkTitle="Ver preços por região"
+        sectionSubtitle="Atualizado diariamente • CEASA-MG / SP / RJ"
+        bgColor="--color-light-green"
       >
         <CeasaPreview />
       </HomeSection>
-      <HomeSection sectionTitle="Agro podcast" hasDivisor>
-        <div className="flex w-full gap-4 justify-between">
-          <PodcastPreview />
-          <div className="w-1/3">
-            <AdBanner refSection="sidebar" />
-          </div>
-        </div>
+      <HomeSection
+        sectionLink="/podcast"
+        sectionLinkTitle="Ver todos os episódios"
+        sectionTitle="Podcasts"
+        sectionSubtitle="Entrevistas com especialistas do agro"
+        bgColor="--color-bg-blue"
+        sectionColor="--color-yellow"
+      >
+        <PodcastPreview />
       </HomeSection>
+      <HomeSection
+        sectionTitle="Classificados"
+        sectionLink="/classificados"
+        sectionSubtitle="Compra, venda e oportunidades"
+        sectionLinkTitle="Ver todos os classificados"
+      >
+        <ClassifiedsPreview />
+      </HomeSection>
+      <HomeSection
+        sectionTitle="Conteúdo Técnico"
+        sectionLink="/conteudo-tecnico"
+        sectionSubtitle="Guias, artigos e materiais de apoio"
+        sectionLinkTitle="Ver biblioteca completa"
+        bgColor="--color-light-green"
+      >
+        <TechnicalContentPreview />
+      </HomeSection>
+
+      <PartnerPreview />
     </div>
   );
 }

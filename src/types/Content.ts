@@ -177,7 +177,7 @@ export type ClassifiedListItem = {
   coverImage: string;
   city: string | null;
   state: string | null;
-  price: number | null;
+  price: number;
   link: string;
   publishedAt: string | null;
   isFeatured: boolean;

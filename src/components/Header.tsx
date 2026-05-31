@@ -1,5 +1,5 @@
-import { Image, NavLink, AdBanner } from "@/src/components";
-import logo from "../assets/images/logo-max.svg";
+import { CollapseMenu, Image, LinkButton } from "@/src/components";
+import Logo from "../assets/images/logo.svg";
 import SearchIcon from "../assets/icons/search-icon.svg";
 import PageDefnitions from "../helpers/PageDefinitions";
 
@@ -7,17 +7,19 @@ export default function Header() {
   const pages = PageDefnitions.getAllPages();
 
   return (
-    <>
-      <AdBanner bgColor="--color-white-shell" refSection="top" />
-      <header className="bg-white w-full flex justify-evenly items-center p-4">
+    <header className="bg-white w-full flex justify-between items-center py-3 px-5 gap-3">
+      <div className="flex gap-3 items-center">
+      <CollapseMenu items={pages} />
+        <Image src={Logo.src} alt="Dia de Campo" width={86} height={40} />
+      </div>
+      <div className="flex gap-3 items-center">
         <div>
-          <Image src={logo.src} alt="Logo" width={'197px'} height={'75px'} />
+          <Image src={SearchIcon.src} alt="Buscar" width={24} height={24} />
         </div>
-        <NavLink items={pages} />
-        <div>
-          <Image src={SearchIcon.src} alt="Buscar" width={'24px'} height={'24px'} />
-        </div>
-      </header>
-    </>
+        <LinkButton href={'/contato'} className="p-2 text-(--color-white) bg-(--color-green) rounded-full">
+          <p>Anuncie</p>
+        </LinkButton>
+      </div>
+    </header>
   );
 }

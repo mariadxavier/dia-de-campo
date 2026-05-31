@@ -1,6 +1,6 @@
 "use client";
 import { SectionTitle } from "@/src/components";
-import Highlights from "@/src/helpers/Highlights";
+import Highlights from "@/src/helpers/FeaturedContent";
 import {
   type ReactNode,
   useCallback,
@@ -13,9 +13,10 @@ const DEFAULT_CHILDREN_SCROLL_MS = Highlights.getHighlightPlayInterval();
 
 type HomeSectionProps = {
   sectionTitle: string;
-  sectionLink?: string;
+  sectionSubtitle?: string;
+  sectionLink: string;
   sectionLinkTitle?: string;
-  hasDivisor: boolean;
+  sectionColor?: string;
   children: ReactNode;
   bgColor?: string;
   childrenAutoScrollIntervalMs?: number;
@@ -23,9 +24,10 @@ type HomeSectionProps = {
 
 export default function HomeSection({
   sectionTitle,
+  sectionSubtitle,
   sectionLink,
-  sectionLinkTitle,
-  hasDivisor,
+  sectionLinkTitle = 'Ver mais',
+  sectionColor = '--color-green',
   children,
   bgColor = "--color-white",
   childrenAutoScrollIntervalMs = DEFAULT_CHILDREN_SCROLL_MS,
@@ -74,17 +76,17 @@ export default function HomeSection({
   }, [hasOverflow, children, childrenAutoScrollIntervalMs]);
 
   return (
-    <section className={`flex w-full flex-col gap-8 bg-(${bgColor}) px-4 py-6`}>
+    <section className={`flex w-full flex-col gap-8 bg-(${bgColor}) px-5 py-12`}>
       <SectionTitle
         title={sectionTitle}
-        hasAction={!!sectionLink}
+        subtitle={sectionSubtitle}
         actionHref={sectionLink}
-        actionTitle={sectionLinkTitle || "ver mais"}
-        hasDivisor={hasDivisor}
+        actionTitle={sectionLinkTitle}
+        sectionColor={sectionColor}
       />
       <div
         ref={scrollerRef}
-        className="flex flex-nowrap justify-evenly gap-4 overflow-x-auto overflow-y-hidden scroll-smooth"
+        className="flex flex-col flex-nowrap justify-evenly gap-5 overflow-y-auto overflow-x-hidden scroll-smooth"
       >
         {children}
       </div>

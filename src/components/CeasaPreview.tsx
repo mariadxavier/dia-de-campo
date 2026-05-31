@@ -1,37 +1,28 @@
-import Link from "next/link";
-import Highlights from "../helpers/Highlights";
-import { Formatter } from "../util/Formatter";
-import { Image } from "@/src/components";
+import Link from 'next/link';
+import FeaturedContent from '../helpers/FeaturedContent';
+import { Formatter } from '../util/Formatter';
 
 export default function CeasaPreview() {
-  const ceasaPricesHighlights = Highlights.getHighlightCeasaPrices();
+  const ceasaPricesHighlights = FeaturedContent.getHighlightCeasaPrices();
 
   return (
     <>
       {ceasaPricesHighlights &&
         ceasaPricesHighlights.map((ceasaPrice, idx) => (
           <Link href={ceasaPrice.link} key={idx}>
-            <article className="bg-(--color-white) flex flex-col p-4 gap-4 border border-(--color-text-gray) min-w-[260px]">
-              <div className="flex gap-3">
-                <p className="p-2 rounded-full text-xs text-(--color-yellow) bg-(--color-gray)">
-                  {ceasaPrice.uf}
-                </p>
+            <article className="flex items-center w-full bg-(--color-white) p-4 gap-3 rounded-lg border border-(--color-faded-white)">
+              <div className="flex flex-col gap-0.5 w-full">
                 <h3 className="font-bold text-sm">{ceasaPrice.title}</h3>
+                <p className="text-(--color-gray) text-xs">{ceasaPrice.unity}</p>
               </div>
-              <h2 className="text-xl font-extraboold">
+              <h2 className="font-bold text-(--color-dark-green)">
                 {Formatter.currency(ceasaPrice.price)}
               </h2>
-              <div className="flex ceasaPrices-center gap-1">
-                <Image
-                  src={ceasaPrice.priceVariationIcon}
-                  width={20}
-                  height={20}
-                  alt={"Variação de preço"}
-                />
-                <p className="text-sm font-bold text-(--color-green)">
-                  {ceasaPrice.priceVariation}
-                </p>
-              </div>
+              <p
+                className={`flex justify-center text-xs font-bold px-4 py-2 bg-(--color-light-green) text-(--color-green) rounded-full min-w-13`}
+              >
+                {ceasaPrice.priceVariation}
+              </p>
             </article>
           </Link>
         ))}
