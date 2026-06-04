@@ -18,6 +18,7 @@ export default function Home() {
         sectionLink="/noticias"
         sectionSubtitle="Cobertura editorial do setor"
         sectionLinkTitle="Ver todas as notícias"
+        enableAutoScroll
       >
         <NewsPreview />
       </HomeSection>
@@ -45,6 +46,7 @@ export default function Home() {
         sectionLink="/classificados"
         sectionSubtitle="Compra, venda e oportunidades"
         sectionLinkTitle="Ver todos os classificados"
+        enableAutoScroll
       >
         <ClassifiedsPreview />
       </HomeSection>
@@ -54,6 +56,7 @@ export default function Home() {
         sectionSubtitle="Guias, artigos e materiais de apoio"
         sectionLinkTitle="Ver biblioteca completa"
         bgColor="--color-light-green"
+        enableAutoScroll
       >
         <TechnicalContentPreview />
       </HomeSection>

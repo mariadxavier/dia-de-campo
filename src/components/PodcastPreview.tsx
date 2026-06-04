@@ -8,7 +8,6 @@ export default function PodcastPreview() {
     <>
       {podcastHighlight && (
         <Article
-          key={''}
           title={podcastHighlight.description}
           link={podcastHighlight.link}
           badge={`${podcastHighlight.episode} - DESTAQUE`}
@@ -18,13 +17,19 @@ export default function PodcastPreview() {
           themeColor="--color-yellow"
           footnote={`${podcastHighlight.author}`}
           bgColor="--color-urain-blue"
+          className={'sm:w-[380px] md:w-[480px]'}
         />
       )}
-      {podcastHighlightList &&
-        podcastHighlightList.map((podcast, idx) => (
-          <PodcastSimpleViewer key={idx} podcast={podcast} />
-        ))}
-      <LinkButton href='/podcast' className='flex items-center justify-center p-3.5 rounded-full bg-(--color-yellow) text-(--color-dark-green)'>
+      <div className='flex flex-col gap-6 w-full'>
+        {podcastHighlightList &&
+          podcastHighlightList.map((podcast, idx) => (
+            <PodcastSimpleViewer key={idx} podcast={podcast} />
+          ))}
+      </div>
+      <LinkButton
+        href="/podcast"
+        className="md:hidden flex items-center justify-center p-3.5 rounded-full bg-(--color-yellow) text-(--color-dark-green)"
+      >
         <p>Ver todos os episódios →</p>
       </LinkButton>
     </>

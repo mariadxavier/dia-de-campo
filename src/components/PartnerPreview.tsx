@@ -3,25 +3,35 @@ import LinkButton from './LinkButton';
 
 export default function PartnerPreview() {
   return (
-    <section className="flex flex-col py-12 px-5 gap-5 bg-(--color-green)">
-      <p className="w-fit rounded-full py-1 px-3 font-bold flex items-center justify-center text-(--color-dark-green) bg-(--color-yellow)">
-      📣 PARA PARCEIROS
-      </p>
-      <h1 className='text-(--color-white) text-3xl font-bold'>Alcance quem decide no agro brasileiro</h1>
-      <p className='text-(--color-white) text-xs'>
-        Mais de 50.000 produtores, distribuidores e compradores acessam nosso portal mensalmente.
-      </p>
-      <div className="grid grid-rows-2 grid-cols-2 gap-2.5">
+    <section className="flex flex-col md:flex-row w-full py-12 px-5 gap-5 md:gap-16 bg-(--color-green) md:px-10 md:py-20 lg:px-20 lg:py-24">
+      <div className="flex flex-col gap-5 md:w-1/2">
+        <p className="w-fit rounded-full py-1 px-3 font-bold flex items-center justify-center text-(--color-dark-green) bg-(--color-yellow) text-xs">
+          📣 PARA PARCEIROS
+        </p>
+        <h1 className="text-(--color-white) text-3xl md:text-4xl font-bold">
+          Alcance quem decide no agro brasileiro
+        </h1>
+        <p className="text-(--color-white) text-xs md:text-sm">
+          Mais de 50.000 produtores, distribuidores e compradores acessam nosso portal mensalmente.
+        </p>
+        <LinkButton
+          href="/contato"
+          className="hidden md:flex text-sm rounded-full items-center justify-center p-3.5 text-(--color-dark-green) bg-(--color-yellow) w-fit"
+        >
+          <p>Quero anunciar</p>
+        </LinkButton>
+      </div>
+      <div className="grid grid-rows-2 grid-cols-2 gap-2.5 md:w-1/2">
         <KPICard metricDescription="Visitantes/mês" metricValue="50k+" />
         <KPICard metricDescription="Visitantes/mês" metricValue="50k+" />
         <KPICard metricDescription="Visitantes/mês" metricValue="50k+" />
         <KPICard metricDescription="Visitantes/mês" metricValue="50k+" />
       </div>
-      <LinkButton href="/contato" className='text-sm rounded-full flex items-center justify-center p-3.5 text-(--color-dark-green) bg-(--color-yellow)'>
+      <LinkButton
+        href="/contato"
+        className="md:hidden text-sm rounded-full flex items-center justify-center p-3.5 text-(--color-dark-green) bg-(--color-yellow)"
+      >
         <p>Quero anunciar</p>
-      </LinkButton>
-      <LinkButton href="/contato" className='text-sm rounded-full flex items-center justify-center p-3.5 bg-(--color-faded-white) text-(--color-white) border border-(--color-white)'>
-        <p>Falar com o comercial</p>
       </LinkButton>
     </section>
   );

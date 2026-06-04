@@ -10,15 +10,15 @@ export default function NewsPreview() {
             key={idx}
             title={news.title}
             link={news.link}
-            coverType='image'
+            coverType="image"
             src={news.coverImage}
             badge={news.categoryName}
-            footnote='10 mai 2026 • 5 min'
+            footnote="10 mai 2026 • 5 min"
           />
         ))}
       <LinkButton
         href="/noticias"
-        className="flex items-center justify-center p-3.5 rounded-full bg-(--color-white-shell) text-(--color-green)"
+        className="flex md:hidden items-center justify-center p-3.5 rounded-full bg-(--color-white-shell) text-(--color-green)"
       >
         <h3>Ver todas as notícias →</h3>
       </LinkButton>

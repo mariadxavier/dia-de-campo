@@ -13,7 +13,7 @@ export default function SocialMediaLink() {
           socialMedias.map((socialMedia, idx) => (
             <li key={idx}>
               <Link href={socialMedia.link}>
-                <Image src={socialMedia.icon.src} width={20} height={20} alt={socialMedia.name} />
+                <Image src={socialMedia.icon.src} width={20} height={20} alt={socialMedia.name} className="md:w-9 md:h-9" />
               </Link>
             </li>
           ))}

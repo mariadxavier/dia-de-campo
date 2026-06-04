@@ -2,6 +2,7 @@ type PageDefinition = {
   type: "main" | "institutional";
   href: string;
   name: string;
+  showOnMenu: boolean;
 };
 
 class PageDefinitions {
@@ -10,56 +11,70 @@ class PageDefinitions {
       type: "main",
       href: "/",
       name: "Home",
+      showOnMenu: true,
     },
     {
       type: "main",
       href: "/noticias",
       name: "Notícias",
+      showOnMenu: true,
     },
     {
       type: "main",
       href: "/precos-ceasa",
       name: "Preços Ceasa",
+      showOnMenu: true,
     },
     {
       type: "main",
       href: "/podcast",
       name: "Podcast",
+      showOnMenu: true,
     },
     {
       type: "main",
       href: "/classificados",
       name: "Classificados",
+      showOnMenu: true,
     },
     {
       type: "institutional",
       href: "/conteudo-tecnico",
       name: "Conteúdo Técnico",
+      showOnMenu: false,
     },
     {
       type: "institutional",
       href: "/anuncie",
       name: "Anuncie",
+      showOnMenu: false,
     },
     {
       type: "institutional",
       href: "/contato",
       name: "Contato",
+      showOnMenu: true,
     },
     {
       type: "institutional",
       href: "/politica-privacidade",
       name: "Política de Privacidade",
+      showOnMenu: false,
     },
     {
       type: "institutional",
       href: "/termos-uso",
       name: "Termos de Uso",
+      showOnMenu: false,
     },
   ];
 
   public getAllPages() {
     return this.pages;
+  }
+
+  public getPagesToShowOnMenu() {
+    return this.pages.filter((page) => page.showOnMenu);
   }
 
   public getMainPages() {

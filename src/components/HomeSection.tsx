@@ -1,13 +1,8 @@
-"use client";
-import { SectionTitle } from "@/src/components";
-import Highlights from "@/src/helpers/FeaturedContent";
-import {
-  type ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+'use client';
+import { SectionTitle } from '@/src/components';
+import Highlights from '@/src/helpers/FeaturedContent';
+import { type ReactNode, useEffect } from 'react';
+import { useAutoHorizontalScroll } from '../context/AutoHorizontalScroll';
 
 const DEFAULT_CHILDREN_SCROLL_MS = Highlights.getHighlightPlayInterval();
 
@@ -20,6 +15,7 @@ type HomeSectionProps = {
   children: ReactNode;
   bgColor?: string;
   childrenAutoScrollIntervalMs?: number;
+  enableAutoScroll?: boolean;
 };
 
 export default function HomeSection({
@@ -29,54 +25,23 @@ export default function HomeSection({
   sectionLinkTitle = 'Ver mais',
   sectionColor = '--color-green',
   children,
-  bgColor = "--color-white",
+  bgColor = '--color-white',
   childrenAutoScrollIntervalMs = DEFAULT_CHILDREN_SCROLL_MS,
+  enableAutoScroll = false,
 }: HomeSectionProps) {
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const stepRef = useRef(0);
-  const [hasOverflow, setHasOverflow] = useState(false);
-
-  const measureOverflow = useCallback(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    setHasOverflow(max > 8);
-  }, []);
+  const { scrollerRef, reset } = useAutoHorizontalScroll({
+    enabled: enableAutoScroll,
+    intervalMs: childrenAutoScrollIntervalMs,
+  });
 
   useEffect(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    measureOverflow();
-    const ro = new ResizeObserver(measureOverflow);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [children, measureOverflow]);
-
-  useEffect(() => {
-    stepRef.current = 0;
-  }, [children]);
-
-  useEffect(() => {
-    if (!hasOverflow) return;
-    const el = scrollerRef.current;
-    if (!el) return;
-
-    const tick = () => {
-      const max = el.scrollWidth - el.clientWidth;
-      if (max <= 8) return;
-      const mid = max / 2;
-      const sequence = [0, mid, max, mid];
-      const i = stepRef.current % sequence.length;
-      el.scrollTo({ left: sequence[i], behavior: "smooth" });
-      stepRef.current = (stepRef.current + 1) % sequence.length;
-    };
-
-    const id = window.setInterval(tick, childrenAutoScrollIntervalMs);
-    return () => window.clearInterval(id);
-  }, [hasOverflow, children, childrenAutoScrollIntervalMs]);
+    reset();
+  }, [children, reset]);
 
   return (
-    <section className={`flex w-full flex-col gap-8 bg-(${bgColor}) px-5 py-12`}>
+    <section
+      className={`flex w-full flex-col gap-8 bg-(${bgColor}) px-5 py-12 md:px-10 md:py-20 lg:px-20 lg:py-24`}
+    >
       <SectionTitle
         title={sectionTitle}
         subtitle={sectionSubtitle}
@@ -86,7 +51,7 @@ export default function HomeSection({
       />
       <div
         ref={scrollerRef}
-        className="flex flex-col flex-nowrap justify-evenly gap-5 overflow-y-auto overflow-x-hidden scroll-smooth"
+        className="flex flex-col md:flex-row flex-nowrap gap-5 md:gap-6 overflow-auto scroll-smooth p-1"
       >
         {children}
       </div>

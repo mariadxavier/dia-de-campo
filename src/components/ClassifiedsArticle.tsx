@@ -7,13 +7,13 @@ type ClassifiedsArticleProps = {
 };
 export default function ClassifiedsArticle({ key, classified }: ClassifiedsArticleProps) {
   return (
-    <article className="flex flex-col gap-2.5 p-4 w-full rounded-lg border-t-3 border-(--color-green) shadow-md">
+    <article className="flex flex-col gap-2.5 p-4 w-full rounded-lg border-t-3 border-(--color-green) shadow-md md:h-[240px] md:justify-between">
       <h3 className="text-(--color-dark-green)">{classified.title}</h3>
-      <div className="flex gap-2 text-xs">
+      <div className="flex gap-2 text-xs md:flex-col">
         <p className="text-(--color-gray)">
           📍 {classified.city}, {classified.state}
         </p>
-        <p className="text-(--color-green) font-bold">{Formatter.currency(classified.price)}</p>
+        <p className="text-(--color-green) font-bold md:text-sm">{Formatter.currency(classified.price)}</p>
       </div>
     </article>
   );

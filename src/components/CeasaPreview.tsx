@@ -1,13 +1,16 @@
+'use client';
 import Link from 'next/link';
 import FeaturedContent from '../helpers/FeaturedContent';
 import { Formatter } from '../util/Formatter';
+import { useMediaQuery } from '../context/MediaQuery';
 
 export default function CeasaPreview() {
   const ceasaPricesHighlights = FeaturedContent.getHighlightCeasaPrices();
+  const { isSmScreen, isMdScreen, isLgScreen } = useMediaQuery();
 
   return (
     <>
-      {ceasaPricesHighlights &&
+      {isSmScreen &&
         ceasaPricesHighlights.map((ceasaPrice, idx) => (
           <Link href={ceasaPrice.link} key={idx}>
             <article className="flex items-center w-full bg-(--color-white) p-4 gap-3 rounded-lg border border-(--color-faded-white)">
@@ -26,6 +29,33 @@ export default function CeasaPreview() {
             </article>
           </Link>
         ))}
+      {(isMdScreen || isLgScreen) && (
+        <div className='w-full overflow-hidden rounded-xl'>
+          <table className="w-full">
+            <thead className="bg-(--color-green) text-(--color-white) text-xs rounded-t-xl">
+              <tr >
+                <th className="text-left py-4 px-6">Produto</th>
+                <th className="text-left py-4 px-6">Unidade</th>
+                <th className="text-left py-4 px-6">Preço Hoje</th>
+                <th className="text-left py-4 px-6">Variação</th>
+              </tr>
+            </thead>
+            <tbody className="text-(--color-green) font-semibold text-xs rounded-b-xl">
+              {ceasaPricesHighlights &&
+                ceasaPricesHighlights.map((ceasaPrice, idx) => (
+                  <tr key={idx} className="odd:bg-(--color-white-shell) even:bg-(--color-white)">
+                    <td className="py-4 px-6">{ceasaPrice.title}</td>
+                    <td className="py-4 px-6">{ceasaPrice.unity}</td>
+                    <td className="py-4 px-6">{Formatter.currency(ceasaPrice.price)}</td>
+                    <td className="py-4 px-6">
+                      <span>{ceasaPrice.priceVariation}</span>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </>
   );
 }

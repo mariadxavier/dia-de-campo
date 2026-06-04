@@ -25,7 +25,7 @@ function CarouselArrow({ direction, onClick }: CarouselArrowProps) {
       type="button"
       onClick={onClick}
       aria-label={label}
-      className={`hidden sm:block absolute top-1/2 -translate-y-1/2 bg-(--color-faded-white) w-12 h-12 rounded-full border border-(--color-white)  ${
+      className={`hidden lg:block absolute top-1/2 -translate-y-1/2 bg-(--color-faded-white) w-12 h-12 rounded-full border border-(--color-white)  ${
         isPrevious ? 'left-4' : 'right-4'
       }`}
     >
@@ -42,7 +42,7 @@ function CarouselArrow({ direction, onClick }: CarouselArrowProps) {
 
 function CarouselDots({ total, currentIndex, onSelect }: CarouselDotsProps) {
   return (
-    <div className="flex justify-center gap-2 p-8">
+    <div className="flex justify-center gap-2 p-8 md:pt-12 lg:pt-14">
       {Array.from({ length: total }).map((_, index) => (
         <button
           key={index}
@@ -91,24 +91,26 @@ export default function HomeHighligths() {
           alt={currentItem.title}
           width={1000}
           height={540}
-          className="w-full h-[540px] brightness-60"
+          className="w-full h-[540px] lg:h-[640px] brightness-60"
         />
 
-        <div className="absolute px-5 gap-3.5 bottom-0 flex flex-col text-(--color-white) md:max-w-[640px]">
-          <h4 className="text-xs bg-(--color-yellow) text-(--color-bg-blue) font-bold rounded-full p-2 w-fit">
-            {currentItem.categoryName}
-          </h4>
-          <h3 className="text-3xl font-extrabold">{currentItem.title}</h3>
-          <p>{currentItem.description}</p>
-          <LinkButton
-            href={currentItem.link || ''}
-            className="flex items-center gap-2.5 text-(--color-white) text-sm"
-          >
-            <div className="p-2 rounded-full bg-(--color-yellow)">
-              <Image src={Arrow.src} width={12} height={12} alt="Seguir para conteúdo" />
-            </div>
-            <p>Saiba mais</p>
-          </LinkButton>
+        <div className="absolute flex flex-col w-full px-5 gap-3.5 md:gap-5 lg:gap-6 bottom-0 text-(--color-white)">
+          <div className='flex flex-col gap-3.5 md:mx-14 md:w-2/3 lg:mx-26 lg:w-1/2'>
+            <h4 className="text-xs bg-(--color-yellow) text-(--color-bg-blue) font-bold rounded-full p-2 w-fit">
+              {currentItem.categoryName}
+            </h4>
+            <h3 className="text-3xl md:text-4xl lg:text-[52px] font-extrabold">{currentItem.title}</h3>
+            <p className="text-sm md:text-[17px]">{currentItem.description}</p>
+            <LinkButton
+              href={currentItem.link || ''}
+              className="flex items-center gap-2.5 text-(--color-white) text-sm md:text-[15px]"
+            >
+              <div className="p-2 rounded-full bg-(--color-yellow)">
+                <Image src={Arrow.src} width={12} height={12} alt="Seguir para conteúdo" />
+              </div>
+              <p>Saiba mais</p>
+            </LinkButton>
+          </div>
           <CarouselDots
             total={MOCK_HIGHLIGHTS.length}
             currentIndex={currentIndex}

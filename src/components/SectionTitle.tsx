@@ -19,9 +19,9 @@ export default function SectionTitle({
     <div className="flex justify-between items-center">
       <div className="flex gap-3">
         <span className={`bg-(${sectionColor}) w-0.75 rounded-xs`}/>
-        <div className="flex flex-col gap-1">
-          <h1 className={`text-(${sectionColor === '--color-yellow' ? '--color-white' : sectionColor}) text-xl font-bold`}>{title}</h1>
-          {subtitle && <p className="text-xs text-(--color-gray)">{subtitle}</p>}
+        <div className="flex flex-col gap-1 md:gap-1.5">
+          <h1 className={`text-(${sectionColor === '--color-yellow' ? '--color-white' : sectionColor}) text-xl font-bold md:text-2xl`}>{title}</h1>
+          {subtitle && <p className="text-xs text-(--color-gray) md:text-sm">{subtitle}</p>}
         </div>
       </div>
       <LinkButton

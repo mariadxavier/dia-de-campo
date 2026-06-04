@@ -10,13 +10,13 @@ export default class SocialMedia {
       link: '',
     },
     {
-      name: 'YoutubeIcon',
-      icon: YoutubeIcon,
+      name: 'Mail',
+      icon: MailIcon,
       link: '',
     },
     {
-      name: 'Mail',
-      icon: MailIcon,
+      name: 'YoutubeIcon',
+      icon: YoutubeIcon,
       link: '',
     },
   ];

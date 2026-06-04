@@ -4,7 +4,6 @@ export { default as Footer } from "./Footer";
 export { default as Copyright } from "./Copyright";
 export { default as SiteMap } from "./SiteMap";
 export { default as SocialMediaLink } from "./SocialMediaLink";
-export { default as NewsletterForm } from "./NewsletterForm";
 export { default as NavLink } from "./CollapseMenu";
 export { default as Button } from "./Button";
 export { default as AdBanner } from "./AdBanner";
@@ -26,4 +25,5 @@ export { default as TechnicalContentPreview } from "./TechnicalContentPreview";
 export { default as TechnicalContentArticle } from "./TechnicalContentArticle";
 export { default as PartnerPreview } from "./PartnerPreview";
 export { default as KPICard } from "./KPICard";
+export { default as RowNavigation } from "./RowNavigation";
 

@@ -10,7 +10,7 @@ export default function SiteMap() {
   ];
 
   return (
-    <div className="flex flex-col gap-6 text-(--color-gray) w-full">
+    <div className="flex flex-col md:flex-row md:justify-around gap-6 text-(--color-gray) w-full">
       {columns &&
         columns.map((column, idx) => (
           <div key={idx} className="flex flex-col gap-2">
