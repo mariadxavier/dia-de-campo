@@ -27,6 +27,7 @@
 * {
   box-sizing: border-box;
   font-family: var(--font-inter);
+  scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar {

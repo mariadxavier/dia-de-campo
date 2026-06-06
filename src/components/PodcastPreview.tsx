@@ -5,7 +5,8 @@ export default function PodcastPreview() {
   const podcastHighlight = FeaturedContent.getHighlightPodcast();
   const podcastHighlightList = FeaturedContent.getHighlightPodcastList();
   return (
-    <>
+    <div className='flex flex-col items-center w-full m-auto max-w-[480px] lg:max-w-none lg:items-start gap-5 lg:gap-8 lg:flex-row'>
+
       {podcastHighlight && (
         <Article
           title={podcastHighlight.description}
@@ -17,7 +18,7 @@ export default function PodcastPreview() {
           themeColor="--color-yellow"
           footnote={`${podcastHighlight.author}`}
           bgColor="--color-urain-blue"
-          className={'sm:w-[380px] md:w-[480px]'}
+          className={'sm:min-w-[380px] w-full md:max-w-[480px] xl:max-w-[640px]'}
         />
       )}
       <div className='flex flex-col gap-6 w-full'>
@@ -28,10 +29,11 @@ export default function PodcastPreview() {
       </div>
       <LinkButton
         href="/podcast"
-        className="md:hidden flex items-center justify-center p-3.5 rounded-full bg-(--color-yellow) text-(--color-dark-green)"
+        className="md:hidden flex items-center justify-center p-3.5 rounded-full bg-(--color-yellow) text-(--color-dark-green) whitespace-nowrap shrink-0"
       >
         <p>Ver todos os episódios →</p>
       </LinkButton>
-    </>
+    </div>
+
   );
 }

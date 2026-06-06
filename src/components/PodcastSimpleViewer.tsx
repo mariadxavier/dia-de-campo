@@ -8,7 +8,7 @@ type PodcastSimpleViewerProps = {
 
 export default function PodcastSimpleViewer({ podcast }: PodcastSimpleViewerProps) {
   return (
-    <div className="flex items-center h-16 md:h-20 p-3 gap-3 rounded-lg bg-(--color-urain-blue) md:justify-between">
+    <div className="flex items-center h-16 md:h-20 p-3 gap-3 rounded-lg bg-(--color-urain-blue) justify-between">
       <div className='flex items-center gap-3'>
         <p className="flex justify-center items-center w-10 h-10 bg-(--color-dark-gray) rounded-md text-(--color-yellow) font-bold text-xs">
           {podcast.episodeNumber}
