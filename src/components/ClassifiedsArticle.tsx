@@ -2,10 +2,10 @@ import { ClassifiedListItem } from '../types';
 import { Formatter } from '../util/Formatter';
 
 type ClassifiedsArticleProps = {
-  key: string | number;
   classified: ClassifiedListItem;
 };
-export default function ClassifiedsArticle({ key, classified }: ClassifiedsArticleProps) {
+
+export default function ClassifiedsArticle({ classified }: ClassifiedsArticleProps) {
   return (
     <article className="flex flex-col gap-2.5 p-4 w-full rounded-lg border-t-3 border-(--color-green) shadow-md md:h-[240px] md:justify-between">
       <h3 className="text-(--color-dark-green)">{classified.title}</h3>

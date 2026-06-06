@@ -26,4 +26,12 @@ export { default as TechnicalContentArticle } from "./TechnicalContentArticle";
 export { default as PartnerPreview } from "./PartnerPreview";
 export { default as KPICard } from "./KPICard";
 export { default as RowNavigation } from "./RowNavigation";
-
+export { default as NewsHighlights } from "./NewsHighlights";
+export { default as NewsFilterTabs } from "./NewsFilterTabs";
+export { default as NewsFeaturedCard } from "./NewsFeaturedCard";
+export { default as NewsArticleRow } from "./NewsArticleRow";
+export { default as NewsPagination } from "./NewsPagination";
+export { default as Breadcrumb } from "./Breadcrumb";
+export type { BreadcrumbItem } from "./Breadcrumb";
+export { default as NewsList } from "./NewsList";
+export { default as Chip } from "./Chip";

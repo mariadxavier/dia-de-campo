@@ -1,0 +1,56 @@
+import Link from 'next/link';
+import Image from './Image';
+import NewsPageData, {
+  getCategoryBadgeColor,
+  formatPublishedDate,
+} from '@/src/helpers/NewsPageData';
+import Chip from './Chip';
+import Button from './Button';
+
+export default function NewsFeaturedCard() {
+  const featuredArticle = NewsPageData.getFeaturedArticle();
+  const categoryName = featuredArticle.categories?.name ?? 'Notícia';
+  const badgeColor = getCategoryBadgeColor(categoryName);
+  const readTime = '5';
+
+  return (
+    <Link href={`/noticias/${featuredArticle.slug}`} className="block group">
+      <article className="flex flex-col md:flex-row rounded-2xl overflow-hidden bg-(--color-white) shadow-sm hover:shadow-md transition-shadow">
+        <div className="relative w-full lg:w-3/4 lg:max-h-[400px] xl:w-1/2 aspect-[16/10] overflow-hidden">
+          <Image
+            src={featuredArticle.cover_image_url}
+            alt={featuredArticle.title}
+            width={600}
+            height={400}
+            className="w-full h-full group-hover:scale-[1.02] transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+        </div>
+
+        <div className="flex flex-col gap-3 p-5">
+          <div className="flex items-center gap-2">
+            <Chip text="Destaque" badgeColor="--color-yellow" />
+            <Chip text={categoryName} badgeColor={badgeColor} />
+          </div>
+
+          <h2 className="text-lg md:text-2xl lg:text-4xl font-bold text-(--color-dark-blue) leading-snug group-hover:text-(--color-green) transition-colors">
+            {featuredArticle.title}
+          </h2>
+
+          <p className="text-sm text-(--color-gray) leading-relaxed line-clamp-3">
+            {featuredArticle.short_description}
+          </p>
+          <div className="flex items-center gap-1.5 text-xs text-(--color-gray) pt-1">
+            <span>{formatPublishedDate(featuredArticle.published_at)}</span>
+            <span>•</span>
+            <span>{readTime} min</span>
+          </div>
+          <Button
+            title="Ler matéria completa →"
+            className="hidden md:block bg-(--color-green) w-fit rounded-full text-(--color-white) py-2.5 px-5 text-xs"
+          />
+        </div>
+      </article>
+    </Link>
+  );
+}

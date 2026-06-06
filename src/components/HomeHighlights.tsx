@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Image, LinkButton } from '@/src/components';
+import { Chip, Image, LinkButton } from '@/src/components';
 import Highlights from '../helpers/FeaturedContent';
 import ArrowLeft from '@/src/assets/icons/arrow-left-icon.svg';
 import Arrow from '@/src/assets/icons/arrow-icon.svg';
@@ -96,9 +96,7 @@ export default function HomeHighligths() {
 
         <div className="absolute flex flex-col w-full px-5 gap-3.5 md:gap-5 lg:gap-6 bottom-0 text-(--color-white)">
           <div className='flex flex-col gap-3.5 md:mx-14 md:w-2/3 lg:mx-26 lg:w-1/2'>
-            <h4 className="text-xs bg-(--color-yellow) text-(--color-bg-blue) font-bold rounded-full p-2 w-fit">
-              {currentItem.categoryName}
-            </h4>
+            <Chip text={currentItem.categoryName} textColor='--color-dark-green' />
             <h3 className="text-3xl md:text-4xl lg:text-[52px] font-extrabold">{currentItem.title}</h3>
             <p className="text-sm md:text-[17px]">{currentItem.description}</p>
             <LinkButton

@@ -2,6 +2,7 @@ import { CollapseMenu, Image, LinkButton, RowNavigation } from '@/src/components
 import Logo from '../assets/images/logo.svg';
 import SearchIcon from '../assets/icons/search-icon.svg';
 import PageDefnitions from '../helpers/PageDefinitions';
+import Link from 'next/link';
 
 export default function Header() {
   const pages = PageDefnitions.getPagesToShowOnMenu();
@@ -10,7 +11,9 @@ export default function Header() {
     <header className="bg-white w-full flex justify-between items-center py-3 px-5 gap-3 md:px-10 lg:px-30">
       <div className="flex gap-3 md:gap-8 items-center">
         <CollapseMenu items={pages} />
-        <Image src={Logo.src} alt="Dia de Campo" width={86} height={40} />
+        <Link href={'/'}>
+          <Image src={Logo.src} alt="Dia de Campo" width={86} height={40} />
+        </Link>
         <RowNavigation items={pages} />
       </div>
       <div className="flex gap-3 items-center">
