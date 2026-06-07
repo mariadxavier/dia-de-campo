@@ -35,3 +35,11 @@ export { default as Breadcrumb } from "./Breadcrumb";
 export type { BreadcrumbItem } from "./Breadcrumb";
 export { default as NewsList } from "./NewsList";
 export { default as Chip } from "./Chip";
+export { default as CeasaPriceTable } from "./CeasaPriceTable";
+export { default as NewsDetailHeader } from "./NewsDetailHeader";
+export { default as NewsDetailContent } from "./NewsDetailContent";
+export { default as NewsContentQuote } from "./NewsContentQuote";
+export { default as NewsDetailCoverImage } from "./NewsDetailCoverImage";
+export { default as NewsContentMedia } from "./NewsContentMedia";
+export { default as NewsDetailRecommendations } from "./NewsDetailRecommendations";
+

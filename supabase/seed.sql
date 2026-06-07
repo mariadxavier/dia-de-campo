@@ -60,6 +60,7 @@ INSERT INTO content_items (
   seo_description,
   canonical_url,
   og_image_url,
+  author,
   published_at,
   is_published,
   sort_order
@@ -76,6 +77,7 @@ SELECT
   data.seo_description,
   data.canonical_url,
   data.og_image_url,
+  'Equipe Dia de Campo',
   now(),
   true,
   data.sort_order
@@ -104,7 +106,7 @@ FROM (
     'mercado-financeiro-alta-sexta',
     'Ibovespa encerrou o dia em valorização.',
     'https://picsum.photos/1200/800?2',
-    '[{"type":"paragraph","content":"O mercado financeiro fechou em alta impulsionado pelo setor bancário."}]',
+    '[{"type":"paragraph","content":"O mercado financeiro fechou em alta impulsionado pelo setor bancário."}, {"type":"image","content":"https://picsum.photos/1200/800?6"}, {"type":"paragraph","content":"O mercado financeiro fechou em alta impulsionado pelo setor bancário. O mercado financeiro fechou em alta impulsionado pelo setor bancário. O mercado financeiro fechou em alta impulsionado pelo setor bancário. O mercado financeiro fechou em alta impulsionado pelo setor bancário. O mercado financeiro fechou em alta impulsionado pelo setor bancário."}, {"type":"subtitle","content":"O mercado financeiro fechou em alta impulsionado pelo setor bancário."}, {"type":"quote","content":"O mercado financeiro fechou em alta impulsionado pelo setor bancário."}, {"type":"paragraph","content":"O mercado financeiro fechou em alta impulsionado pelo setor bancário."}]',
     'Mercado financeiro em alta',
     'Ibovespa fecha positivo.',
     'https://portal.com/noticias/mercado-financeiro-alta-sexta',

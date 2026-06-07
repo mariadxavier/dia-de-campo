@@ -38,6 +38,7 @@ export function mapToNewsDetail(
 ): NewsDetail {
   return {
     ...mapToNewsListItem(row, featuredPriorityById),
+    author: row.author,
     content: row.content,
     seoTitle: row.seo_title,
     seoDescription: row.seo_description,

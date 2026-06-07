@@ -5,7 +5,7 @@ export type PodcastEmbedKind = "audio" | "spotify" | "youtube";
 export type FeaturedResourceType = "news" | "technical" | "podcast";
 
 export type ContentBlock = {
-  type: "paragraph";
+  type: "paragraph" | "image" | "quote" | "subtitle";
   content: string;
 };
 
@@ -40,6 +40,7 @@ export type ContentItemRow = {
   seo_description: string | null;
   canonical_url: string | null;
   og_image_url: string | null;
+  author: string;
   search_vector: unknown | null;
   published_at: string | null;
   is_published: boolean;
@@ -127,6 +128,7 @@ export type NewsListItem = {
 };
 
 export type NewsDetail = NewsListItem & {
+  author: string;
   content: ContentJson;
   seoTitle: string | null;
   seoDescription: string | null;
