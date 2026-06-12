@@ -2,7 +2,8 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 CREATE TYPE content_type AS ENUM (
   'news',
-  'technical'
+  'technical',
+  'hero'
 );
 
 CREATE TYPE podcast_embed_kind AS ENUM (
@@ -65,6 +66,7 @@ CREATE TABLE content_items (
 CREATE TABLE podcast_episodes (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   episode_number TEXT NOT NULL,
+  episode_time_duration TEXT NOT NULL,
   title TEXT NOT NULL,
   slug TEXT NOT NULL UNIQUE,
   description TEXT NOT NULL DEFAULT '',
@@ -93,10 +95,19 @@ CREATE TABLE podcast_episodes (
   )
 );
 
+CREATE TYPE featured_resource_type AS ENUM (
+  'news',
+  'technical',
+  'podcast',
+  'classified',
+  'hero'
+);
+
 CREATE TABLE featured_placements (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  content_item_id UUID REFERENCES content_items(id) ON DELETE CASCADE,
-  podcast_episode_id UUID REFERENCES podcast_episodes(id) ON DELETE CASCADE,
+  resource_type featured_resource_type NOT NULL,
+  resource_id UUID NOT NULL,
+
   starts_at TIMESTAMPTZ NOT NULL,
   ends_at TIMESTAMPTZ NOT NULL,
 
@@ -109,18 +120,6 @@ CREATE TABLE featured_placements (
 
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-
-  CONSTRAINT featured_placements_content_xor_podcast CHECK (
-    (
-      content_item_id IS NOT NULL
-      AND podcast_episode_id IS NULL
-    )
-    OR
-    (
-      content_item_id IS NULL
-      AND podcast_episode_id IS NOT NULL
-    )
-  ),
 
   CONSTRAINT featured_placements_valid_range CHECK (
     ends_at > starts_at
@@ -300,25 +299,34 @@ USING (
   AND ends_at >= now()
   AND (
     (
-      content_item_id IS NOT NULL
+      resource_id IS NOT NULL
       AND EXISTS (
         SELECT 1
         FROM content_items ci
-        WHERE ci.id = featured_placements.content_item_id
+        WHERE ci.id = featured_placements.resource_id
         AND ci.is_published = true
       )
     )
     OR
     (
-      podcast_episode_id IS NOT NULL
+      resource_id IS NOT NULL
+      AND EXISTS (
+        SELECT 1
+        FROM classifieds ci
+        WHERE ci.id = featured_placements.resource_id
+        AND ci.is_published = true
+      )
+    )
+    OR
+    (
+      resource_id IS NOT NULL
       AND EXISTS (
         SELECT 1
         FROM podcast_episodes pe
-        WHERE pe.id = featured_placements.podcast_episode_id
+        WHERE pe.id = featured_placements.resource_id
         AND pe.is_published = true
       )
     )
-
   )
 );
 

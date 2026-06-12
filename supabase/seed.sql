@@ -86,49 +86,209 @@ FROM (
 
   (
     'news',
-    'tecnologia',
-    'OpenAI anuncia novo modelo multimodal',
-    'openai-anuncia-modelo-multimodal',
-    'Empresa revelou avanços em inteligência artificial.',
-    'https://picsum.photos/1200/800?1',
-    '[{"type":"paragraph","content":"A OpenAI anunciou um novo modelo multimodal com capacidades avançadas de processamento."}]',
-    'OpenAI anuncia novo modelo',
-    'Novo modelo multimodal da OpenAI.',
-    'https://portal.com/noticias/openai-anuncia-modelo-multimodal',
-    'https://picsum.photos/1200/630?1',
+    'mercado',
+    'Mercado de tecnologia registra crescimento no primeiro semestre',
+    'mercado-tecnologia-crescimento-primeiro-semestre',
+    'Empresas ampliam investimentos em inovação e transformação digital.',
+    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3',
+    '[
+      {
+        "type": "paragraph",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt, velit at vulputate hendrerit, justo arcu gravida purus, sed feugiat augue purus et magna."
+      },
+      {
+        "type": "image",
+        "content": "https://images.unsplash.com/photo-1498050108023-c5249f4df085"
+      },
+      {
+        "type": "subtitle",
+        "content": "Investimentos continuam em alta"
+      },
+      {
+        "type": "paragraph",
+        "content": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Praesent facilisis odio vel lorem varius, non luctus metus dignissim."
+      },
+      {
+        "type": "quote",
+        "content": "A transformação digital deixou de ser diferencial e passou a ser requisito competitivo."
+      },
+      {
+        "type": "paragraph",
+        "content": "Donec euismod eros nec sem efficitur, non vestibulum velit malesuada. Sed consequat tincidunt turpis, eget faucibus tortor faucibus vitae."
+      }
+    ]'::jsonb,
+    'Mercado de tecnologia cresce em ritmo acelerado',
+    'Empresas ampliam investimentos em inovação durante o semestre.',
+    '/noticias/mercado-tecnologia-crescimento-primeiro-semestre',
+    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3',
+    now() - interval '2 days',
+    true,
     1
-  ),
-
-  (
-    'news',
-    'economia',
-    'Mercado financeiro fecha em alta nesta sexta',
-    'mercado-financeiro-alta-sexta',
-    'Ibovespa encerrou o dia em valorização.',
-    'https://picsum.photos/1200/800?2',
-    '[{"type":"paragraph","content":"O mercado financeiro fechou em alta impulsionado pelo setor bancário."}, {"type":"image","content":"https://picsum.photos/1200/800?6"}, {"type":"paragraph","content":"O mercado financeiro fechou em alta impulsionado pelo setor bancário. O mercado financeiro fechou em alta impulsionado pelo setor bancário. O mercado financeiro fechou em alta impulsionado pelo setor bancário. O mercado financeiro fechou em alta impulsionado pelo setor bancário. O mercado financeiro fechou em alta impulsionado pelo setor bancário."}, {"type":"subtitle","content":"O mercado financeiro fechou em alta impulsionado pelo setor bancário."}, {"type":"quote","content":"O mercado financeiro fechou em alta impulsionado pelo setor bancário."}, {"type":"paragraph","content":"O mercado financeiro fechou em alta impulsionado pelo setor bancário."}]',
-    'Mercado financeiro em alta',
-    'Ibovespa fecha positivo.',
-    'https://portal.com/noticias/mercado-financeiro-alta-sexta',
-    'https://picsum.photos/1200/630?2',
-    2
-  ),
-
-  (
-    'news',
-    'esportes',
-    'Seleção brasileira vence amistoso internacional',
-    'brasil-vence-amistoso',
-    'Time brasileiro venceu por 3 a 0.',
-    'https://picsum.photos/1200/800?3',
-    '[{"type":"paragraph","content":"A seleção brasileira apresentou ótimo desempenho em amistoso internacional."}]',
-    'Brasil vence amistoso',
-    'Vitória da seleção brasileira.',
-    'https://portal.com/noticias/brasil-vence-amistoso',
-    'https://picsum.photos/1200/630?3',
-    3
-  ),
-
+),
+(
+  'news',
+  'tecnologia',
+  'Nova solução logística reduz tempo de entrega em grandes centros',
+  'nova-solucao-logistica-reduz-tempo-entrega',
+  'Operadoras relatam ganhos significativos de eficiência.',
+  'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d',
+  '[
+    {
+      "type": "paragraph",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur finibus, augue sit amet facilisis dignissim, mauris metus malesuada nisi, eget placerat tortor libero eget nulla."
+    },
+    {
+      "type": "subtitle",
+      "content": "Resultados observados nos primeiros testes"
+    },
+    {
+      "type": "paragraph",
+      "content": "Morbi pharetra velit vitae justo malesuada, vitae sollicitudin nisl dignissim. Suspendisse potenti. Fusce ac tincidunt nibh."
+    },
+    {
+      "type": "image",
+      "content": "https://images.unsplash.com/photo-1553413077-190dd305871c"
+    },
+    {
+      "type": "quote",
+      "content": "A redução no tempo médio de entrega superou as expectativas iniciais."
+    },
+    {
+      "type": "paragraph",
+      "content": "Sed gravida, tortor sed pellentesque efficitur, erat justo malesuada eros, nec viverra leo purus et lorem."
+    }
+  ]'::jsonb,
+  'Logística ganha eficiência com nova tecnologia',
+  'Projeto reduz prazos e melhora experiência dos consumidores.',
+  '/noticias/nova-solucao-logistica-reduz-tempo-entrega',
+  'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d',
+  now() - interval '5 days',
+  true,
+  2
+),
+(
+  'news',
+  'tecnologia',
+  'Setor de energia investe em fontes renováveis para próxima década',
+  'setor-energia-fontes-renovaveis-proxima-decada',
+  'Empresas anunciam novos projetos voltados à sustentabilidade.',
+  'https://images.unsplash.com/photo-1466611653911-95081537e5b7',
+  '[
+    {
+      "type": "paragraph",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu velit a nibh cursus hendrerit. Nullam ullamcorper metus eget ex condimentum, sit amet pulvinar turpis volutpat."
+    },
+    {
+      "type": "image",
+      "content": "https://images.unsplash.com/photo-1509391366360-2e959784a276"
+    },
+    {
+      "type": "subtitle",
+      "content": "Meta é ampliar participação das renováveis"
+    },
+    {
+      "type": "paragraph",
+      "content": "Aliquam erat volutpat. Donec ullamcorper magna sed orci fermentum, nec aliquet velit placerat. Integer vitae ultrices tortor."
+    },
+    {
+      "type": "quote",
+      "content": "A sustentabilidade será um dos pilares estratégicos dos próximos anos."
+    },
+    {
+      "type": "paragraph",
+      "content": "Mauris volutpat, arcu vitae vulputate pellentesque, neque ligula porttitor augue, quis luctus risus turpis nec lorem."
+    }
+  ]'::jsonb,
+  'Investimentos em energia renovável avançam',
+  'Companhias anunciam projetos focados em sustentabilidade.',
+  '/noticias/setor-energia-fontes-renovaveis-proxima-decada',
+  'https://images.unsplash.com/photo-1466611653911-95081537e5b7',
+  now() - interval '7 days',
+  true,
+  3
+),
+(
+  'hero',
+  'tecnologia',
+  'Pesquisa aponta aumento no consumo de conteúdo digital',
+  'pesquisa-aumento-consumo-conteudo-digital',
+  'Levantamento mostra mudanças no comportamento dos usuários.',
+  'https://images.unsplash.com/photo-1522202176988-66273c2fd55f',
+  '[
+    {
+      "type": "paragraph",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut varius nisl non mauris pulvinar, at ullamcorper orci malesuada."
+    },
+    {
+      "type": "subtitle",
+      "content": "Streaming lidera crescimento"
+    },
+    {
+      "type": "paragraph",
+      "content": "Nam porttitor lacus et neque faucibus, nec pellentesque lorem malesuada. Integer pretium tempor libero, sed feugiat massa."
+    },
+    {
+      "type": "quote",
+      "content": "Os hábitos digitais continuam evoluindo em ritmo acelerado."
+    },
+    {
+      "type": "image",
+      "content": "https://images.unsplash.com/photo-1499750310107-5fef28a66643"
+    },
+    {
+      "type": "paragraph",
+      "content": "Praesent aliquet metus vitae nunc pulvinar, nec facilisis nunc aliquet. Nulla facilisi."
+    }
+  ]'::jsonb,
+  'Consumo de conteúdo digital cresce novamente',
+  'Pesquisa revela aumento expressivo no uso de plataformas digitais.',
+  '/noticias/pesquisa-aumento-consumo-conteudo-digital',
+  'https://images.unsplash.com/photo-1522202176988-66273c2fd55f',
+  now() - interval '10 days',
+  true,
+  4
+),
+(
+  'hero',
+  'tecnologia',
+  'Empresas apostam em inteligência artificial para otimizar processos',
+  'empresas-apostam-inteligencia-artificial-otimizar-processos',
+  'Automação e análise de dados lideram os investimentos corporativos.',
+  'https://images.unsplash.com/photo-1677442136019-21780ecad995',
+  '[
+    {
+      "type": "paragraph",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis tristique tortor. Donec convallis pretium felis."
+    },
+    {
+      "type": "image",
+      "content": "https://images.unsplash.com/photo-1676276376926-5935d0d36f14"
+    },
+    {
+      "type": "subtitle",
+      "content": "IA deixa de ser tendência e vira estratégia"
+    },
+    {
+      "type": "paragraph",
+      "content": "Suspendisse sed velit non urna malesuada suscipit. Vivamus consequat sapien et lacus faucibus, sed pretium augue convallis."
+    },
+    {
+      "type": "quote",
+      "content": "A inteligência artificial já impacta diretamente indicadores operacionais."
+    },
+    {
+      "type": "paragraph",
+      "content": "Curabitur ut nibh vitae libero eleifend posuere. Sed feugiat, turpis vel luctus aliquet, velit lectus tincidunt augue, ac luctus magna augue sed libero."
+    }
+  ]'::jsonb,
+  'IA impulsiona eficiência operacional nas empresas',
+  'Organizações ampliam investimentos em inteligência artificial.',
+  '/noticias/empresas-apostam-inteligencia-artificial-otimizar-processos',
+  'https://images.unsplash.com/photo-1677442136019-21780ecad995',
+  now() - interval '1 day',
+  true,
+  5
+),
   (
     'technical',
     'tecnologia',
@@ -141,9 +301,10 @@ FROM (
     'Aprenda SSR no Next.js.',
     'https://portal.com/tech/como-funciona-ssr-nextjs',
     'https://picsum.photos/1200/630?4',
-    4
+    now(),
+    true,
+    6
   ),
-
   (
     'technical',
     'tecnologia',
@@ -156,9 +317,10 @@ FROM (
     'Introdução ao PostgreSQL.',
     'https://portal.com/tech/introducao-postgresql',
     'https://picsum.photos/1200/630?5',
-    5
+    now(),
+    true,
+    7
   ),
-
   (
     'technical',
     'tecnologia',
@@ -171,22 +333,9 @@ FROM (
     'Aprenda Docker.',
     'https://portal.com/tech/docker-desenvolvimento-web',
     'https://picsum.photos/1200/630?6',
-    6
-  ),
-
-  (
-    'news',
-    'cultura',
-    'Nova plataforma de streaming cresce no Brasil',
-    'streaming-cresce-brasil',
-    'Serviço amplia participação no mercado.',
-    'https://picsum.photos/1200/800?7',
-    '[{"type":"paragraph","content":"A nova plataforma de streaming registrou crescimento recorde."}]',
-    'Streaming cresce no Brasil',
-    'Nova plataforma cresce rapidamente.',
-    'https://portal.com/noticias/streaming-cresce-brasil',
-    'https://picsum.photos/1200/630?7',
-    7
+    now(),
+    true,
+    8
   )
 
 ) AS data (
@@ -201,6 +350,8 @@ FROM (
   seo_description,
   canonical_url,
   og_image_url,
+  published_at,
+  is_published,
   sort_order
 )
 
@@ -337,7 +488,8 @@ VALUES
 );
 
 INSERT INTO featured_placements (
-  content_item_id,
+  resource_type,
+  resource_id,
   starts_at,
   ends_at,
   priority,
@@ -345,36 +497,147 @@ INSERT INTO featured_placements (
   campaign_name,
   is_active
 )
-SELECT
-  id,
-  now() - interval '1 day',
-  now() + interval '30 days',
-  1,
-  'Portal Editorial',
-  'Destaques Home',
-  true
-FROM content_items
-LIMIT 4;
+VALUES
 
-INSERT INTO featured_placements (
-  podcast_episode_id,
-  starts_at,
-  ends_at,
-  priority,
-  client_name,
-  campaign_name,
-  is_active
-)
-SELECT
-  id,
+-- NEWS
+
+(
+  'news',
+  '316cc0af-d654-4225-af73-be8eb8df88e8',
+  now() - interval '7 days',
+  now() + interval '30 days',
+  100,
+  'Portal Editorial',
+  'Teste de notícia destaque',
+  true
+),
+
+(
+  'news',
+  '59ce9795-4578-4df7-8a48-9d32729ad191',
+  now() - interval '3 days',
+  now() + interval '20 days',
+  90,
+  'Portal Editorial',
+  'Tecnologia em Evidência',
+  true
+),
+
+(
+  'news',
+  '7b87db63-435c-4c1f-9d05-e9af27d85688',
   now() - interval '1 day',
   now() + interval '15 days',
-  2,
-  'Podcast Network',
-  'Podcasts em Destaque',
+  80,
+  'Portal Editorial',
+  'Notícias Relevantes',
   true
-FROM podcast_episodes
-LIMIT 3;
+),
+
+-- TECHNICAL CONTENT
+
+(
+  'technical',
+  '4d5e9718-88ea-4d41-8242-b92bf3f4a697',
+  now() - interval '5 days',
+  now() + interval '45 days',
+  95,
+  'Equipe Técnica',
+  'Conteúdo Técnico Premium',
+  true
+),
+
+(
+  'technical',
+  'a0bcd99a-f22c-40ab-a038-ab73390353ab',
+  now() - interval '2 days',
+  now() + interval '30 days',
+  85,
+  'Equipe Técnica',
+  'Aprendizado Full Stack',
+  true
+),
+
+(
+  'technical',
+  'e73ec644-c01e-47a5-9705-dd80175dcd5c',
+  now() - interval '1 day',
+  now() + interval '25 days',
+  75,
+  'Equipe Técnica',
+  'Dev Experience',
+  true
+),
+
+-- PODCASTS
+
+(
+  'podcast',
+  '16af19cf-2a06-4f7c-94ae-612153099b75',
+  now() - interval '10 days',
+  now() + interval '60 days',
+  70,
+  'Podcast Oficial',
+  'Temporada IA',
+  true
+),
+
+(
+  'podcast',
+  '2ed893d7-a0b3-470a-b315-dd887bf38ce2',
+  now() - interval '4 days',
+  now() + interval '45 days',
+  65,
+  'Podcast Oficial',
+  'Especial Política',
+  true
+),
+
+(
+  'podcast',
+  '34bb4db6-5006-415c-a172-b3e27848e1af',
+  now() - interval '2 days',
+  now() + interval '30 days',
+  60,
+  'Podcast Oficial',
+  'Mercado e Tendências',
+  true
+),
+
+-- CLASSIFIEDS
+
+(
+  'classified',
+  '4824500a-039c-44cd-97ac-4b1302c54d5e',
+  now() - interval '1 day',
+  now() + interval '20 days',
+  50,
+  'Carlos Silva',
+  'Notebook Gamer Destaque',
+  true
+),
+
+(
+  'classified',
+  '72f538d7-8bb9-494a-97aa-8cc42641f89b',
+  now() - interval '2 days',
+  now() + interval '25 days',
+  40,
+  'Fernanda Lima',
+  'Imóvel em Destaque',
+  true
+),
+
+(
+  'classified',
+  '74dd97b5-07f2-4874-af48-3eba07684064',
+  now() - interval '3 days',
+  now() + interval '30 days',
+  30,
+  'Growth Agency',
+  'Serviços Profissionais',
+  true
+);
 
 INSERT INTO classifieds (
   title,

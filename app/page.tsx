@@ -8,11 +8,29 @@ import {
   PodcastPreview,
   TechnicalContentPreview,
 } from '@/src/components';
+import { buildSeoMetadata } from '@/src/helpers/BuildSeoMetadata';
+import FeaturedContent from '@/src/helpers/FeaturedContent';
 
-export default function Home() {
+export default async function Home() {
+  const heroItems = await FeaturedContent.getHomeHeros();
+  const featuredNews = await FeaturedContent.getNews();
+  const ceasaItems = await FeaturedContent.getCeasaPrices();
+  const podcastList = await FeaturedContent.getPodcasts();
+  const mainPodcast = await FeaturedContent.getMainPodcast();
+  
+  const content = {
+    title: 'Portal Dia de Campo',
+    seo_title: 'Portal Dia de Campo',
+    seo_description: 'Notícias, preços CEASA atualizados diariamente, conteúdo técnico e oportunidades comerciais. Tudo em um único portal.',
+    canonical_url: '',
+    og_image_url: '',
+  }
+
+  buildSeoMetadata(content)
+
   return (
     <div className="flex flex-col flex-1 items-center justify-center">
-      <HomeHighlights />
+      <HomeHighlights heroItems={heroItems} />
       <HomeSection
         sectionTitle="Últimas do Mercado"
         sectionLink="/noticias"
@@ -20,7 +38,7 @@ export default function Home() {
         sectionLinkTitle="Ver todas as notícias"
         enableAutoScroll
       >
-        <NewsPreview />
+        <NewsPreview articles={featuredNews} />
       </HomeSection>
       <HomeSection
         sectionTitle="Preços CEASA"
@@ -29,7 +47,7 @@ export default function Home() {
         sectionSubtitle="Atualizado diariamente • CEASA-MG / SP / RJ"
         bgColor="--color-light-green"
       >
-        <CeasaPreview />
+        <CeasaPreview ceasaItems={ceasaItems}/>
       </HomeSection>
       <HomeSection
         sectionLink="/podcast"
@@ -39,7 +57,7 @@ export default function Home() {
         bgColor="--color-bg-blue"
         sectionColor="--color-yellow"
       >
-        <PodcastPreview />
+        <PodcastPreview mainPodcast={mainPodcast} podcastList={podcastList} />
       </HomeSection>
       <HomeSection
         sectionTitle="Classificados"

@@ -1,10 +1,10 @@
 import { getSupabaseAdmin } from "@/src/lib/supabase/server";
-import { findActiveFeaturedPriorityMapForPodcasts } from "@/src/server/repositories/featuredPlacementRepository";
 import {
   paginate,
   sortByFeaturedThenPublished,
 } from "@/src/server/utils/sortWithFeatured";
 import type { PodcastEpisodeRow } from "@/src/types";
+import { findActiveFeaturedPriorityMapForContentType } from "./featuredPlacementRepository";
 
 export async function findPublishedPodcastEpisodes(
   limit: number,
@@ -22,7 +22,7 @@ export async function findPublishedPodcastEpisodes(
   }
 
   const rows = (data ?? []) as PodcastEpisodeRow[];
-  const featuredPriorityById = await findActiveFeaturedPriorityMapForPodcasts();
+  const featuredPriorityById = await findActiveFeaturedPriorityMapForContentType('podcast');
   const sorted = sortByFeaturedThenPublished(rows, featuredPriorityById);
 
   return paginate(sorted, limit, offset);

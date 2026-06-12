@@ -1,9 +1,9 @@
 import { cacheKeys } from "@/src/lib/cache/keys";
 import { getCached } from "@/src/lib/cache/withCache";
 import { findPublishedPodcastEpisodes } from "@/src/server/repositories/podcastRepository";
-import { findActiveFeaturedPriorityMapForPodcasts } from "@/src/server/repositories/featuredPlacementRepository";
 import { mapToPodcastEpisodeItem } from "@/src/server/mappers/podcastMapper";
 import type { PodcastEpisodeItem } from "@/src/types";
+import { findActiveFeaturedPriorityMapForContentType } from "../repositories/featuredPlacementRepository";
 
 export async function listPodcastEpisodes(
   limit: number,
@@ -12,7 +12,7 @@ export async function listPodcastEpisodes(
   return getCached(cacheKeys.podcastList(limit, offset), async () => {
     const [rows, featuredPriorityById] = await Promise.all([
       findPublishedPodcastEpisodes(limit, offset),
-      findActiveFeaturedPriorityMapForPodcasts(),
+      findActiveFeaturedPriorityMapForContentType("podcast"),
     ]);
 
     return rows.map((row) =>

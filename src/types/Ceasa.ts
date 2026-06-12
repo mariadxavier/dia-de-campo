@@ -15,10 +15,23 @@ export type CeasaPriceRow = {
   updated_at: string;
 };
 
-export type ExternalCeasaPrice = Omit<
-  CeasaPriceRow,
-  "id" | "created_at" | "updated_at"
->;
+export type CeasaPriceItem = {
+  id: string;
+  link: string;
+  city: string;
+  ibgeCode: string | null;
+  uf: string;
+  ceasaName: string;
+  productName: string;
+  productSlug: string;
+  unity: string | null;
+  priceDate: string;
+  dailyPrice: number;
+  previousPrice: number | null;
+  priceVariation: number | null;
+  updatedAt: string;
+};
 
-export type ExternalCeasaPricesResponse =
-  ExternalCeasaPrice[];
+export type ExternalCeasaPrice = Omit<CeasaPriceRow, 'id' | 'created_at' | 'updated_at'>;
+
+export type ExternalCeasaPricesResponse = ExternalCeasaPrice[];

@@ -1,9 +1,9 @@
-import { HomeSectionPodcast } from '../types';
 import { Image } from '@/src/components';
 import PlayerIcon from '@/src/assets/icons/player-icon.svg';
+import { PodcastEpisodeItem } from '../types';
 
 type PodcastSimpleViewerProps = {
-  podcast: HomeSectionPodcast;
+  podcast: PodcastEpisodeItem;
 };
 
 export default function PodcastSimpleViewer({ podcast }: PodcastSimpleViewerProps) {
@@ -11,7 +11,7 @@ export default function PodcastSimpleViewer({ podcast }: PodcastSimpleViewerProp
     <div className="flex items-center h-16 md:h-20 p-3 gap-3 rounded-lg bg-(--color-urain-blue) justify-between">
       <div className='flex items-center gap-3'>
         <p className="flex justify-center items-center w-10 h-10 bg-(--color-dark-gray) rounded-md text-(--color-yellow) font-bold text-xs">
-          {podcast.episodeNumber}
+          {podcast.episode}
         </p>
         <div className="flex flex-col gap-0.5">
           <h3 className="text-xs text-(--color-white) font-semibold">{podcast.title}</h3>

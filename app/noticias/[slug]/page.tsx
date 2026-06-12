@@ -4,6 +4,7 @@ import {
   NewsDetailHeader,
   NewsDetailRecommendations,
 } from '@/src/components';
+import { generateContentMetadata } from '@/src/helpers/BuildSeoMetadata';
 import { getNewsBySlug } from '@/src/server/services/newsService';
 import { notFound } from 'next/navigation';
 
@@ -15,6 +16,8 @@ interface PageProps {
 export default async function NewsDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const newsDetail = await getNewsBySlug(slug);
+
+  generateContentMetadata(() => getNewsBySlug(slug));
 
   if (!newsDetail) {
     return notFound();

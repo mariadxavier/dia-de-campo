@@ -6,7 +6,10 @@ export const cacheKeys = {
     `technical:list:${limit}:${offset}`,
   technicalBySlug: (slug: string) => `technical:slug:${slug}`,
   homeFeatured: () => "featured:home",
-  ceasaPrices: () => "ceasa:prices",
+  ceasaPrices: (limit: number, offset: number) => `ceasa:prices:${limit}:${offset}`,
   podcastList: (limit: number, offset: number) =>
     `podcast:list:${limit}:${offset}`,
+  classifiedList: (limit: number, offset: number) =>
+    `classified:list:${limit}:${offset}`,
+  classifiedBySlug: (slug: string) => `classified:slug:${slug}`,
 };

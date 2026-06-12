@@ -1,29 +1,27 @@
-import FeaturedContent from '../helpers/FeaturedContent';
 import { Article, LinkButton, PodcastSimpleViewer } from '@/src/components';
+import { PodcastEpisodeItem } from '../types';
 
-export default function PodcastPreview() {
-  const podcastHighlight = FeaturedContent.getHighlightPodcast();
-  const podcastHighlightList = FeaturedContent.getHighlightPodcastList();
+export default function PodcastPreview({mainPodcast, podcastList}: {mainPodcast: PodcastEpisodeItem, podcastList: PodcastEpisodeItem[]}) {
   return (
     <div className='flex flex-col items-center w-full m-auto max-w-[480px] lg:max-w-none lg:items-start gap-5 lg:gap-8 lg:flex-row'>
 
-      {podcastHighlight && (
+      {mainPodcast && (
         <Article
-          title={podcastHighlight.description}
-          link={podcastHighlight.link}
-          badge={`${podcastHighlight.episode} - DESTAQUE`}
+          title={mainPodcast.description}
+          link={mainPodcast.link}
+          badge={`${mainPodcast.episode} - DESTAQUE`}
           coverType={'podcast'}
-          src={podcastHighlight.embedUrl}
-          embedKind={podcastHighlight.embedKind}
+          src={mainPodcast.embedUrl}
+          embedKind={mainPodcast.embedKind}
           themeColor="--color-yellow"
-          footnote={`${podcastHighlight.author}`}
+          footnote={`${mainPodcast.author}`}
           bgColor="--color-urain-blue"
           className={'sm:min-w-[380px] w-full md:max-w-[480px] xl:max-w-[640px]'}
         />
       )}
       <div className='flex flex-col gap-6 w-full'>
-        {podcastHighlightList &&
-          podcastHighlightList.map((podcast, idx) => (
+        {podcastList &&
+          podcastList.map((podcast, idx) => (
             <PodcastSimpleViewer key={idx} podcast={podcast} />
           ))}
       </div>

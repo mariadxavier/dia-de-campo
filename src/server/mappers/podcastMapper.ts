@@ -10,6 +10,7 @@ export function mapToPodcastEpisodeItem(
   return {
     id: row.id,
     episode: row.episode_number,
+    duration: `${row.episode_time_duration} min`,
     title: row.title,
     description: row.description,
     embedUrl: row.embed_url,

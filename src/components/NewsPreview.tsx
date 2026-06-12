@@ -2,21 +2,20 @@
 import { Article, LinkButton } from '@/src/components';
 import NewsPageData, { getCategoryBadgeColor, formatPublishedDate } from '../helpers/NewsPageData';
 import { useMediaQuery } from '../context/MediaQuery';
+import { NewsListItem } from '../types';
 
-export default function NewsPreview() {
+export default function NewsPreview({ articles }: { articles: NewsListItem[] }) {
   const { isLgScreen } = useMediaQuery();
 
-  const articles = [NewsPageData.getFeaturedArticle(), ...NewsPageData.getArticles().slice(0, 3)];
-
   return (
-    <> 
+    <>
       {articles.map((news, idx) => {
         const isActive = isLgScreen && idx === 0;
-        const badgeColor = getCategoryBadgeColor(news.categories?.name);
+        const badgeColor = getCategoryBadgeColor(news.categoryName);
 
         const footnoteText = isActive
-          ? `${formatPublishedDate(news.published_at)} • ${NewsPageData.getReadTime(news.id)} min de leitura`
-          : `${formatPublishedDate(news.published_at)} • ${NewsPageData.getReadTime(news.id)} min`;
+          ? `${formatPublishedDate(news.publishedAt)} • ${NewsPageData.getReadTime(news.id)} min de leitura`
+          : `${formatPublishedDate(news.publishedAt)} • ${NewsPageData.getReadTime(news.id)} min`;
 
         const cardWidthClass = isLgScreen
           ? isActive
@@ -39,8 +38,8 @@ export default function NewsPreview() {
               title={news.title}
               link={`/noticias/${news.slug}`}
               coverType="image"
-              src={news.cover_image_url}
-              badge={news.categories?.name ?? 'Notícia'}
+              src={news.coverImage}
+              badge={news.categoryName ?? 'Notícia'}
               themeColor={badgeColor}
               footnote={footnoteText}
               className={articleClassName}

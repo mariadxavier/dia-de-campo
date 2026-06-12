@@ -1,9 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Chip, Image, LinkButton } from '@/src/components';
-import Highlights from '../helpers/FeaturedContent';
 import ArrowLeft from '@/src/assets/icons/arrow-left-icon.svg';
 import Arrow from '@/src/assets/icons/arrow-icon.svg';
+import FeaturedContent from '../helpers/FeaturedContent';
+import { NewsListItem } from '../types';
 
 type CarouselArrowProps = {
   direction: 'previous' | 'next';
@@ -58,36 +59,35 @@ function CarouselDots({ total, currentIndex, onSelect }: CarouselDotsProps) {
   );
 }
 
-export default function HomeHighligths() {
-  const MOCK_HIGHLIGHTS = Highlights.getHighlights();
-  const AUTO_PLAY_INTERVAL_MS = Highlights.getHighlightPlayInterval();
+export default function HomeHighligths({heroItems}: {heroItems: NewsListItem[]}) {
+  const AUTO_PLAY_INTERVAL_MS = FeaturedContent.getFeaturedContentPlayInterval();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const currentItem = MOCK_HIGHLIGHTS[currentIndex];
+  const currentItem = heroItems[currentIndex];
 
   function handlePrevious() {
     setCurrentIndex((previousIndex) => {
-      if (previousIndex === 0) return MOCK_HIGHLIGHTS.length - 1;
+      if (previousIndex === 0) return heroItems.length - 1;
       return previousIndex - 1;
     });
   }
 
   function handleNext() {
-    setCurrentIndex((previousIndex) => (previousIndex + 1) % MOCK_HIGHLIGHTS.length);
+    setCurrentIndex((previousIndex) => (previousIndex + 1) % heroItems.length);
   }
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setCurrentIndex((previousIndex) => (previousIndex + 1) % MOCK_HIGHLIGHTS.length);
+      setCurrentIndex((previousIndex) => (previousIndex + 1) % heroItems.length);
     }, AUTO_PLAY_INTERVAL_MS);
 
     return () => window.clearInterval(interval);
-  }, [AUTO_PLAY_INTERVAL_MS, MOCK_HIGHLIGHTS]);
+  }, [AUTO_PLAY_INTERVAL_MS, heroItems]);
 
   return (
     <section className="size-full">
       <div className="relative w-full">
         <Image
-          src={currentItem.imageSrc}
+          src={currentItem.coverImage}
           alt={currentItem.title}
           width={1000}
           height={540}
@@ -96,9 +96,9 @@ export default function HomeHighligths() {
 
         <div className="absolute flex flex-col w-full px-5 gap-3.5 md:gap-5 lg:gap-6 bottom-0 text-(--color-white)">
           <div className='flex flex-col gap-3.5 md:mx-14 md:w-2/3 lg:mx-26 lg:w-1/2'>
-            <Chip text={currentItem.categoryName} textColor='--color-dark-green' />
+            <Chip text={currentItem.categoryName || 'Notícia'} textColor='--color-dark-green' />
             <h3 className="text-3xl md:text-4xl lg:text-[52px] font-extrabold">{currentItem.title}</h3>
-            <p className="text-sm md:text-[17px]">{currentItem.description}</p>
+            <p className="text-sm md:text-[17px]">{currentItem.shortDescription}</p>
             <LinkButton
               href={currentItem.link || ''}
               className="flex items-center gap-2.5 text-(--color-white) text-sm md:text-[15px]"
@@ -110,7 +110,7 @@ export default function HomeHighligths() {
             </LinkButton>
           </div>
           <CarouselDots
-            total={MOCK_HIGHLIGHTS.length}
+            total={heroItems.length}
             currentIndex={currentIndex}
             onSelect={setCurrentIndex}
           />

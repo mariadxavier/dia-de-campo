@@ -1,8 +1,6 @@
-export type ContentType = "news" | "technical";
+export type ContentType = "news" | "technical" | "classified" | "podcast" | "hero";
 
 export type PodcastEmbedKind = "audio" | "spotify" | "youtube";
-
-export type FeaturedResourceType = "news" | "technical" | "podcast";
 
 export type ContentBlock = {
   type: "paragraph" | "image" | "quote" | "subtitle";
@@ -29,7 +27,7 @@ export type CategoryRow = {
 
 export type ContentItemRow = {
   id: string;
-  type: ContentType;
+  type: 'news' | 'technical';
   category_id: string | null;
   title: string;
   slug: string;
@@ -54,6 +52,7 @@ export type ContentItemRow = {
 export type PodcastEpisodeRow = {
   id: string;
   episode_number: string;
+  episode_time_duration: string;
   title: string;
   slug: string;
   description: string;
@@ -73,8 +72,8 @@ export type PodcastEpisodeRow = {
 
 export type FeaturedPlacementRow = {
   id: string;
-  content_item_id: string | null;
-  podcast_episode_id: string | null;
+  resource_id: string;
+  resource_type: ContentType;
   starts_at: string;
   ends_at: string;
   priority: number;
@@ -83,8 +82,6 @@ export type FeaturedPlacementRow = {
   is_active: boolean;
   created_at: string;
   updated_at: string;
-  content_items?: ContentItemRow | null;
-  podcast_episodes?: PodcastEpisodeRow | null;
 };
 
 export type ClassifiedRow = {
@@ -145,6 +142,7 @@ export type PodcastEpisodeItem = {
   episode: string;
   title: string;
   description: string;
+  duration: `${string} min`
   embedUrl: string;
   embedKind: PodcastEmbedKind;
   author: string | null;
@@ -156,7 +154,7 @@ export type PodcastEpisodeItem = {
 
 export type HomeFeaturedItem = {
   placementId: string;
-  resourceType: FeaturedResourceType;
+  resourceType: ContentType;
   resourceId: string;
   priority: number;
   title: string;
@@ -183,6 +181,7 @@ export type ClassifiedListItem = {
   link: string;
   publishedAt: string | null;
   isFeatured: boolean;
+  featuredPriority: number | null;
 };
 
 export type ClassifiedDetail = ClassifiedListItem & {
