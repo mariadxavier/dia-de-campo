@@ -27,3 +27,19 @@ export async function findPublishedPodcastEpisodes(
 
   return paginate(sorted, limit, offset);
 }
+
+export async function countPublishedPodcastEpisodes(): Promise<number> {
+  const supabase = getSupabaseAdmin();
+
+  const { count, error } = await supabase
+    .from("podcast_episodes")
+    .select("*", { count: "exact", head: true })
+    .eq("is_published", true);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return count ?? 0;
+}
+

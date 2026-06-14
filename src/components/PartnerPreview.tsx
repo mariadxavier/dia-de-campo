@@ -22,10 +22,10 @@ export default function PartnerPreview() {
         </LinkButton>
       </div>
       <div className="grid grid-rows-2 grid-cols-2 gap-2.5 md:w-1/2">
-        <KPICard metricDescription="Visitantes/mês" metricValue="50k+" />
-        <KPICard metricDescription="Visitantes/mês" metricValue="50k+" />
-        <KPICard metricDescription="Visitantes/mês" metricValue="50k+" />
-        <KPICard metricDescription="Visitantes/mês" metricValue="50k+" />
+        <KPICard value="50k+" description="Visitantes/mês" />
+        <KPICard value="50k+" description="Visitantes/mês" />
+        <KPICard value="50k+" description="Visitantes/mês" />
+        <KPICard value="50k+" description="Visitantes/mês" />
       </div>
       <LinkButton
         href="/contato"

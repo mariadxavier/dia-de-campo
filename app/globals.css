@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+@source "../app/**/*.{ts,tsx}";
+@source "../src/**/*.{ts,tsx}";
+
 @theme base {
   --color-light-green: #F0FBF4;
   --color-green: #008542;
