@@ -1,4 +1,6 @@
-export type ContentType = "news" | "technical" | "classified" | "podcast" | "hero";
+export type ContentType = "news" | "technical" | "classified" | "podcast";
+
+export type SlotType = "content" | "hero";
 
 export type PodcastEmbedKind = "audio" | "spotify" | "youtube";
 
@@ -28,6 +30,7 @@ export type CategoryRow = {
 export type ContentItemRow = {
   id: string;
   type: 'news' | 'technical';
+  slot: SlotType;
   category_id: string | null;
   title: string;
   slug: string;
@@ -117,7 +120,7 @@ export type NewsListItem = {
   slug: string;
   shortDescription: string;
   coverImage: string;
-  categoryName: string | null;
+  categoryName: string;
   link: string;
   publishedAt: string | null;
   isFeatured: boolean;

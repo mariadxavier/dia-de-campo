@@ -5,13 +5,13 @@ const currencyFormatter = new Intl.NumberFormat("pt-BR", {
 
 class Formatter {
   static currency(value: number | string): string {
+    let numericValue = typeof value === "string" ? parseFloat(value.replace(',', '.')) : value;
     let cents: number;
 
-    if (typeof value === "number") {
-      cents = Number.isFinite(value) ? Math.round(value * 100) : 0;
+    if (typeof numericValue === "number" && Number.isFinite(numericValue)) {
+      cents = Math.round(numericValue * 100);
     } else {
-      const digits = value.replace(/\D/g, "");
-      cents = digits === "" ? 0 : Number.parseInt(digits, 10);
+      cents = 0;
     }
 
     return currencyFormatter.format(cents / 100);

@@ -16,7 +16,7 @@ export default function PodcastPreview({mainPodcast, podcastList}: {mainPodcast:
           themeColor="--color-yellow"
           footnote={`${mainPodcast.author}`}
           bgColor="--color-urain-blue"
-          className={'sm:min-w-[380px] w-full md:max-w-[480px] xl:max-w-[640px]'}
+          className={'w-full sm:w-[380px] md:w-[480px] xl:w-[540px]'}
         />
       )}
       <div className='flex flex-col gap-6 w-full'>

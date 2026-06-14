@@ -10,8 +10,8 @@ export async function listHomeHeros(
 ): Promise<NewsListItem[]> {
   return getCached(cacheKeys.newsList(10, offset), async () => {
     const [rows, featuredPriorityById] = await Promise.all([
-      findPublishedContentByType("hero", 10, offset),
-      findActiveFeaturedPriorityMapForContentType("hero"),
+      findPublishedContentByType(["news", "technical"], 10, offset, "hero"),
+      findActiveFeaturedPriorityMapForContentType(["news", "technical"]),
     ]);
 
     return rows.map((row) => mapToNewsListItem(row, featuredPriorityById));
@@ -21,8 +21,8 @@ export async function listHomeHeros(
 export async function getNewsBySlug(slug: string): Promise<NewsDetail | null> {
   return getCached(cacheKeys.newsBySlug(slug), async () => {
     const [row, featuredPriorityById] = await Promise.all([
-      findPublishedContentBySlug("hero", slug),
-      findActiveFeaturedPriorityMapForContentType("hero"),
+      findPublishedContentBySlug("news", slug),
+      findActiveFeaturedPriorityMapForContentType("news"),
     ]);
 
     return row ? mapToNewsDetail(row, featuredPriorityById) : null;

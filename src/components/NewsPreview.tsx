@@ -14,8 +14,8 @@ export default function NewsPreview({ articles }: { articles: NewsListItem[] }) 
         const badgeColor = getCategoryBadgeColor(news.categoryName);
 
         const footnoteText = isActive
-          ? `${formatPublishedDate(news.publishedAt)} • ${NewsPageData.getReadTime(news.id)} min de leitura`
-          : `${formatPublishedDate(news.publishedAt)} • ${NewsPageData.getReadTime(news.id)} min`;
+          ? `${formatPublishedDate(news.publishedAt)}`
+          : `${formatPublishedDate(news.publishedAt)}`;
 
         const cardWidthClass = isLgScreen
           ? isActive

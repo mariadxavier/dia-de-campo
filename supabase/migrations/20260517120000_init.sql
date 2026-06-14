@@ -2,8 +2,12 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 CREATE TYPE content_type AS ENUM (
   'news',
-  'technical',
-  'hero'
+  'technical'
+);
+
+CREATE TYPE content_slot AS ENUM (
+  'hero', 
+  'content'
 );
 
 CREATE TYPE podcast_embed_kind AS ENUM (
@@ -28,6 +32,7 @@ CREATE TABLE categories (
 CREATE TABLE content_items (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   type content_type NOT NULL,
+  slot content_slot NOT NULL DEFAULT 'content',
   
   category_id UUID
     REFERENCES categories(id)

@@ -11,22 +11,26 @@ import {
 import { buildSeoMetadata } from '@/src/helpers/BuildSeoMetadata';
 import FeaturedContent from '@/src/helpers/FeaturedContent';
 
+export async function generateMetadata() {
+  const content = {
+    title: 'Portal Dia de Campo',
+    seo_title: 'Portal Dia de Campo',
+    seo_description: 'Notícias, preços CEASA atualizados diariamente, conteúdo técnico e oportunidades comerciais. Tudo em um único portal.',
+    canonical_url: '/',
+    og_image_url: '',
+  }
+
+  return buildSeoMetadata(content)
+}
+
 export default async function Home() {
   const heroItems = await FeaturedContent.getHomeHeros();
   const featuredNews = await FeaturedContent.getNews();
   const ceasaItems = await FeaturedContent.getCeasaPrices();
   const podcastList = await FeaturedContent.getPodcasts();
   const mainPodcast = await FeaturedContent.getMainPodcast();
-  
-  const content = {
-    title: 'Portal Dia de Campo',
-    seo_title: 'Portal Dia de Campo',
-    seo_description: 'Notícias, preços CEASA atualizados diariamente, conteúdo técnico e oportunidades comerciais. Tudo em um único portal.',
-    canonical_url: '',
-    og_image_url: '',
-  }
-
-  buildSeoMetadata(content)
+  const featuredClassifieds = await FeaturedContent.getClassifieds();
+  const technicalContent = await FeaturedContent.getTechnicalContent();
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center">
@@ -47,7 +51,7 @@ export default async function Home() {
         sectionSubtitle="Atualizado diariamente • CEASA-MG / SP / RJ"
         bgColor="--color-light-green"
       >
-        <CeasaPreview ceasaItems={ceasaItems}/>
+        <CeasaPreview ceasaItems={ceasaItems} />
       </HomeSection>
       <HomeSection
         sectionLink="/podcast"
@@ -66,7 +70,7 @@ export default async function Home() {
         sectionLinkTitle="Ver todos os classificados"
         enableAutoScroll
       >
-        <ClassifiedsPreview />
+        <ClassifiedsPreview featuredClassifieds={featuredClassifieds} />
       </HomeSection>
       <HomeSection
         sectionTitle="Conteúdo Técnico"
@@ -76,7 +80,7 @@ export default async function Home() {
         bgColor="--color-light-green"
         enableAutoScroll
       >
-        <TechnicalContentPreview />
+        <TechnicalContentPreview technicalContent={technicalContent} />
       </HomeSection>
 
       <PartnerPreview />

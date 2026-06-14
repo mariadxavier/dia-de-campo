@@ -26,7 +26,7 @@ export { default as TechnicalContentArticle } from "./TechnicalContentArticle";
 export { default as PartnerPreview } from "./PartnerPreview";
 export { default as KPICard } from "./KPICard";
 export { default as RowNavigation } from "./RowNavigation";
-export { default as NewsHighlights } from "./NewsHighlights";
+export { default as NewsPageHeader } from "./NewsPageHeader";
 export { default as NewsFilterTabs } from "./NewsFilterTabs";
 export { default as NewsFeaturedCard } from "./NewsFeaturedCard";
 export { default as NewsArticleRow } from "./NewsArticleRow";

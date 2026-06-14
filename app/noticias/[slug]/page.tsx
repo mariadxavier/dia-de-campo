@@ -5,23 +5,27 @@ import {
   NewsDetailRecommendations,
 } from '@/src/components';
 import { generateContentMetadata } from '@/src/helpers/BuildSeoMetadata';
-import { getNewsBySlug } from '@/src/server/services/newsService';
+import { getNewsByCategory, getNewsBySlug } from '@/src/server/services/newsService';
 import { notFound } from 'next/navigation';
 
-interface PageProps {
+type PageProps = {
   params: Promise<{
     slug: string;
   }>;
 }
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  return generateContentMetadata(() => getNewsBySlug(slug));
+}
+
 export default async function NewsDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const newsDetail = await getNewsBySlug(slug);
-
-  generateContentMetadata(() => getNewsBySlug(slug));
-
   if (!newsDetail) {
     return notFound();
   }
+  
+  const newsList = await getNewsByCategory(newsDetail.categoryName, 3, 0);
 
   return (
     <>
@@ -38,7 +42,8 @@ export default async function NewsDetailPage({ params }: PageProps) {
         imgAlt={newsDetail.seoTitle || newsDetail.title}
       />
       <NewsDetailContent content={newsDetail.content} />
-      <NewsDetailRecommendations />
+      {newsList &&
+        <NewsDetailRecommendations recommended={newsList} />}
     </>
   );
 }

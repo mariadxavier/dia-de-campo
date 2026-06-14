@@ -40,7 +40,7 @@ export async function pingRedis(): Promise<boolean> {
   }
 
   try {
-    if (client.status !== "ready") {
+    if (client.status === "wait") {
       await client.connect();
     }
     const result = await client.ping();

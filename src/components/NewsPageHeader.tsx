@@ -3,7 +3,7 @@ import { BreadcrumbItem } from './Breadcrumb';
 import NewsPageData from '@/src/helpers/NewsPageData';
 import PageHeader from './PageHeader';
 
-export default function NewsHighlights() {
+export default function NewsPageHeader() {
   const BREADCRUMB: BreadcrumbItem[] = [{ label: 'Home', href: '/' }, { label: 'Notícias' }];
   const searchTags = NewsPageData.getSearchTags();
   function handleSearch() {

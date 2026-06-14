@@ -28,8 +28,8 @@ export default function PodcastAudioPlayer({
   if (embedKind === "spotify" || embedKind === "youtube") {
     const frameClass =
       embedKind === "spotify"
-        ? "h-[152px] w-full max-w-[232px] shrink-0 overflow-hidden rounded-sm border border-white/90 bg-[#b0b3b8]"
-        : "aspect-video w-full max-w-[min(100%,320px)] shrink-0 overflow-hidden rounded-sm border border-white/90 bg-black";
+        ? "h-[152px] w-full shrink-0 overflow-hidden rounded-sm bg-[#b0b3b8]"
+        : "aspect-video w-full shrink-0 overflow-hidden rounded-sm bg-black";
 
     return (
       <div className={`${frameClass} ${className}`}>

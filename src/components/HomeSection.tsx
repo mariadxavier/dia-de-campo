@@ -1,10 +1,9 @@
 'use client';
 import { SectionTitle } from '@/src/components';
-import Highlights from '@/src/helpers/FeaturedContent';
 import { type ReactNode, useEffect } from 'react';
 import { useAutoHorizontalScroll } from '../context/AutoHorizontalScroll';
 
-const DEFAULT_CHILDREN_SCROLL_MS = Highlights.getHighlightPlayInterval();
+const DEFAULT_CHILDREN_SCROLL_MS = 10000;
 
 type HomeSectionProps = {
   sectionTitle: string;

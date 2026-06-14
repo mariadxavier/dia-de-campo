@@ -50,6 +50,7 @@ VALUES
 
 INSERT INTO content_items (
   type,
+  slot,
   category_id,
   title,
   slug,
@@ -67,6 +68,7 @@ INSERT INTO content_items (
 )
 SELECT
   data.type::content_type,
+  data.slot::content_slot,
   c.id,
   data.title,
   data.slug,
@@ -86,6 +88,7 @@ FROM (
 
   (
     'news',
+    'content',
     'mercado',
     'Mercado de tecnologia registra crescimento no primeiro semestre',
     'mercado-tecnologia-crescimento-primeiro-semestre',
@@ -127,6 +130,7 @@ FROM (
 ),
 (
   'news',
+  'hero',
   'tecnologia',
   'Nova solução logística reduz tempo de entrega em grandes centros',
   'nova-solucao-logistica-reduz-tempo-entrega',
@@ -168,6 +172,7 @@ FROM (
 ),
 (
   'news',
+  'hero',
   'tecnologia',
   'Setor de energia investe em fontes renováveis para próxima década',
   'setor-energia-fontes-renovaveis-proxima-decada',
@@ -208,7 +213,8 @@ FROM (
   3
 ),
 (
-  'hero',
+  'news',
+  'content',
   'tecnologia',
   'Pesquisa aponta aumento no consumo de conteúdo digital',
   'pesquisa-aumento-consumo-conteudo-digital',
@@ -249,7 +255,8 @@ FROM (
   4
 ),
 (
-  'hero',
+  'technical',
+  'content',
   'tecnologia',
   'Empresas apostam em inteligência artificial para otimizar processos',
   'empresas-apostam-inteligencia-artificial-otimizar-processos',
@@ -291,6 +298,7 @@ FROM (
 ),
   (
     'technical',
+    'hero',
     'tecnologia',
     'Como funciona SSR no Next.js',
     'como-funciona-ssr-nextjs',
@@ -307,6 +315,7 @@ FROM (
   ),
   (
     'technical',
+    'content',
     'tecnologia',
     'Introdução ao PostgreSQL',
     'introducao-postgresql',
@@ -323,6 +332,7 @@ FROM (
   ),
   (
     'technical',
+    'content',
     'tecnologia',
     'Docker para desenvolvimento web',
     'docker-desenvolvimento-web',
@@ -360,6 +370,7 @@ JOIN categories c
 
 INSERT INTO podcast_episodes (
   episode_number,
+  episode_time_duration,
   title,
   slug,
   description,
@@ -377,6 +388,7 @@ VALUES
 
 (
   '001',
+  '3',
   'O futuro da inteligência artificial',
   'podcast-futuro-ia',
   'Discussão sobre IA e inovação.',
@@ -393,6 +405,7 @@ VALUES
 
 (
   '002',
+  '5',
   'Política e eleições em 2026',
   'podcast-eleicoes-2026',
   'Especialistas analisam cenário político.',
@@ -409,6 +422,7 @@ VALUES
 
 (
   '003',
+  '8',
   'Economia global e criptomoedas',
   'podcast-economia-cripto',
   'Mercado financeiro em debate.',
@@ -425,6 +439,7 @@ VALUES
 
 (
   '004',
+  '5',
   'Champions League em análise',
   'podcast-champions-league',
   'Resumo da rodada europeia.',
@@ -441,6 +456,7 @@ VALUES
 
 (
   '005',
+  '5',
   'Cinema brasileiro em alta',
   'podcast-cinema-brasileiro',
   'Discussão sobre audiovisual nacional.',
@@ -457,6 +473,7 @@ VALUES
 
 (
   '006',
+  '5',
   'Cloud computing para iniciantes',
   'podcast-cloud-computing',
   'Introdução à computação em nuvem.',
@@ -473,6 +490,7 @@ VALUES
 
 (
   '007',
+  '5',
   'SEO moderno para aplicações web',
   'podcast-seo-moderno',
   'Técnicas atuais de SEO.',

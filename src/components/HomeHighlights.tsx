@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Chip, Image, LinkButton } from '@/src/components';
 import ArrowLeft from '@/src/assets/icons/arrow-left-icon.svg';
 import Arrow from '@/src/assets/icons/arrow-icon.svg';
-import FeaturedContent from '../helpers/FeaturedContent';
 import { NewsListItem } from '../types';
 
 type CarouselArrowProps = {
@@ -60,10 +59,9 @@ function CarouselDots({ total, currentIndex, onSelect }: CarouselDotsProps) {
 }
 
 export default function HomeHighligths({heroItems}: {heroItems: NewsListItem[]}) {
-  const AUTO_PLAY_INTERVAL_MS = FeaturedContent.getFeaturedContentPlayInterval();
+  const AUTO_PLAY_INTERVAL_MS = 10000;
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentItem = heroItems[currentIndex];
-
   function handlePrevious() {
     setCurrentIndex((previousIndex) => {
       if (previousIndex === 0) return heroItems.length - 1;

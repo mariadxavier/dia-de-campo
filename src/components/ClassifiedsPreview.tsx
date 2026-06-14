@@ -1,9 +1,12 @@
-import FeaturedContent from '../helpers/FeaturedContent';
+import { ClassifiedListItem } from '../types';
 import ClassifiedsArticle from './ClassifiedsArticle';
 import LinkButton from './LinkButton';
 
-export default function ClassifiedsPreview() {
-  const featuredClassifieds = FeaturedContent.getClassifieds();
+export default function ClassifiedsPreview({
+  featuredClassifieds,
+}: {
+  featuredClassifieds: ClassifiedListItem[];
+}) {
   return (
     <div className="flex flex-col w-full gap-5 md:gap-6 px-0.5">
       <div className="flex flex-col md:flex-row w-full gap-5 md:gap-6">

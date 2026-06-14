@@ -1,4 +1,6 @@
 import { getRedisClient } from "@/src/lib/redis/client";
+import { Logger } from "@/src/utils/logger";
+import { ErrorHandler } from "@/src/utils/ErrorHandler";
 
 function getDefaultTtl(): number {
   const ttl = Number(process.env.CACHE_TTL_SECONDS ?? 300);
@@ -14,27 +16,36 @@ export async function getCached<T>(
 
   if (redis) {
     try {
-      if (redis.status !== "ready") {
+      if (redis.status === "wait") {
         await redis.connect();
       }
 
       const cached = await redis.get(key);
 
       if (cached) {
+        Logger.info(`[cache] HIT: ${key}`);
         return JSON.parse(cached) as T;
       }
+      
+      Logger.info(`[cache] MISS: ${key} - Fetching new data`);
     } catch (error) {
-      console.warn("[cache] Read failed, bypassing cache:", error);
+      Logger.warn(`[cache] Read failed, bypassing cache for key ${key}:`, error);
     }
   }
 
-  const value = await fetcher();
+  let value: T;
+  try {
+    value = await fetcher();
+  } catch (error) {
+    return ErrorHandler.handle(error, `getCached fetcher for key ${key}`) as T;
+  }
 
-  if (redis) {
+  if (redis && value !== undefined && value !== null) {
     try {
       await redis.set(key, JSON.stringify(value), "EX", ttlSeconds);
+      Logger.info(`[cache] POPULATED: ${key}`);
     } catch (error) {
-      console.warn("[cache] Write failed:", error);
+      Logger.warn(`[cache] Write failed for key ${key}:`, error);
     }
   }
 

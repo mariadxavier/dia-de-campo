@@ -4,9 +4,8 @@ import { useState } from 'react';
 import FilterIcon from '@/src/assets/icons/filter-icon.svg';
 import { Image } from '@/src/components';
 
-export default function NewsFilterTabs() {
+export default function NewsFilterTabs({ totalResults }: { totalResults: number }) {
   const categoryTabs = NewsPageData.getCategoryTabs();
-  const totalResults = NewsPageData.getTotalResults();
   const TIME_FILTERS = [
     { label: 'Hoje', value: 'hoje' },
     { label: 'Esta semana', value: 'esta-semana' },

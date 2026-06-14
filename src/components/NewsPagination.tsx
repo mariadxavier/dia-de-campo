@@ -1,22 +1,23 @@
 'use client';
-import { useState } from 'react';
-import NewsPageData from '../helpers/NewsPageData';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { Image } from '@/src/components';
 import ArrowIcon from '../assets/icons/arrow-icon.svg';
 
 type NewsPaginationProps = {
-  onLoadMore?: () => void;
-  onPageChange?: (page: number) => void;
+  currentPage: number;
+  totalPages: number;
 };
 
-export default function NewsPagination({ onLoadMore, onPageChange }: NewsPaginationProps) {
-  const totalPages = NewsPageData.getTotalPages();
-  const [currentPage, setCurrentPage] = useState(1);
+export default function NewsPagination({ currentPage, totalPages }: NewsPaginationProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   function goToPage(page: number) {
     if (page < 1 || page > totalPages) return;
-    setCurrentPage(page);
-    onPageChange?.(page);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', page.toString());
+    router.push(`${pathname}?${params.toString()}`);
   }
 
   function getVisiblePages(): (number | '...')[] {
@@ -39,12 +40,13 @@ export default function NewsPagination({ onLoadMore, onPageChange }: NewsPaginat
 
   return (
     <div className="flex flex-col items-center gap-4 py-8 px-5">
-      <button
-        id="news-load-more"
-        type="button"
-        onClick={onLoadMore}
-        className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full border-2 border-(--color-green) text-(--color-green) text-sm font-semibold hover:bg-(--color-green) hover:text-(--color-white) transition-colors cursor-pointer"
-      >
+      {currentPage < totalPages && (
+        <button
+          id="news-load-more"
+          type="button"
+          onClick={() => goToPage(currentPage + 1)}
+          className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full border-2 border-(--color-green) text-(--color-green) text-sm font-semibold hover:bg-(--color-green) hover:text-(--color-white) transition-colors cursor-pointer"
+        >
         Carregar mais notícias
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="mt-0.5">
           <path
@@ -55,7 +57,8 @@ export default function NewsPagination({ onLoadMore, onPageChange }: NewsPaginat
             strokeLinejoin="round"
           />
         </svg>
-      </button>
+        </button>
+      )}
 
       <nav className="flex items-center gap-1" aria-label="Paginação">
         <button
