@@ -6,10 +6,10 @@ import PageHeader from './PageHeader';
 export default function NewsPageHeader() {
   const BREADCRUMB: BreadcrumbItem[] = [{ label: 'Home', href: '/' }, { label: 'Notícias' }];
   const searchTags = NewsPageData.getSearchTags();
-  function handleSearch() {
+  const handleSearch = (query: string) => {
     // TODO: LIDAR COM BUSCA
   }
-  
+
   return (
     <PageHeader
       title="Notícias do Hortifruti"

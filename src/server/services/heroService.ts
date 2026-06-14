@@ -8,7 +8,7 @@ import type { NewsDetail, NewsListItem } from "@/src/types";
 export async function listHomeHeros(
   offset: number,
 ): Promise<NewsListItem[]> {
-  return getCached(cacheKeys.newsList(10, offset), async () => {
+  return getCached(cacheKeys.homeHeros(10, offset), async () => {
     const [rows, featuredPriorityById] = await Promise.all([
       findPublishedContentByType(["news", "technical"], 10, offset, "hero"),
       findActiveFeaturedPriorityMapForContentType(["news", "technical"]),

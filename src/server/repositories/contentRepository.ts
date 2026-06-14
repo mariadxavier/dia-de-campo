@@ -20,15 +20,18 @@ export async function findPublishedContentByType(
   type: ContentType | ContentType[],
   limit: number,
   offset: number,
-  slot: SlotType = 'content',
+  slot: SlotType | 'all' = 'all',
 ): Promise<ContentItemRow[]> {
   const supabase = getSupabaseAdmin();
 
   let query = supabase
     .from("content_items")
     .select(CONTENT_SELECT)
-    .eq("is_published", true)
-    .eq("slot", slot);
+    .eq("is_published", true);
+
+  if (slot !== 'all') {
+    query = query.eq("slot", slot);
+  }
 
   if (Array.isArray(type)) {
     query = query.in("type", type);
@@ -42,9 +45,10 @@ export async function findPublishedContentByType(
     throw new Error(error.message);
   }
 
-  const rows = (data ?? []) as ContentItemRow[];
+  let rows = (data ?? []) as ContentItemRow[];
   const featuredPriorityById =
     await findActiveFeaturedPriorityMapForContentType(type);
+
   const sorted = sortByFeaturedThenPublished(rows, featuredPriorityById);
 
   return paginate(sorted, limit, offset);

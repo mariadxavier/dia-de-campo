@@ -42,4 +42,5 @@ export { default as NewsContentQuote } from "./NewsContentQuote";
 export { default as NewsDetailCoverImage } from "./NewsDetailCoverImage";
 export { default as NewsContentMedia } from "./NewsContentMedia";
 export { default as NewsDetailRecommendations } from "./NewsDetailRecommendations";
+export { default as TechnicalContentPageHeader } from "./TechnicalContentPageHeader";
 

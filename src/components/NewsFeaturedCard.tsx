@@ -6,17 +6,17 @@ import {
 } from '@/src/helpers/NewsPageData';
 import Chip from './Chip';
 import Button from './Button';
-import type { NewsListItem } from '@/src/types';
+import type { NewsListItem, TechnicalContentListItem } from '@/src/types';
 
-export default function NewsFeaturedCard({ article }: { article: NewsListItem }) {
+export default function NewsFeaturedCard({ article }: { article: NewsListItem | TechnicalContentListItem }) {
   const categoryName = article.categoryName ?? 'Notícia';
   const badgeColor = getCategoryBadgeColor(categoryName);
   const readTime = '5';
 
   return (
-    <Link href={`/noticias/${article.slug}`} className="block group">
+    <Link href={`/${article.type === 'news' ? 'noticias' : 'conteudo-tecnico'}/${article.slug}`} className="block group">
       <article className="flex flex-col md:flex-row rounded-2xl overflow-hidden bg-(--color-white) shadow-sm hover:shadow-md transition-shadow">
-        <div className="relative w-full lg:w-3/4 lg:max-h-[400px] xl:w-1/2 aspect-[16/10] overflow-hidden">
+        <div className="relative w-full md:w-2/3 lg:max-h-[400px] xl:w-1/2 aspect-[16/10] overflow-hidden">
           <Image
             src={article.coverImage}
             alt={article.title}
@@ -46,7 +46,7 @@ export default function NewsFeaturedCard({ article }: { article: NewsListItem })
             <span>{readTime} min</span>
           </div>
           <Button
-            title="Ler matéria completa →"
+            title={`Ler ${article.type === 'news' ? 'matéria completa' : 'artigo completo'} →`}
             className="hidden md:block bg-(--color-green) w-fit rounded-full text-(--color-white) py-2.5 px-5 text-xs"
           />
         </div>

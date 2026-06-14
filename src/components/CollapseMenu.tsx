@@ -17,7 +17,7 @@ export default function CollapseMenu({ items }: NavLinkProps) {
     setIsMenuExpanded(!isMenuExpanded);
   };
   return (
-    <div className="md:hidden relative flex items-center">
+    <div className="lg:hidden relative flex items-center">
       <ActionButton action={toggleMenuExpanded}>
         <Image src={MenuIcon.src} alt={"Menu"} width={24} height={24} />
       </ActionButton>

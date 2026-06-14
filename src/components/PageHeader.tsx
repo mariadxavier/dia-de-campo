@@ -11,8 +11,9 @@ type PageHeaderProps = {
   breadcrumb: BreadcrumbItem[];
   hasSearch?: boolean;
   searchTags?: string[];
-  handleSearch: () => void;
+  handleSearch: (query: string) => void;
   secondarySection?: ReactNode;
+  searchPlaceholder?: string;
 };
 
 export default function PageHeader({
@@ -23,12 +24,13 @@ export default function PageHeader({
   handleSearch,
   secondarySection,
   searchTags,
+  searchPlaceholder,
 }: PageHeaderProps) {
   const [searchQuery, setSearchQuery] = useState('');
 
   function handleKeyDown(e: React.KeyboardEvent) {
     if (e.key === 'Enter' && hasSearch) {
-      handleSearch?.();
+      handleSearch?.(searchQuery);
     }
   }
 
@@ -55,7 +57,7 @@ export default function PageHeader({
               <input
                 id="news-search-input"
                 type="text"
-                placeholder="Buscar notícias..."
+                placeholder={searchPlaceholder || "Buscar..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
@@ -64,8 +66,8 @@ export default function PageHeader({
               <button
                 id="news-search-button"
                 type="button"
-                onClick={handleSearch}
-                aria-label="Buscar notícias"
+                onClick={() => handleSearch?.(searchQuery)}
+                aria-label="Buscar"
                 className="w-11 h-11 md:w-fit md:px-7 rounded-full bg-(--color-green) flex items-center justify-center shrink-0 hover:bg-(--color-dark-green) cursor-pointer"
               >
                 <Image

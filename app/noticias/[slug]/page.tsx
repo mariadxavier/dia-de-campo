@@ -24,12 +24,13 @@ export default async function NewsDetailPage({ params }: PageProps) {
   if (!newsDetail) {
     return notFound();
   }
-  
+
   const newsList = await getNewsByCategory(newsDetail.categoryName, 3, 0);
 
   return (
     <>
       <NewsDetailHeader
+        type='news'
         slug={slug}
         title={newsDetail.title}
         shortDescription={newsDetail.shortDescription}

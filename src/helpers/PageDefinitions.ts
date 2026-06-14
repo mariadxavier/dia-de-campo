@@ -41,7 +41,7 @@ class PageDefinitions {
       type: "institutional",
       href: "/conteudo-tecnico",
       name: "Conteúdo Técnico",
-      showOnMenu: false,
+      showOnMenu: true,
     },
     {
       type: "institutional",

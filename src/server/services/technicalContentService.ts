@@ -1,6 +1,6 @@
 import { cacheKeys } from "@/src/lib/cache/keys";
 import { getCached } from "@/src/lib/cache/withCache";
-import { findPublishedContentBySlug, findPublishedContentByType } from "@/src/server/repositories/contentRepository";
+import { countPublishedContentByType, findPublishedContentByCategory, findPublishedContentBySlug, findPublishedContentByType } from "@/src/server/repositories/contentRepository";
 import { findActiveFeaturedPriorityMapForContentType } from "@/src/server/repositories/featuredPlacementRepository";
 import { mapToNewsDetail, mapToNewsListItem } from "@/src/server/mappers/contentMapper";
 import type { TechnicalContentDetail, TechnicalContentListItem } from "@/src/types";
@@ -31,3 +31,17 @@ export async function getTechnicalContentBySlug(
     return row ? mapToNewsDetail(row, featuredPriorityById) : null;
   });
 }
+
+export async function countTechnicalContent(): Promise<number> {
+  return getCached(cacheKeys.technicalList(1, 0) + "_count", async () => {
+    return countPublishedContentByType("technical");
+  });
+}
+
+export async function getTechnicalContentByCategory(category: string, limit: number, offset: number): Promise<TechnicalContentListItem[]> {
+  return getCached(cacheKeys.technicalList(limit, offset), async () => {
+    const content = await findPublishedContentByCategory(category, "technical", limit, offset);
+    return content.map(row => mapToNewsListItem(row));
+  }); 
+}
+

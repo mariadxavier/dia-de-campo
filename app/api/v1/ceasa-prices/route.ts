@@ -3,7 +3,7 @@ import { listCeasaPrices } from "@/src/server/services/ceasaPricesService";
 
 export async function GET() {
   try {
-    const data = await listCeasaPrices();
+    const data = await listCeasaPrices(50, 0);
     return jsonOk(data);
   } catch (error) {
     const message =

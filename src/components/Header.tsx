@@ -8,7 +8,7 @@ export default function Header() {
   const pages = PageDefnitions.getPagesToShowOnMenu();
 
   return (
-    <header className="bg-white w-full flex justify-between items-center py-3 px-5 gap-3 md:px-10 lg:px-30">
+    <header className="bg-white w-full flex justify-between items-center py-3 px-5 gap-3 md:px-8 lg:px-10 xl:px-30">
       <div className="flex gap-3 md:gap-8 items-center">
         <CollapseMenu items={pages} />
         <Link href={'/'}>

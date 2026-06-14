@@ -1,7 +1,9 @@
 import { Breadcrumb, BreadcrumbItem, Chip } from '@/src/components';
 import { DateHandler } from '../util/DateHandler';
+import { ContentType } from '../types';
 
 type NewsDetailHeaderProps = {
+  type: ContentType;
   slug: string;
   title: string;
   shortDescription: string;
@@ -10,6 +12,7 @@ type NewsDetailHeaderProps = {
   releaseDate: string | null;
 };
 export default function NewsDetailHeader({
+  type,
   slug,
   title,
   shortDescription,
@@ -23,12 +26,12 @@ export default function NewsDetailHeader({
       href: '/',
     },
     {
-      label: 'Notícias',
-      href: '/noticias',
+      label: type === 'news' ? 'Notícias' : 'Conteúdo Técnico',
+      href: type === 'news' ? '/noticias' : '/conteudo-tecnico',
     },
     {
       label: category || 'Notícia',
-      href: `/noticias/${slug}`,
+      href: type === 'news' ? `/noticias/${slug}` : `/conteudo-tecnico/${slug}`,
     },
   ];
   return (

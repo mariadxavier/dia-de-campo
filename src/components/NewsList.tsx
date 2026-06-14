@@ -6,7 +6,7 @@ export default function NewsList({ newsList }: { newsList: NewsListItem[] }) {
   const articles = newsList.slice(1);
 
   return (
-    <section className="flex flex-col gap-4 md:gap-8 py-9 px-5 md:p-8">
+    <section className="flex flex-col w-full gap-4 md:gap-8 py-9 px-5 md:p-8">
       <NewsFeaturedCard article={featuredCard} />
       <div className='flex flex-col gap-4 md:gap-8 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
         {articles.map((article) => (
