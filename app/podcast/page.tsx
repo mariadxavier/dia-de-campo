@@ -1,4 +1,4 @@
-import { PodcastList, PodcastPageHero } from "@/src/components";
+import { FeaturedPodcastSection, Pagination, PodcastList, PodcastPageHero } from "@/src/components";
 import { buildSeoMetadata } from "@/src/helpers/BuildSeoMetadata";
 import { countPodcastEpisodes, listPodcastEpisodes } from "@/src/server/services/podcastService";
 
@@ -13,11 +13,21 @@ export async function generateMetadata() {
 
   return buildSeoMetadata(content)
 }
-export default async function PodcastPage() {
+export default async function PodcastPage({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  const ITEMS_PER_PAGE = 6;
+  const pageStr = searchParams?.page;
+  const page = typeof pageStr === 'string' ? parseInt(pageStr, 10) : 1;
+  const currentPage = isNaN(page) || page < 1 ? 1 : page;
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   const [episodes, totalCount] = await Promise.all([
-    listPodcastEpisodes(6, 0),
+    listPodcastEpisodes(ITEMS_PER_PAGE, offset),
     countPodcastEpisodes(),
   ]);
+  const totalPages = Math.max(1, Math.ceil(totalCount / ITEMS_PER_PAGE));
   const FEATURED_EPISODE = episodes[0];
   const episodeList = episodes.slice(1);
   
@@ -31,7 +41,9 @@ export default async function PodcastPage() {
           perWeek: "1x",
         }}
       />
+      <FeaturedPodcastSection featuredEpisode={FEATURED_EPISODE} />
       <PodcastList episodeList={episodeList} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} colorTheme="--color-yellow"/>
     </div>
   );
 }

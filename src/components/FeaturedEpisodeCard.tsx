@@ -5,23 +5,8 @@ import Link from "next/link";
 import Chip from "./Chip";
 import Image from "./Image";
 import PlayerIcon from '@/src/assets/icons/player-icon.svg';
-
-function PlayIcon() {
-    return (
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
-            <path d="M5 3.5L14.5 9L5 14.5V3.5Z" fill="#13131F" />
-        </svg>
-    );
-}
-
-function PauseIcon() {
-    return (
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
-            <rect x="4" y="3" width="3.5" height="12" rx="1" fill="#13131F" />
-            <rect x="10.5" y="3" width="3.5" height="12" rx="1" fill="#13131F" />
-        </svg>
-    );
-}
+import PlayIcon from '@/src/assets/icons/play-icon.svg';
+import PauseIcon from '@/src/assets/icons/pause-icon.svg';
 
 function ImageIcon() {
     return (<svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden>
@@ -84,7 +69,7 @@ export default function FeaturedEpisodeCard({ episode }: { episode: PodcastEpiso
                     </h2>
                 </div>
                 <div className="w-11 h-11 lg:hidden shrink-0 whitespace-nowrap cursor-pointer">
-                    <Image src={PlayerIcon.src} alt="Tocar" width={44} height={44} className='w-full h-full' />
+                    <Image src={PlayerIcon.src} alt="Tocar" width={44} height={44} />
                 </div>
             </div>
 
@@ -117,7 +102,7 @@ export default function FeaturedEpisodeCard({ episode }: { episode: PodcastEpiso
                             aria-label="Abrir episódio"
                             className="w-11 h-11 rounded-full bg-(--color-yellow) flex items-center justify-center shrink-0 hover:brightness-90 active:scale-95 transition-all duration-150"
                         >
-                            <PlayIcon />
+                            <Image src={PlayerIcon.src} alt="Tocar" width={44} height={44} />
                         </Link>
                     ) : (
                         <>
@@ -136,7 +121,7 @@ export default function FeaturedEpisodeCard({ episode }: { episode: PodcastEpiso
                                 aria-label={playing ? "Pausar episódio" : "Reproduzir episódio"}
                                 className="w-11 h-11 rounded-full bg-(--color-yellow) flex items-center justify-center shrink-0 hover:brightness-90 active:scale-95 transition-all duration-150 cursor-pointer"
                             >
-                                {playing ? <PauseIcon /> : <PlayIcon />}
+                                {playing ? <Image src={PauseIcon.src} alt="Pause" width={20} height={20} /> : <Image src={PlayIcon.src} alt="Play" width={20} height={20} />}
                             </button>
                         </>
                     )}

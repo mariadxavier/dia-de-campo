@@ -1,7 +1,7 @@
 import {
   NewsFilterTabs,
   NewsList,
-  NewsPagination,
+  Pagination,
   NewsPageHeader
 } from '@/src/components';
 import { buildSeoMetadata } from '@/src/helpers/BuildSeoMetadata';
@@ -42,7 +42,7 @@ export default async function NewsPage({
       <NewsPageHeader />
       <NewsFilterTabs totalResults={totalCount} />
       <NewsList newsList={news} />
-      <NewsPagination currentPage={currentPage} totalPages={totalPages} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
     </div>
   );
 }
