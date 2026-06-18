@@ -2,6 +2,7 @@ import { getSupabaseAdmin } from "@/src/lib/supabase/server";
 
 import type {
   CeasaPriceRow,
+  CeasaProductOption,
 } from "@/src/types";
 
 const CEASA_SELECT = `
@@ -47,6 +48,37 @@ export async function findCeasaPrices(
   );
 }
 
+export async function findCeasaPricesByCeasaName(
+  limit: number,
+  offset: number,
+  ceasaName: string
+): Promise<CeasaPriceRow[]> {
+  const supabase =
+    getSupabaseAdmin();
+
+  const { data, error } =
+    await supabase
+      .from("ceasa_prices")
+      .select(CEASA_SELECT)
+      .eq(
+        "ceasa_name",
+        ceasaName,
+      )
+      .order("product_name")
+      .range(
+        offset,
+        offset + limit - 1,
+      );
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return (
+    (data ?? []) as CeasaPriceRow[]
+  );
+}
+
 export async function findCeasaPricesByProduct(
   productSlug: string,
 ): Promise<CeasaPriceRow[]> {
@@ -74,21 +106,33 @@ export async function findCeasaPricesByProduct(
   );
 }
 
-export async function findCeasaPricesByUF(
-  uf: string,
+export async function findCeasaPricesByCeasaAndProduct(
+  ceasaName: string,
+  productSlug: string,
+  limit: number,
+  offset: number,
 ): Promise<CeasaPriceRow[]> {
-  const supabase =
-    getSupabaseAdmin();
+  const supabase = getSupabaseAdmin();
 
   const { data, error } =
     await supabase
       .from("ceasa_prices")
       .select(CEASA_SELECT)
       .eq(
-        "uf",
-        uf.toUpperCase(),
+        "ceasa_name",
+        ceasaName,
       )
-      .order("product_name");
+      .eq(
+        "product_slug",
+        productSlug,
+      )
+      .order("daily_price", {
+        ascending: true,
+      })
+      .range(
+        offset,
+        offset + limit - 1,
+      );
 
   if (error) {
     throw new Error(error.message);
@@ -97,4 +141,65 @@ export async function findCeasaPricesByUF(
   return (
     (data ?? []) as CeasaPriceRow[]
   );
+}
+
+export async function findCeasaProductsByCeasaName(
+  ceasaName: string,
+  limit: number,
+  offset: number,
+): Promise<CeasaProductOption[]> {
+  const supabase =
+    getSupabaseAdmin();
+
+  const { data, error } =
+    await supabase
+      .from("ceasa_prices")
+      .select("product_name, product_slug")
+      .eq(
+        "ceasa_name",
+        ceasaName.toUpperCase(),
+      )
+      .order("product_name").range(
+        offset,
+        offset + limit - 1,
+      );
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return [
+    ...new Map(
+      (data ?? []).map((item) => [
+        item.product_slug,
+        {
+          product_name:
+            item.product_name,
+          product_slug:
+            item.product_slug,
+        },
+      ]),
+    ).values(),
+  ];
+}
+
+export async function findCeasaNames(): Promise<string[]> {
+  const supabase = getSupabaseAdmin();
+
+  const { data, error } = await supabase
+    .from("ceasa_prices")
+    .select("ceasa_name")
+    .order("ceasa_name");
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return [
+    ...new Set(
+      (data ?? []).map(
+        (item) => item.ceasa_name,
+      ),
+    ),
+  ];
 }

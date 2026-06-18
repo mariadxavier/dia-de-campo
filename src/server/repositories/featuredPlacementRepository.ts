@@ -1,6 +1,6 @@
 import { getSupabaseAdmin } from '@/src/lib/supabase/server';
 import { isPlacementActive } from '@/src/server/utils/sortWithFeatured';
-import { ErrorHandler } from '@/src/utils/ErrorHandler';
+import { ErrorHandler } from '@/src/util/ErrorHandler';
 import type { ContentType, FeaturedPlacementRow } from '@/src/types';
 
 const PLACEMENT_SELECT = `

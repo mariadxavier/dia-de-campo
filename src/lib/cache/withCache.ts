@@ -1,6 +1,6 @@
 import { getRedisClient } from "@/src/lib/redis/client";
-import { Logger } from "@/src/utils/logger";
-import { ErrorHandler } from "@/src/utils/ErrorHandler";
+import { Logger } from "@/src/util/Logger";
+import { ErrorHandler } from "@/src/util/ErrorHandler";
 
 function getDefaultTtl(): number {
   const ttl = Number(process.env.CACHE_TTL_SECONDS ?? 300);
@@ -26,7 +26,7 @@ export async function getCached<T>(
         Logger.info(`[cache] HIT: ${key}`);
         return JSON.parse(cached) as T;
       }
-      
+
       Logger.info(`[cache] MISS: ${key} - Fetching new data`);
     } catch (error) {
       Logger.warn(`[cache] Read failed, bypassing cache for key ${key}:`, error);

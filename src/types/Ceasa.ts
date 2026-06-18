@@ -35,3 +35,8 @@ export type CeasaPriceItem = {
 export type ExternalCeasaPrice = Omit<CeasaPriceRow, 'id' | 'created_at' | 'updated_at'>;
 
 export type ExternalCeasaPricesResponse = ExternalCeasaPrice[];
+
+export type CeasaProductOption = {
+  product_name: string;
+  product_slug: string;
+};

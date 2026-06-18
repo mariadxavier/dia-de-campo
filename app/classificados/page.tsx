@@ -1,8 +1,9 @@
+import PageHeader from "@/src/components/PageHeader";
+
 export default function ClassifiedsPage() {
-    return (
-      <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black ">
-        <h1>CLASSIFICADOS</h1>
-      </div>
-    );
-  }
-  
+  return (
+    <>
+      <PageHeader title="Classificados" description="Anuncie, encontre e negocie em um só lugar" breadcrumb={["Home", "Classificados"]} handleSearch={() => { }} />
+    </>
+  );
+}

@@ -48,3 +48,5 @@ export { default as FeaturedEpisodeCard } from "./FeaturedEpisodeCard";
 export { default as PodcastList } from "./PodcastList";
 export { default as EpisodeRow } from "./EpisodeRow";
 export { default as FeaturedPodcastSection } from "./FeaturedPodcastSection";
+export { default as CeasaBranchSelection } from "./CeasaBranchSelection";
+export { default as CeasaCotation } from "./CeasaCotation";
