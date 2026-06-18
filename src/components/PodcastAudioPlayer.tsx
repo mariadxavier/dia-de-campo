@@ -1,6 +1,6 @@
 "use client";
 import type { PodcastEmbedKind } from "@/src/types";
-import { toSpotifyEmbedUrl, toYouTubeEmbedUrl } from "@/src/util/PodcastEmbedUrl";
+import { toSpotifyEmbedUrl, toYouTubeEmbedUrl } from "@/src/util/PodcastEmbed";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type PodcastAudioPlayerProps = {
