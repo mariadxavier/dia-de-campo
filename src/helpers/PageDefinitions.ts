@@ -35,7 +35,7 @@ class PageDefinitions {
       type: "main",
       href: "/classificados",
       name: "Classificados",
-      showOnMenu: true,
+      showOnMenu: false,
     },
     {
       type: "institutional",
@@ -53,7 +53,7 @@ class PageDefinitions {
       type: "institutional",
       href: "/contato",
       name: "Contato",
-      showOnMenu: true,
+      showOnMenu: false,
     },
     {
       type: "institutional",

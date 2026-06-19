@@ -7,9 +7,11 @@ type PaginationProps = {
   currentPage: number;
   totalPages: number;
   colorTheme?: string;
+  hasScroll?: boolean;
+  hasLoadMoreButton?: boolean;
 };
 
-export default function Pagination({ currentPage, totalPages, colorTheme = '--color-green' }: PaginationProps) {
+export default function Pagination({ currentPage, totalPages, colorTheme = '--color-green', hasScroll = true, hasLoadMoreButton = true }: PaginationProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -18,7 +20,9 @@ export default function Pagination({ currentPage, totalPages, colorTheme = '--co
     if (page < 1 || page > totalPages) return;
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', page.toString());
-    router.push(`${pathname}?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`, {
+      scroll: hasScroll,
+    });
   }
 
   function getVisiblePages(): (number | '...')[] {
@@ -41,23 +45,23 @@ export default function Pagination({ currentPage, totalPages, colorTheme = '--co
 
   return (
     <div className="flex flex-col items-center gap-4 py-8 px-5">
-      {currentPage < totalPages && (
+      {((currentPage < totalPages) && hasLoadMoreButton) && (
         <button
           id="news-load-more"
           type="button"
           onClick={() => goToPage(currentPage + 1)}
           className={`w-fit px-5 flex items-center justify-center gap-2 py-3.5 rounded-full border-2 border-(${colorTheme}) text-(${colorTheme}) text-sm font-semibold hover:bg-(${colorTheme}) hover:text-(--color-white) transition-colors cursor-pointer`}
         >
-        Carregar mais
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="mt-0.5">
-          <path
-            d="M7 2v10M2 7l5 5 5-5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+          Carregar mais
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="mt-0.5">
+            <path
+              d="M7 2v10M2 7l5 5 5-5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
       )}
 
@@ -95,8 +99,8 @@ export default function Pagination({ currentPage, totalPages, colorTheme = '--co
               className={`
                 w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium transition-colors cursor-pointer
                 ${currentPage === page
-                    ? `bg-(${colorTheme}) text-(--color-white)`
-                    : `text-(--color-dark-gray) hover:bg-(--color-light-green) hover:text-(${colorTheme})`
+                  ? `bg-(${colorTheme}) text-(--color-white)`
+                  : `text-(--color-dark-gray) hover:bg-(--color-light-green) hover:text-(${colorTheme})`
                 }
               `}
             >

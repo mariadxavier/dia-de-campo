@@ -1,5 +1,3 @@
-import { ContentItemRow, CategoryRow } from '../types';
-
 const CATEGORY_COLOR_MAP: Record<string, `--color-${string}`> = {
   Mercado: '--color-green',
   Produção: '--color-green',

@@ -26,17 +26,17 @@ export async function listCeasaNames(): Promise<string[]> {
   });
 }
 
-export async function listProductNames(limit: number, offset: number, ceasaName: string,): Promise<CeasaProductOption[]> {
+export async function listCeasaProductNames(limit: number, offset: number, ceasaName: string,): Promise<CeasaProductOption[]> {
   return getCached(cacheKeys.ceasaProducts(ceasaName), async () => {
     const rows = await findCeasaProductsByCeasaName(ceasaName, limit, offset);
     return rows;
   });
 }
 
-export async function listCeasaPricesByCeasaNameAndProductSlug(limit: number, offset: number, ceasaName: string, productSlug: string): Promise<CeasaProductOption[]> {
+export async function listCeasaPricesByCeasaNameAndProductSlug(limit: number, offset: number, ceasaName: string, productSlug: string): Promise<CeasaPriceItem[]> {
   return getCached(cacheKeys.ceasaPricesByCeasaAndProduct(limit, offset, ceasaName, productSlug), async () => {
     const rows = await findCeasaPricesByCeasaAndProduct(ceasaName, productSlug, limit, offset);
-    return rows;
+    return rows.map((row) => mapToCeasaPriceItem(row));
   });
 }
 

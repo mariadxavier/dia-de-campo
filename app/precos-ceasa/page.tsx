@@ -1,11 +1,12 @@
-import { BreadcrumbItem, CeasaBranchSelection, CeasaCotation } from "@/src/components";
-// import PageHeader from "@/src/components/PageHeader";
+import { CeasaCotation, CeasaPageHeader, CeasaSelection } from "@/src/components";
 import { buildSeoMetadata } from "@/src/helpers/BuildSeoMetadata";
-import { listCeasaNames, listCeasaPrices } from "@/src/server/services/ceasaPricesService";
+import { listCeasaNames, listCeasaPrices, listCeasaPricesByCeasaNameAndProductSlug, listCeasaProductNames } from "@/src/server/services/ceasaPricesService";
 
 type Props = {
   searchParams: Promise<{
     ceasa?: string;
+    produto?: string;
+    page?: string;
   }>;
 };
 
@@ -23,19 +24,20 @@ export async function generateMetadata() {
 
 export default async function CeasaPricesPage({ searchParams }: Props) {
   const { ceasa } = await searchParams;
-  // const prices = await listCeasaPrices(20, 0, ceasa || undefined);
+  const { produto } = await searchParams;
   const branches = await listCeasaNames();
-  // const BREADCRUMB: BreadcrumbItem[] = [
-  //   { label: "Home", href: "/" },
-  //   { label: "Preços CEASA", href: "/precos-ceasa" }
-  // ];
-
+  const products = await listCeasaProductNames(50, 0, ceasa || 'AMA/BA - JUAZEIRO');
+  const finalProducts = [{ product_name: 'Todos os Produtos', product_slug: 'all' }, ...products]
+  const prices = produto ? await listCeasaPricesByCeasaNameAndProductSlug(210, 0, ceasa || 'AMA/BA - JUAZEIRO', produto) : await listCeasaPrices(210, 0, ceasa || 'AMA/BA - JUAZEIRO');
 
   return (
     <div className="border-t-4 border-(--color-yellow)">
-      {/* <PageHeader breadcrumb={BREADCRUMB} title="Preços CEASA" description="Cotações atualizadas por central de abastecimento, produto e categoria" hasSearch /> */}
-      <CeasaBranchSelection branches={branches} selectedBranch={ceasa || 'CEASAMINAS - BELO HORIZONTE'} />
-      <CeasaCotation />
+      <CeasaPageHeader />
+      <div className="flex flex-col md:flex-row gap-5 py-5 lg:max-w-2/3">
+        <CeasaSelection items={branches} selectedItem={ceasa || 'AMA/BA - JUAZEIRO'} searchParam="ceasa" label="Selecione a central" />
+        <CeasaSelection items={finalProducts} selectedItem={produto || 'all'} searchParam="produto" label="Selecione o produto" />
+      </div>
+      <CeasaCotation ceasaName={ceasa || 'AMA/BA - JUAZEIRO'} items={prices} />
     </div>
 
   );

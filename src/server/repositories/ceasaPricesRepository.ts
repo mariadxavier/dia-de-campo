@@ -114,25 +114,26 @@ export async function findCeasaPricesByCeasaAndProduct(
 ): Promise<CeasaPriceRow[]> {
   const supabase = getSupabaseAdmin();
 
-  const { data, error } =
-    await supabase
-      .from("ceasa_prices")
-      .select(CEASA_SELECT)
-      .eq(
-        "ceasa_name",
-        ceasaName,
-      )
-      .eq(
-        "product_slug",
-        productSlug,
-      )
-      .order("daily_price", {
-        ascending: true,
-      })
-      .range(
-        offset,
-        offset + limit - 1,
-      );
+  let query = supabase
+    .from("ceasa_prices")
+    .select(CEASA_SELECT)
+    .eq(
+      "ceasa_name",
+      ceasaName,
+    )
+    .order("product_name", {
+      ascending: true,
+    })
+    .range(
+      offset,
+      offset + limit - 1,
+    );
+
+  if (productSlug !== "all") {
+    query = query.eq("product_slug", productSlug);
+  }
+
+  const { data, error } = await query
 
   if (error) {
     throw new Error(error.message);

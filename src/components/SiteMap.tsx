@@ -10,17 +10,17 @@ export default function SiteMap() {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-around gap-6 text-(--color-gray) w-full">
+    <div className="flex justify-between md:justify-around gap-6 text-(--color-gray) w-full">
       {columns &&
         columns.map((column, idx) => (
-          <div key={idx} className="flex flex-col gap-2">
-            <h3 className="font-bold text-sm text-(--color-white)">{column.title}</h3>
+          <div key={idx} className="flex flex-col gap-4">
+            <h3 className="font-bold text-sm text-(--color-white) after:content-[''] relative after:absolute after:left-0 after:-bottom-2 after:h-1 after:w-8 after:rounded-full after:bg-(--color-green)">{column.title}</h3>
             <nav aria-label="Mapa do Site">
               <ul className="flex flex-col gap-2 font-xs">
                 {column.pages &&
                   column.pages.map((page, idx) => (
                     <li key={idx}>
-                      <Link href={page.href}>{page.name}</Link>
+                      <Link href={page.href} className='text-xs'>{page.name}</Link>
                     </li>
                   ))}
               </ul>
