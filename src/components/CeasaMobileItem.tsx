@@ -41,16 +41,16 @@ export default function CeasaMobileItem({
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <p className="text-xs text-gray-400">Preço anterior</p>
+          <p className="text-xs text-gray-400">Preço atual</p>
           <p className="mt-1 text-sm font-bold text-green-700">
-            {Formatter.currency(previousPrice)}
+            {Formatter.currency(currentPrice)}
           </p>
         </div>
 
         <div>
-          <p className="text-xs text-gray-400">Preço hoje</p>
+          <p className="text-xs text-gray-400">Preço anterior</p>
           <p className="mt-1 text-sm font-semibold">
-            {Formatter.currency(currentPrice)}
+            {Formatter.currency(previousPrice)}
           </p>
         </div>
       </div>

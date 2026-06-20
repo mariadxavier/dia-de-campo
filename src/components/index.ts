@@ -54,3 +54,6 @@ export { default as CeasaSelection } from "./CeasaSelection";
 export { default as CeasaMobileItem } from "./CeasaMobileItem";
 export { default as CollapseMenuButton } from "./CollapseMenuButton";
 export { default as CollapseMenuPartnerCard } from "./CollapseMenuPartnerCard";
+export { default as ContactModal } from "./ContactModal";
+export { default as WhatsappContactCard } from "./WhatsappContactCard";
+export { default as EmailContactCard } from "./EmailContactCard";

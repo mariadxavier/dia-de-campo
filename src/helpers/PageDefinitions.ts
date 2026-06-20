@@ -51,12 +51,6 @@ class PageDefinitions {
     },
     {
       type: "institutional",
-      href: "/contato",
-      name: "Contato",
-      showOnMenu: false,
-    },
-    {
-      type: "institutional",
       href: "/politica-privacidade",
       name: "Política de Privacidade",
       showOnMenu: false,

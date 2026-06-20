@@ -1,11 +1,14 @@
-import { CollapseMenu, Image, LinkButton, RowNavigation } from '@/src/components';
+"use client";
+import { Button, CollapseMenu, ContactModal, Image, RowNavigation } from '@/src/components';
 import Logo from '../assets/images/logo.svg';
 import SearchIcon from '../assets/icons/search-icon.svg';
 import PageDefnitions from '../helpers/PageDefinitions';
 import Link from 'next/link';
+import { useContactModal } from '../context/ContactModal';
 
 export default function Header() {
   const pages = PageDefnitions.getPagesToShowOnMenu();
+  const { isContactModalOpen, openContactModal, closeContactModal } = useContactModal();
 
   return (
     <header className="bg-white relative w-full flex justify-between items-center py-3 px-5 gap-3 md:px-10 lg:px-15 xl:px-30">
@@ -20,13 +23,12 @@ export default function Header() {
         <div>
           <Image src={SearchIcon.src} alt="Buscar" width={24} height={24} />
         </div>
-        <LinkButton
-          href={'/contato'}
+        <Button title='Anuncie'
           className="py-2 px-3.5 text-(--color-white) bg-(--color-green) rounded-full text-xs font-semibold md:py-2.5 md:px-5"
-        >
-          <p>Anuncie</p>
-        </LinkButton>
+          onClick={() => openContactModal()}
+        />
       </div>
+      <ContactModal isOpened={isContactModalOpen} onClose={closeContactModal} />
     </header>
   );
 }

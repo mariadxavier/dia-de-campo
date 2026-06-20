@@ -47,7 +47,7 @@ export default function NewsFeaturedCard({ article }: { article: NewsListItem | 
           </div>
           <Button
             title={`Ler ${article.type === 'news' ? 'matéria completa' : 'artigo completo'} →`}
-            className="hidden md:block bg-(--color-green) w-fit rounded-full text-(--color-white) py-2.5 px-5 text-xs"
+            className="hidden md:block bg-(--color-green) w-fit rounded-full text-(--color-white) py-2.5 px-5 text-xs uppercase"
           />
         </div>
       </article>
