@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Image } from "@/src/components";
 import SearchIcon from '@/src/assets/icons/search-icon.svg';
+import { useMediaQuery } from "../context/MediaQuery";
 
 type SearchResult = {
     href: string;
@@ -20,6 +21,9 @@ export default function HeaderSearch() {
     const [results, setResults] = useState<SearchResult[]>([]);
     const [isOpened, setIsOpened] = useState(false);
     const pathname = usePathname();
+    const desktopInputRef = useRef<HTMLInputElement>(null);
+    const mobileInputRef = useRef<HTMLInputElement>(null);
+    const { isSmScreen } = useMediaQuery();
 
     const clearSearch = () => {
         const params = new URLSearchParams(searchParams.toString());
@@ -71,9 +75,14 @@ export default function HeaderSearch() {
 
     useEffect(() => {
         const originalOverflow = document.body.style.overflow;
-
+        
         if (isOpened) {
             document.body.style.overflow = "hidden";
+            if (!isSmScreen) {
+                desktopInputRef.current?.focus();
+            } else {
+                mobileInputRef.current?.focus();
+            }
         }
 
         return () => {
@@ -95,6 +104,7 @@ export default function HeaderSearch() {
                     <Image src={SearchIcon.src} alt="Buscar" width={24} height={24} className="m-auto" />
                 </Button>
                 <input
+                    ref={desktopInputRef}
                     type="text"
                     className={`bg-transparent outline-none placeholder:text-(--color-gray) transition-all duration-300 ${isOpened ? 'w-full opacity-100' : 'w-0 opacity-0'}`}
                     placeholder="Buscar"
@@ -102,7 +112,6 @@ export default function HeaderSearch() {
                     value={searchQuery}
                     onKeyDown={handleKeyDown}
                     tabIndex={isOpened ? 0 : -1}
-                    autoFocus={isOpened}
                 />
             </div>
             {/* Mobile icon only */}
@@ -118,12 +127,12 @@ export default function HeaderSearch() {
                         <div className="flex gap-2 items-center text-xs border border-(--color-green) rounded-lg p-2">
                             🔍
                             <input
+                                ref={mobileInputRef}
                                 type="text"
                                 className="outline-none placeholder:text-(--color-gray)"
                                 placeholder="Buscar"
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 value={searchQuery} onKeyDown={handleKeyDown}
-                                autoFocus={isOpened}
                             />
                         </div>
                         <Link href={`?pesquisa=${searchQuery.toLocaleLowerCase()}`} className="font-semibold bg-(--color-yellow) text-(--color-dark-green) p-2 rounded-full text-xs">
