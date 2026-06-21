@@ -1,10 +1,11 @@
 import { syncCeasaPrices } from "@/src/server/services/syncCeasaPrices";
+import { ErrorHandler } from "@/src/util/ErrorHandler";
 
 async function bootstrap() {
   console.log(
     "[CEASA] Starting sync...",
   );
-
+  
   await syncCeasaPrices();
 
   console.log(
@@ -15,7 +16,7 @@ async function bootstrap() {
 }
 
 bootstrap().catch((error) => {
-  console.error(error);
+  ErrorHandler.handle(error, 'CEASA SYNC')
 
   process.exit(1);
 });

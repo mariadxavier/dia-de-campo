@@ -2,6 +2,7 @@ import type {
   ExternalCeasaPrice,
   ExternalCeasaPricesResponse,
 } from "@/src/types";
+import { ErrorHandler } from "@/src/util/ErrorHandler";
 
 function getCeasaApiUrl(): string {
   const url = process.env.CEASA_API_URL;
@@ -149,6 +150,7 @@ export async function fetchCeasaPricesFromApi(): Promise<ExternalCeasaPricesResp
   );
 
   if (!response.ok) {
+    ErrorHandler.handle(response, 'CEASA FETCH');
     throw new Error(
       `CEASA API responded with ${response.status}`,
     );

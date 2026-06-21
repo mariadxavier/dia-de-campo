@@ -8,6 +8,13 @@ type StaticPage = {
   description: string;
 };
 
+function normalize(str: string): string {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
 const STATIC_PAGES: StaticPage[] = [
   {
     name: "Notícias - Portal Dia de Campo",
@@ -49,13 +56,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json([]);
   }
 
-  const queryLower = query.toLocaleLowerCase();
+  const queryNorm = normalize(query);
 
   const matchedStatic = STATIC_PAGES.filter(
     (page) =>
-      page.name.toLocaleLowerCase().includes(queryLower) ||
-      page.description.toLocaleLowerCase().includes(queryLower) ||
-      page.category.toLocaleLowerCase().includes(queryLower)
+      normalize(page.name).includes(queryNorm) ||
+      normalize(page.description).includes(queryNorm) ||
+      normalize(page.category).includes(queryNorm)
   );
 
   const supabase = getSupabaseAdmin();
@@ -67,6 +74,16 @@ export async function GET(request: NextRequest) {
     .filter(Boolean)
     .map(term => `${term}:*`)
     .join(" & ");
+
+  const ilikeFilter = (col1: string, col2?: string) => {
+    const terms = [query, queryNorm].filter((v, i, arr) => arr.indexOf(v) === i);
+    const conditions = terms.flatMap(term =>
+      col2
+        ? [`${col1}.ilike.%${term}%`, `${col2}.ilike.%${term}%`]
+        : [`${col1}.ilike.%${term}%`]
+    );
+    return conditions.join(",");
+  };
 
   searchPromises.push(
     (async () => {
@@ -95,7 +112,7 @@ export async function GET(request: NextRequest) {
             .from("content_items")
             .select("title, slug, short_description, type")
             .eq("is_published", true)
-            .or(`title.ilike.%${query}%,short_description.ilike.%${query}%`)
+            .or(ilikeFilter("title", "short_description"))
             .limit(5);
           return (data ?? []).map((item) => ({
             name: item.title,
@@ -117,7 +134,7 @@ export async function GET(request: NextRequest) {
           .from("podcast_episodes")
           .select("title, slug, description")
           .eq("is_published", true)
-          .or(`title.ilike.%${query}%,description.ilike.%${query}%`)
+          .or(ilikeFilter("title", "description"))
           .limit(5);
 
         if (error) throw error;
@@ -142,7 +159,7 @@ export async function GET(request: NextRequest) {
           .select("title, slug, short_description")
           .eq("is_published", true)
           .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
-          .or(`title.ilike.%${query}%,short_description.ilike.%${query}%`)
+          .or(ilikeFilter("title", "short_description"))
           .limit(5);
 
         if (error) throw error;
@@ -165,7 +182,7 @@ export async function GET(request: NextRequest) {
         const { data, error } = await supabase
           .from("ceasa_prices")
           .select("product_name, product_slug, ceasa_name")
-          .or(`product_name.ilike.%${query}%,ceasa_name.ilike.%${query}%`)
+          .or(ilikeFilter("product_name", "ceasa_name"))
           .limit(10);
 
         if (error) throw error;
