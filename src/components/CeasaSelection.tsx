@@ -19,7 +19,7 @@ export default function CeasaSelection({ items, selectedItem, searchParam, label
             <h1 className="font-bold text-lg">{label}</h1>
             <div className="bg-(--color-light-green) px-4 py-2 border border-(--color-green) rounded-full text-(--color-green)">
                 <select
-                    className="w-full  border-none font-semibold text-[13px] outline-none"
+                    className="w-full border-none font-semibold text-[13px] outline-none"
                     value={selectedItem}
                     onChange={handleChange}
                 >

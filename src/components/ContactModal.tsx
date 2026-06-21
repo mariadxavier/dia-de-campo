@@ -3,8 +3,7 @@ import { useEffect } from "react";
 import Chip from "./Chip";
 import EmailContactCard from "./EmailContactCard";
 import WhatsappContactCard from "./WhatsappContactCard";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export default function ContactModal() {
   const searchParams = useSearchParams();
@@ -38,7 +37,7 @@ export default function ContactModal() {
   }
 
   return (
-    <div className="fixed top-0 left-0 p-5 flex items-center justify-center z-999 w-screen h-screen bg-black/50">
+    <div className="fixed top-0 left-0 p-5 flex items-center justify-center z-999 w-screen h-dvh bg-black/50">
       <div className={`flex flex-col gap-2 w-full bg-(--color-white) p-4 rounded-xl`}>
         <div className="w-full flex justify-between">
           <Chip text="comercial" textColor="--color-dark-green" />

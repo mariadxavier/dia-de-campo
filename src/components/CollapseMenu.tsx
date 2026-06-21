@@ -39,7 +39,7 @@ export default function CollapseMenu({ items }: NavLinkProps) {
     <div className="lg:hidden flex items-center">
       <CollapseMenuButton onClick={toggleMenuExpanded} />
       {isMenuExpanded &&
-        <div className="flex flex-col gap-3 w-screen h-screen absolute z-999 bg-(--color-white-shell) top-16 left-0 p-5 shadow-xl">
+        <div className="flex flex-col gap-3 w-screen h-dvh absolute z-999 bg-(--color-white-shell) top-16 left-0 p-5 shadow-xl">
           <h1 className="text-(--color-bg-blue) text-2xl font-bold">Menu</h1>
           <p className="text-sm text-(--color-gray)">Acesse as principais áreas do Dia de Campo</p>
           <nav>

@@ -1,9 +1,8 @@
-"use client";
-import { CollapseMenu, ContactModal, Image, RowNavigation } from '@/src/components';
+import { CollapseMenu, ContactModal, HeaderSearch, Image, RowNavigation } from '@/src/components';
 import Logo from '../assets/images/logo.svg';
-import SearchIcon from '../assets/icons/search-icon.svg';
 import PageDefnitions from '../helpers/PageDefinitions';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default function Header() {
   const pages = PageDefnitions.getPagesToShowOnMenu();
@@ -18,14 +17,16 @@ export default function Header() {
         <RowNavigation items={pages} />
       </div>
       <div className="flex gap-3 items-center">
-        <div>
-          <Image src={SearchIcon.src} alt="Buscar" width={24} height={24} />
-        </div>
+        <Suspense fallback={<div className="w-6 h-6 animate-pulse bg-gray-200 rounded-full" />}>
+          <HeaderSearch />
+        </Suspense>
         <Link href="?contato=true" scroll={false} className="py-2 px-3.5 text-(--color-white) bg-(--color-green) rounded-full text-xs font-semibold md:py-2.5 md:px-5">
           Anuncie
         </Link>
       </div>
-      <ContactModal />
+      <Suspense fallback={null}>
+        <ContactModal />
+      </Suspense>
     </header>
   );
 }

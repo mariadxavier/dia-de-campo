@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { getSupabaseAdmin } from "@/src/lib/supabase/server";
 import { fetchCeasaPricesFromApi } from "@/src/server/clients/ceasaApiClient";
+import { ErrorHandler } from "@/src/util/ErrorHandler";
 
 export async function syncCeasaPrices(): Promise<void> {
   const supabase = getSupabaseAdmin();
@@ -17,6 +18,7 @@ export async function syncCeasaPrices(): Promise<void> {
     });
 
   if (error) {
+    ErrorHandler.handle(error, "Erro ao sincronizar preços da CEASA", []);
     throw new Error(error.message);
   }
 }
