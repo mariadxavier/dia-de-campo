@@ -57,3 +57,4 @@ export { default as CollapseMenuPartnerCard } from "./CollapseMenuPartnerCard";
 export { default as ContactModal } from "./ContactModal";
 export { default as WhatsappContactCard } from "./WhatsappContactCard";
 export { default as EmailContactCard } from "./EmailContactCard";
+export { default as FooterComercialContact } from "./FooterComercialContact";

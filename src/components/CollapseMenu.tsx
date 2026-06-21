@@ -23,6 +23,18 @@ export default function CollapseMenu({ items }: NavLinkProps) {
     setIsMenuExpanded(false);
   }, [pathname]);
 
+  useEffect(() => {
+    if (isMenuExpanded) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isMenuExpanded]);
+
   return (
     <div className="lg:hidden flex items-center">
       <CollapseMenuButton onClick={toggleMenuExpanded} />
