@@ -43,3 +43,18 @@ export async function countPublishedPodcastEpisodes(): Promise<number> {
   return count ?? 0;
 }
 
+export async function findAllPublishedPodcastSlugs(): Promise<Array<{ slug: string; updated_at: string }>> {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("podcast_episodes")
+    .select("slug, updated_at")
+    .eq("is_published", true);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return (data ?? []) as Array<{ slug: string; updated_at: string }>;
+}
+
+

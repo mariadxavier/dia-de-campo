@@ -13,6 +13,7 @@ type PageProps = {
     slug: string;
   }>;
 }
+
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   return generateContentMetadata(() => getNewsBySlug(slug));

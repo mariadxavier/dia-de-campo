@@ -33,20 +33,20 @@ export default function ContactModal({
 
   return (
     <div className="absolute top-0 left-0 p-5 flex items-center justify-center z-999 w-screen h-screen bg-black/50">
-      <div className={`flex flex-col gap-4 w-full bg-(--color-white) p-5 rounded-xl`}>
+      <div className={`flex flex-col gap-2 w-full bg-(--color-white) p-4 rounded-xl`}>
         <div className="w-full flex justify-between">
           <Chip text="comercial" textColor="--color-dark-green" />
-          <button className="text-(--color-dark-green) bg-(--color-light-gray) rounded-full w-8 h-8" onClick={onClose}>X</button>
+          <button className="text-(--color-dark-green) bg-(--color-light-gray) rounded-full w-7 h-7" onClick={onClose}>X</button>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
           <h1 className="font-bold text-2xl">Contato para anúncios e publicidade editorial</h1>
           <p className="text-(--color-gray) text-sm">Escolha o canal para anunciar, destacar sua marca ou conversar com o time comercial do Dia de Campo</p>
           <div className="flex flex-col gap-3 md:flex-row">
             <WhatsappContactCard />
             <EmailContactCard />
           </div>
-          <section className="flex flex-col rounded-2xl bg-(--color-dark-blue) p-5 gap-3">
-            <p className="text-xs font-bold uppercase text-(--color-yellow)">
+          <section className="flex flex-col rounded-2xl bg-(--color-dark-blue) p-4 gap-2">
+            <p className="text-[11px] font-bold uppercase text-(--color-yellow)">
               Publicidade editorial
             </p>
 

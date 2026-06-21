@@ -143,3 +143,18 @@ export async function findClassifiedsByState(
 
   return (data ?? []) as ClassifiedRow[];
 }
+
+export async function findAllPublishedClassifiedSlugs(): Promise<Array<{ slug: string; updated_at: string }>> {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("classifieds")
+    .select("slug, updated_at")
+    .eq("is_published", true)
+    .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return (data ?? []) as Array<{ slug: string; updated_at: string }>;
+}

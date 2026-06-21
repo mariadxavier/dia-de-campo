@@ -45,12 +45,6 @@ class PageDefinitions {
     },
     {
       type: "institutional",
-      href: "/anuncie",
-      name: "Anuncie",
-      showOnMenu: false,
-    },
-    {
-      type: "institutional",
       href: "/politica-privacidade",
       name: "Política de Privacidade",
       showOnMenu: false,

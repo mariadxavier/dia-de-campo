@@ -123,3 +123,18 @@ export async function findPublishedContentByCategory(categoryName: string, type:
 
   return paginate(sorted, limit, offset);
 }
+
+export async function findAllPublishedContentSlugsAndTypes(): Promise<Array<{ slug: string; type: ContentType; updated_at: string }>> {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("content_items")
+    .select("slug, type, updated_at")
+    .eq("is_published", true);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return (data ?? []) as Array<{ slug: string; type: ContentType; updated_at: string }>;
+}
+

@@ -1,4 +1,6 @@
 export default function WhatsAppContactCard() {
+  const phoneNumber = process.env.NEXT_PUBLIC_COMERCIAL_PHONE_NUMBER;
+
   return (
     <section className="rounded-xl border border-green-100 bg-(--color-light-green) p-4">
       <div className="flex gap-2">
@@ -18,7 +20,7 @@ export default function WhatsAppContactCard() {
       </div>
 
       <a
-        href={`https://wa.me/${process.env.COMERCIAL_PHONE_NUMBER}`}
+        href={`https://wa.me//${phoneNumber}`}
         target="_blank"
         rel="noopener noreferrer"
         className="mt-4 flex h-11 w-full items-center justify-center rounded-full bg-(--color-dark-green) text-[13px] font-semibold text-white transition-opacity hover:opacity-90"
