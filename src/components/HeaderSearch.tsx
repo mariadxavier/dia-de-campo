@@ -24,9 +24,21 @@ export default function HeaderSearch() {
     const desktopInputRef = useRef<HTMLInputElement>(null);
     const mobileInputRef = useRef<HTMLInputElement>(null);
     const { isSmScreen } = useMediaQuery();
+    const params = new URLSearchParams(searchParams.toString());
+
+    const handleSearch = () => {
+        params.set(
+            "pesquisa",
+            searchQuery,
+        );
+
+        router.replace(
+            `${pathname}?${params.toString()}`,
+            { scroll: false }
+        );
+    }
 
     const clearSearch = () => {
-        const params = new URLSearchParams(searchParams.toString());
         params.delete("pesquisa");
         router.replace(`?${params.toString()}`, { scroll: false });
     }
@@ -38,18 +50,8 @@ export default function HeaderSearch() {
     }
 
     const handleRedirect = (href: string) => {
-        setIsOpened(false);
         onClose();
         router.push(href);
-    }
-
-    function handleKeyDown(e: React.KeyboardEvent) {
-        if (e.key === 'Enter' && searchQuery.length > 0) {
-            router.push(`/?pesquisa=${searchQuery.toLocaleLowerCase()}`);
-        }
-        if (e.key === 'Escape') {
-            onClose();
-        }
     }
 
     useEffect(() => {
@@ -75,7 +77,7 @@ export default function HeaderSearch() {
 
     useEffect(() => {
         const originalOverflow = document.body.style.overflow;
-        
+
         if (isOpened) {
             document.body.style.overflow = "hidden";
             if (!isSmScreen) {
@@ -90,12 +92,6 @@ export default function HeaderSearch() {
         };
     }, [isOpened]);
 
-    useEffect(() => {
-        if (searchQuery.length <= 0) {
-            clearSearch();
-        }
-    }, [searchQuery]);
-
     return (
         <div>
             {/* Desktop inline search bar */}
@@ -103,16 +99,23 @@ export default function HeaderSearch() {
                 <Button onClick={() => setIsOpened(!isOpened)} className='flex items-center outline-none shrink-0'>
                     <Image src={SearchIcon.src} alt="Buscar" width={24} height={24} className="m-auto" />
                 </Button>
-                <input
-                    ref={desktopInputRef}
-                    type="text"
-                    className={`bg-transparent outline-none placeholder:text-(--color-gray) transition-all duration-300 ${isOpened ? 'w-full opacity-100' : 'w-0 opacity-0'}`}
-                    placeholder="Buscar"
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    value={searchQuery}
-                    onKeyDown={handleKeyDown}
-                    tabIndex={isOpened ? 0 : -1}
-                />
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        if (!searchQuery.trim()) return;
+                        handleSearch();
+                    }}
+                >
+                    <input
+                        ref={desktopInputRef}
+                        type="text"
+                        className={`bg-transparent outline-none placeholder:text-(--color-gray) transition-all duration-300 ${isOpened ? 'w-full opacity-100' : 'w-0 opacity-0'}`}
+                        placeholder="Buscar"
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        value={searchQuery}
+                        tabIndex={isOpened ? 0 : -1}
+                    />
+                </form>
             </div>
             {/* Mobile icon only */}
             <Button onClick={() => setIsOpened(true)} className='flex items-center outline-none md:hidden'>
@@ -126,14 +129,23 @@ export default function HeaderSearch() {
                     <div className="flex items-center justify-between w-full md:hidden">
                         <div className="flex gap-2 items-center text-xs border border-(--color-green) rounded-lg p-2">
                             🔍
-                            <input
-                                ref={mobileInputRef}
-                                type="text"
-                                className="outline-none placeholder:text-(--color-gray)"
-                                placeholder="Buscar"
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                value={searchQuery} onKeyDown={handleKeyDown}
-                            />
+                            <form
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    if (!searchQuery.trim()) return;
+                                    handleSearch();
+                                }}
+                            >
+                                <input
+                                    ref={mobileInputRef}
+                                    type="text"
+                                    className="outline-none placeholder:text-(--color-gray)"
+                                    placeholder="Buscar"
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    value={searchQuery}
+                                    tabIndex={isOpened ? 0 : -1}
+                                />
+                            </form>
                         </div>
                         <Link href={`?pesquisa=${searchQuery.toLocaleLowerCase()}`} className="font-semibold bg-(--color-yellow) text-(--color-dark-green) p-2 rounded-full text-xs">
                             Pesquisar
@@ -164,7 +176,7 @@ export default function HeaderSearch() {
                             ))}
 
                         <li key="empty" className={results && results.length > 0 ? 'hidden' : 'flex h-100 items-center justify-center'}>
-                            <p className="text-(--color-gray)">{(searchQuery && pesquisa.length > 0) ? `Nenhum resultado encontrado para "${searchQuery}"` : 'Realize uma busca para ver os resultados'}</p>
+                            <p className="text-(--color-gray)">{(searchQuery && pesquisa.length > 0) ? `Nenhum resultado encontrado para "${pesquisa}"` : 'Realize uma busca para ver os resultados'}</p>
                         </li>
                     </ul>
                 </div>
