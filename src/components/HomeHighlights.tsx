@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Chip, Image, LinkButton } from '@/src/components';
 import ArrowLeft from '@/src/assets/icons/arrow-left-icon.svg';
 import Arrow from '@/src/assets/icons/arrow-icon.svg';
@@ -25,9 +25,8 @@ function CarouselArrow({ direction, onClick }: CarouselArrowProps) {
       type="button"
       onClick={onClick}
       aria-label={label}
-      className={`hidden lg:block absolute top-1/2 -translate-y-1/2 bg-(--color-faded-white) w-12 h-12 rounded-full border border-(--color-white)  ${
-        isPrevious ? 'left-4' : 'right-4'
-      }`}
+      className={`hidden lg:block cursor-pointer absolute top-1/2 -translate-y-1/2 bg-(--color-faded-white) w-12 h-12 rounded-full border border-(--color-white)  ${isPrevious ? 'left-4' : 'right-4'
+        }`}
     >
       <Image
         src={ArrowLeft.src}
@@ -49,19 +48,69 @@ function CarouselDots({ total, currentIndex, onSelect }: CarouselDotsProps) {
           type="button"
           onClick={() => onSelect(index)}
           aria-label={`Ir para destaque ${index + 1}`}
-          className={`h-0.75 rounded-full ${
-            index === currentIndex ? 'w-7 bg-(--color-yellow)' : 'w-2 bg-(--color-gray)'
-          }`}
+          className={`h-0.75 rounded-full ${index === currentIndex ? 'w-7 bg-(--color-yellow)' : 'w-2 bg-(--color-gray)'
+            }`}
         />
       ))}
     </div>
   );
 }
 
-export default function HomeHighligths({heroItems}: {heroItems: NewsListItem[]}) {
+export default function HomeHighligths({ heroItems }: { heroItems: NewsListItem[] }) {
   const AUTO_PLAY_INTERVAL_MS = 10000;
+  const SWIPE_THRESHOLD = 50;
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentItem = heroItems[currentIndex];
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  function handleTouchStart(
+    e: React.TouchEvent<HTMLDivElement>,
+  ) {
+    touchStartX.current = e.touches[0].clientX;
+  }
+
+  function handleTouchMove(
+    e: React.TouchEvent<HTMLDivElement>,
+  ) {
+    touchEndX.current = e.touches[0].clientX;
+  }
+
+  function handleTouchEnd() {
+    if (
+      touchStartX.current === null ||
+      touchEndX.current === null
+    ) {
+      return;
+    }
+
+    const distance = touchStartX.current - touchEndX.current;
+
+    if (distance > SWIPE_THRESHOLD) {
+      handleNext();
+      restartAutoPlay();
+    }
+
+    if (distance < -SWIPE_THRESHOLD) {
+      handlePrevious();
+      restartAutoPlay();
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  }
+
+  function restartAutoPlay() {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    intervalRef.current = setInterval(() => {
+      handleNext();
+    }, AUTO_PLAY_INTERVAL_MS);
+  }
+
   function handlePrevious() {
     setCurrentIndex((previousIndex) => {
       if (previousIndex === 0) return heroItems.length - 1;
@@ -83,7 +132,12 @@ export default function HomeHighligths({heroItems}: {heroItems: NewsListItem[]})
 
   return (
     <section className="size-full">
-      <div className="relative w-full">
+      <div
+        className="relative w-full"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <Image
           src={currentItem.coverImage}
           alt={currentItem.title}
