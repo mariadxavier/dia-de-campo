@@ -2,7 +2,7 @@ export default function WhatsAppContactCard() {
   const phoneNumber = process.env.NEXT_PUBLIC_COMERCIAL_PHONE_NUMBER;
 
   return (
-    <section className="rounded-xl border border-green-100 bg-(--color-light-green) p-4">
+    <section className="rounded-xl border border-green-100 bg-(--color-light-green) p-4 w-full">
       <div className="flex gap-2">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-(--color-green)">
           <span className="text-xs font-bold text-white">WA</span>

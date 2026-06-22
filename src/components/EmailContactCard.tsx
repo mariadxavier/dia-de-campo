@@ -1,6 +1,6 @@
 export default function EmailContactCard() {
     return (
-        <section className="rounded-xl border border-gray-200 bg-(--color-white-shell) p-4">
+        <section className="rounded-xl border border-gray-200 bg-(--color-white-shell) p-4 w-full">
             <div className="flex gap-3">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-(--color-yellow)">
                     <span className="text-lg font-bold text-(--color-green)">
