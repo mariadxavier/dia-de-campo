@@ -15,7 +15,7 @@ export default function NewsPageHeader() {
         <PageHeader
             title="Conteúdo Técnico"
             breadcrumb={BREADCRUMB}
-            description="Artigos com orientação prática para produção, manejo, pragas, irrigação e gestão no campo"
+            description="Artigos, estudos, análises e materiais técnicos desenvolvidos para produtores, gestores, centrais de abastecimento e profissionais do agronegócio."
             handleSearch={handleSearch}
             hasSearch
             searchTags={searchTags}

@@ -13,8 +13,8 @@ type Props = {
 export async function generateMetadata() {
   const content = {
     title: 'Preços CEASA',
-    seo_title: 'Preços CEASA - Portal Dia de Campo',
-    seo_description: 'Cotações atualizadas por central de abastecimento, produto e categoria',
+    seo_title: 'Preços CEASA Atualizados | Cotações Hortigranjeiras',
+    seo_description: 'Monitore os preços CEASA e acompanhe diariamente as cotações dos principais produtos hortigranjeiros comercializados no país.',
     canonical_url: '/precos-ceasa',
     og_image_url: '',
   }

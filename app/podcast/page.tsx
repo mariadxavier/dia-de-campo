@@ -5,9 +5,9 @@ import { countPodcastEpisodes, listPodcastEpisodes } from "@/src/server/services
 export async function generateMetadata() {
   const content = {
     title: 'Podcasts',
-    seo_title: 'Podcasts - Portal Dia de Campo',
-    seo_description: 'Conversas com especialistas, lideranças e produtores sobre mercado, CEASA, produção e tecnologia no campo.',
-    canonical_url: '/podcast',
+    seo_title: 'Podcasts do Agronegócio e Abastecimento | Portal Dia de Campo',
+    seo_description: 'Ouça especialistas discutindo inovação, tecnologia, abastecimento, gestão e os principais desafios e oportunidades do agronegócio brasileiro.',
+    canonical_url: 'https://portaldiadecampo.com.br/podcast',
     og_image_url: '',
   }
 

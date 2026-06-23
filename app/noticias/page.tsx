@@ -10,9 +10,9 @@ import { countNews, listNews } from '@/src/server/services/newsService';
 export async function generateMetadata() {
   const content = {
     title: 'Notícias',
-    seo_title: 'Notícias - Portal Dia de Campo',
-    seo_description: 'Fique por dentro das últimas notícias do agronegócio com o Portal Dia de Campo. Atualizações diárias, tendências de mercado e conteúdo técnico especializado para impulsionar o seu negócio.',
-    canonical_url: '/noticias',
+    seo_title: 'Notícias do Mercado Hortigranjeiro | Portal Dia de Campo',
+    seo_description: 'Atualizações diárias sobre abastecimento, produção, comercialização e tendências que impactam o mercado hortigranjeiro e o agronegócio nacional.',
+    canonical_url: 'https://portaldiadecampo.com.br/noticias',
     og_image_url: '',
   }
 

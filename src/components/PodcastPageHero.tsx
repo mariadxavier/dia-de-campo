@@ -25,8 +25,7 @@ export default function PodcastPageHero({ featuredEpisode, stats }: PodcastPageH
         </h1>
 
         <p className="text-[15px] md:text-base text-(--color-light-green) leading-relaxed max-w-md">
-          Conversas com especialistas, lideranças e produtores sobre mercado, CEASA, produção e
-          tecnologia no campo.
+          Entrevistas, debates e conversas com especialistas, pesquisadores, gestores e lideranças do agronegócio e das centrais de abastecimento.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3">

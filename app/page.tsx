@@ -14,9 +14,9 @@ import FeaturedContent from '@/src/helpers/FeaturedContent';
 export async function generateMetadata() {
   const content = {
     title: 'Portal Dia de Campo',
-    seo_title: 'Portal Dia de Campo',
-    seo_description: 'Notícias, preços CEASA atualizados diariamente, conteúdo técnico e oportunidades comerciais. Tudo em um único portal.',
-    canonical_url: '/',
+    seo_title: 'Portal Dia de Campo | Informação Estratégica para o Mercado Hortigranjeiro',
+    seo_description: 'O Portal Dia de Campo conecta produtores, atacadistas, centrais de abastecimento e profissionais do setor hortigranjeiro com notícias, conteúdo técnico, análises de mercado, podcasts e indicadores estratégicos.',
+    canonical_url: 'https://portaldiadecampo.com.br/',
     og_image_url: '',
   }
 

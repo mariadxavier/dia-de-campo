@@ -10,9 +10,9 @@ import { countTechnicalContent, listTechnicalContent } from '@/src/server/servic
 export async function generateMetadata() {
   const content = {
     title: 'Conteúdo Técnico',
-    seo_title: 'Conteúdo Técnico - Portal Dia de Campo',
-    seo_description: 'Fique por dentro do conteúdo técnico do agronegócio com o Portal Dia de Campo. Atualizações diárias, tendências de mercado e conteúdo técnico especializado para impulsionar o seu negócio.',
-    canonical_url: '/conteudo-tecnico',
+    seo_title: 'Conteúdo Técnico Especializado | Portal Dia de Campo',
+    seo_description: 'Acesse conteúdos técnicos especializados, estudos de mercado e informações estratégicas para apoiar decisões e impulsionar resultados no setor hortigranjeiro.',
+    canonical_url: 'https://portaldiadecampo.com.br/conteudo-tecnico',
     og_image_url: '',
   }
 

@@ -14,7 +14,7 @@ export default function NewsPageHeader() {
     <PageHeader
       title="Notícias do Hortifruti"
       breadcrumb={BREADCRUMB}
-      description="Cobertura editorial sobre mercado, produção, pragas, clima e tecnologia no hortifruti."
+      description="Fique por dentro das principais notícias sobre abastecimento, produção agrícola, logística, comercialização, sustentabilidade e inovação no agronegócio brasileiro."
       handleSearch={handleSearch}
       hasSearch
       searchTags={searchTags}
