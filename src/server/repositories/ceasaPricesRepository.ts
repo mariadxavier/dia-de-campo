@@ -1,9 +1,6 @@
-import { getSupabaseAdmin } from "@/src/lib/supabase/server";
+import { getSupabaseAdmin } from '@/src/lib/supabase/server';
 
-import type {
-  CeasaPriceRow,
-  CeasaProductOption,
-} from "@/src/types";
+import type { CeasaPriceRow, CeasaProductOption } from '@/src/types';
 
 const CEASA_SELECT = `
   id,
@@ -22,88 +19,64 @@ const CEASA_SELECT = `
   updated_at
 `;
 
-export async function findCeasaPrices(
-  limit: number,
-  offset: number,
-): Promise<CeasaPriceRow[]> {
-  const supabase =
-    getSupabaseAdmin();
+export async function findCeasaPrices(limit: number, offset: number): Promise<CeasaPriceRow[]> {
+  const supabase = getSupabaseAdmin();
 
-  const { data, error } =
-    await supabase
-      .from("ceasa_prices")
-      .select(CEASA_SELECT)
-      .order("product_name")
-      .range(
-        offset,
-        offset + limit - 1,
-      );
+  const { data, error } = await supabase
+    .from('ceasa_prices')
+    .select(CEASA_SELECT)
+    .order('product_name')
+    .range(offset, offset + limit - 1);
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return (
-    (data ?? []) as CeasaPriceRow[]
-  );
+  return (data ?? []) as CeasaPriceRow[];
 }
 
 export async function findCeasaPricesByCeasaName(
   limit: number,
   offset: number,
-  ceasaName: string
+  ceasaName: string,
 ): Promise<CeasaPriceRow[]> {
-  const supabase =
-    getSupabaseAdmin();
+  const supabase = getSupabaseAdmin();
 
-  const { data, error } =
-    await supabase
-      .from("ceasa_prices")
-      .select(CEASA_SELECT)
-      .eq(
-        "ceasa_name",
-        ceasaName,
-      )
-      .order("product_name")
-      .range(
-        offset,
-        offset + limit - 1,
-      );
+  let query = supabase
+    .from('ceasa_prices')
+    .select(CEASA_SELECT)
+    .order('product_name')
+    .range(offset, offset + limit - 1);
+
+  if (ceasaName !== 'Todas as centrais') {
+    query = query.eq('ceasa_name', ceasaName.toUpperCase());
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return (
-    (data ?? []) as CeasaPriceRow[]
-  );
+  return (data ?? []) as CeasaPriceRow[];
 }
 
-export async function findCeasaPricesByProduct(
-  productSlug: string,
-): Promise<CeasaPriceRow[]> {
-  const supabase =
-    getSupabaseAdmin();
+export async function findCeasaPricesByProduct(productSlug: string): Promise<CeasaPriceRow[]> {
+  const supabase = getSupabaseAdmin();
 
-  const { data, error } =
-    await supabase
-      .from("ceasa_prices")
-      .select(CEASA_SELECT)
-      .eq(
-        "product_slug",
-        productSlug,
-      )
-      .order("daily_price", {
-        ascending: true,
-      });
+  const { data, error } = await supabase
+    .from('ceasa_prices')
+    .select(CEASA_SELECT)
+    .eq('product_slug', productSlug)
+    .order('daily_price', {
+      ascending: true,
+    });
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return (
-    (data ?? []) as CeasaPriceRow[]
-  );
+  return (data ?? []) as CeasaPriceRow[];
 }
 
 export async function findCeasaPricesByCeasaAndProduct(
@@ -115,92 +88,63 @@ export async function findCeasaPricesByCeasaAndProduct(
   const supabase = getSupabaseAdmin();
 
   let query = supabase
-    .from("ceasa_prices")
+    .from('ceasa_prices')
     .select(CEASA_SELECT)
-    .eq(
-      "ceasa_name",
-      ceasaName,
-    )
-    .order("product_name", {
+    .order('product_name', {
       ascending: true,
     })
-    .range(
-      offset,
-      offset + limit - 1,
-    );
+    .range(offset, offset + limit - 1);
 
-  if (productSlug !== "all") {
-    query = query.eq("product_slug", productSlug);
+  if (productSlug !== 'all') {
+    query = query.eq('product_slug', productSlug);
+  }
+  if (ceasaName !== 'Todas as centrais') {
+    query = query.eq('ceasa_name', ceasaName.toUpperCase());
   }
 
-  const { data, error } = await query
+  const { data, error } = await query;
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return (
-    (data ?? []) as CeasaPriceRow[]
-  );
+  return (data ?? []) as CeasaPriceRow[];
 }
 
 export async function findCeasaProductsByCeasaName(
   ceasaName: string,
-  limit: number,
-  offset: number,
 ): Promise<CeasaProductOption[]> {
-  const supabase =
-    getSupabaseAdmin();
+  const supabase = getSupabaseAdmin();
 
-  const { data, error } =
-    await supabase
-      .from("ceasa_prices")
-      .select("product_name, product_slug")
-      .eq(
-        "ceasa_name",
-        ceasaName.toUpperCase(),
-      )
-      .order("product_name").range(
-        offset,
-        offset + limit - 1,
-      );
+  const { data, error } = await supabase.rpc(
+    'get_ceasa_products',
+    {
+      p_ceasa_name:
+        ceasaName === 'Todas as centrais'
+          ? null
+          : ceasaName,
+    });
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return [
-    ...new Map(
-      (data ?? []).map((item) => [
-        item.product_slug,
-        {
-          product_name:
-            item.product_name,
-          product_slug:
-            item.product_slug,
-        },
-      ]),
-    ).values(),
-  ];
+  return (data ?? []).map((item: CeasaPriceRow) => ({
+    product_name: item.product_name,
+    product_slug: item.product_slug,
+  }));
 }
 
 export async function findCeasaNames(): Promise<string[]> {
   const supabase = getSupabaseAdmin();
 
-  const { data, error } = await supabase
-    .from("ceasa_prices")
-    .select("ceasa_name")
-    .order("ceasa_name");
+  const { data, error } = await supabase.rpc('get_ceasa_names');
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return [
-    ...new Set(
-      (data ?? []).map(
-        (item) => item.ceasa_name,
-      ),
-    ),
-  ];
+  const rows = (data ?? []) as { ceasa_name: string }[];
+
+  return rows.map((row) => row.ceasa_name);
 }

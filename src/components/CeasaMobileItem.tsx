@@ -1,4 +1,3 @@
-import { max } from "date-fns";
 import { Formatter } from "../util/Formatter";
 
 type CeasaMobileItemProps = {
@@ -7,6 +6,7 @@ type CeasaMobileItemProps = {
   variation: number;
   previousPrice: number;
   currentPrice: number;
+  branch: string;
 }
 
 export default function CeasaMobileItem({
@@ -15,10 +15,11 @@ export default function CeasaMobileItem({
   variation,
   previousPrice,
   currentPrice,
+  branch,
 }: CeasaMobileItemProps) {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-      <div className="flex items-start justify-between">
+      <div className="flex items-center justify-between">
         <div>
           <h2 className="text-base font-semibold text-gray-800">
             {product}
@@ -27,10 +28,11 @@ export default function CeasaMobileItem({
           <p className="mt-1 text-xs text-gray-400">
             {unity}
           </p>
+          <span className="mt-1 text-xs text-gray-400">{branch}</span>
         </div>
 
-        <div className="rounded-full bg-green-100 px-4 py-2">
-          <span className="text-sm font-semibold text-green-600">
+        <div className={`rounded-full px-3 py-1 bg-${variation > 0 ? 'red' :'green'}-100`}>
+          <span className={`text-sm font-semibold text-${variation > 0 ? 'red' :'green-600'}`}>
             {variation > 0 ? "+" : ""}
             {variation.toFixed(1).replace(".", ",")}%
           </span>

@@ -26,15 +26,16 @@ export default async function CeasaPricesPage({ searchParams }: Props) {
   const { ceasa } = await searchParams;
   const { produto } = await searchParams;
   const branches = await listCeasaNames();
-  const products = await listCeasaProductNames(50, 0, ceasa || 'AMA/BA - JUAZEIRO');
+  const products = await listCeasaProductNames(ceasa || 'Todas as centrais');
   const finalProducts = [{ product_name: 'Todos os Produtos', product_slug: 'all' }, ...products]
-  const prices = produto ? await listCeasaPricesByCeasaNameAndProductSlug(210, 0, ceasa || 'AMA/BA - JUAZEIRO', produto) : await listCeasaPrices(210, 0, ceasa || 'AMA/BA - JUAZEIRO');
+  const finalBranches = ['Todas as centrais', ...branches];
+  const prices = produto ? await listCeasaPricesByCeasaNameAndProductSlug(210, 0, ceasa || 'Todas as centrais', produto) : await listCeasaPrices(210, 0, ceasa || 'Todas as centrais');
 
   return (
     <div className="border-t-4 border-(--color-yellow)">
       <CeasaPageHeader />
       <div className="flex flex-col md:flex-row gap-5 py-5 lg:max-w-2/3">
-        <CeasaSelection items={branches} selectedItem={ceasa || 'AMA/BA - JUAZEIRO'} searchParam="ceasa" label="Selecione a central" />
+        <CeasaSelection items={finalBranches} selectedItem={ceasa || 'Todas as centrais'} searchParam="ceasa" label="Selecione a central" />
         <CeasaSelection items={finalProducts} selectedItem={produto || 'all'} searchParam="produto" label="Selecione o produto" />
       </div>
       <CeasaCotation ceasaName={ceasa || 'AMA/BA - JUAZEIRO'} items={prices} />

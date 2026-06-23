@@ -26,9 +26,9 @@ export async function listCeasaNames(): Promise<string[]> {
   });
 }
 
-export async function listCeasaProductNames(limit: number, offset: number, ceasaName: string,): Promise<CeasaProductOption[]> {
+export async function listCeasaProductNames(ceasaName: string,): Promise<CeasaProductOption[]> {
   return getCached(cacheKeys.ceasaProducts(ceasaName), async () => {
-    const rows = await findCeasaProductsByCeasaName(ceasaName, limit, offset);
+    const rows = await findCeasaProductsByCeasaName(ceasaName);
     return rows;
   });
 }

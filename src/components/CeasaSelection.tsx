@@ -23,8 +23,8 @@ export default function CeasaSelection({ items, selectedItem, searchParam, label
                     value={selectedItem}
                     onChange={handleChange}
                 >
-                    {items && items.map((item) => (
-                        <option key={typeof item === "string" ? item : item.product_slug} value={typeof item === "string" ? item : item.product_slug}>{typeof item === "string" ? item : item.product_name}</option>
+                    {items && items.map((item, idx) => (
+                        <option key={idx} value={typeof item === "string" ? item : item.product_slug}>{typeof item === "string" ? item : item.product_name}</option>
                     ))}
                 </select>
             </div>

@@ -29,6 +29,7 @@ export default function CeasaCotation({ ceasaName, items }: { ceasaName: string,
                         variation={item.priceVariation || 0}
                         previousPrice={item.previousPrice || 0}
                         currentPrice={item.dailyPrice || 0}
+                        branch={item.ceasaName}
                     />
                 ))}
             </div>
