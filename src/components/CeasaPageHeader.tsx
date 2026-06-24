@@ -16,7 +16,6 @@ export default function CeasaPageHeader() {
             title="Preços CEASA"
             description="Consulte preços atualizados de frutas, legumes e verduras nas principais Centrais de Abastecimento do Brasil e acompanhe as movimentações do mercado."
             hasSearch
-            handleSearch={handleSearch}
             searchPlaceholder="Buscar produto, ex: abacate"
         />
     )
