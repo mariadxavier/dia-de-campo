@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/src/lib/supabase/server";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 type StaticPage = {
   name: string;
@@ -48,8 +49,149 @@ const STATIC_PAGES: StaticPage[] = [
   },
 ];
 
+const ilikeFilter = (query: string, col1: string, col2?: string) => {
+  const queryNorm = normalize(query);
+  const terms = [query, queryNorm].filter((v, i, arr) => arr.indexOf(v) === i);
+  const conditions = terms.flatMap(term =>
+    col2
+      ? [`${col1}.ilike.%${term}%`, `${col2}.ilike.%${term}%`]
+      : [`${col1}.ilike.%${term}%`]
+  );
+  return conditions.join(",");
+};
+
+const formatQuery = (query: string) => query
+  .trim()
+  .split(/\s+/)
+  .filter(Boolean)
+  .map(term => `${term}:*`)
+  .join(" & ");
+
+const contentItemsSearch = async (supabase: SupabaseClient, query: string, type: "technical" | "news" | "all") => {
+  const formattedQuery = formatQuery(query)
+  try {
+    let supabaseQuery = supabase
+      .from("content_items")
+      .select("title, slug, short_description, type")
+      .eq("is_published", true)
+      .textSearch("search_vector", formattedQuery, {
+        config: "portuguese",
+        type: "plain",
+      })
+      .limit(5);
+    
+    if (type !== "all") {
+      supabaseQuery = supabaseQuery.eq("type", type);
+    }
+    const { data, error } = await supabaseQuery;
+
+    if (error) throw error;
+    return (data ?? []).map((item) => ({
+      name: item.title,
+      href: item.type === "news" ? `/noticias/${item.slug}` : `/conteudo-tecnico/${item.slug}`,
+      category: item.type === "news" ? "Notícias" : "Conteúdo Técnico",
+      description: item.short_description,
+    }));
+  } catch (err) {
+    console.error("Error searching content_items:", err);
+    try {
+      const { data } = await supabase
+        .from("content_items")
+        .select("title, slug, short_description, type")
+        .eq("is_published", true)
+        .or(ilikeFilter(query, "title", "short_description"))
+        .limit(5);
+      return (data ?? []).map((item) => ({
+        name: item.title,
+        href: item.type === "news" ? `/noticias/${item.slug}` : `/conteudo-tecnico/${item.slug}`,
+        category: item.type === "news" ? "Notícias" : "Conteúdo Técnico",
+        description: item.short_description,
+      }));
+    } catch {
+      return [];
+    }
+  }
+}
+
+const podcastSearch = async (supabase: SupabaseClient, query: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("podcast_episodes")
+      .select("title, slug, description")
+      .eq("is_published", true)
+      .or(ilikeFilter(query, "title", "description"))
+      .limit(5);
+
+    if (error) throw error;
+    return (data ?? []).map((item) => ({
+      name: item.title,
+      href: `/podcast/${item.slug}`,
+      category: "Podcasts",
+      description: item.description,
+    }));
+  } catch (err) {
+    console.error("Error searching podcast_episodes:", err);
+    return [];
+  }
+}
+
+const classifiedsSearch = async (supabase: SupabaseClient, query: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("classifieds")
+      .select("title, slug, short_description")
+      .eq("is_published", true)
+      .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
+      .or(ilikeFilter(query, "title", "short_description"))
+      .limit(5);
+
+    if (error) throw error;
+    return (data ?? []).map((item) => ({
+      name: item.title,
+      href: `/classificados/${item.slug}`,
+      category: "Classificados",
+      description: item.short_description,
+    }));
+  } catch (err) {
+    console.error("Error searching classifieds:", err);
+    return [];
+  }
+}
+
+const ceasaPricesSearch = async (supabase: SupabaseClient, query: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("ceasa_prices")
+      .select("product_name, product_slug, ceasa_name")
+      .or(ilikeFilter(query, "product_name", "ceasa_name"))
+      .limit(10);
+
+    if (error) throw error;
+
+    const seen = new Set<string>();
+    const results: any[] = [];
+    for (const item of (data ?? [])) {
+      const key = `${item.product_slug}-${item.ceasa_name}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        results.push({
+          name: item.product_name,
+          href: `/precos-ceasa?ceasa=${encodeURIComponent(item.ceasa_name)}&produto=${item.product_slug}`,
+          category: "Preços CEASA",
+          description: `Cotação de ${item.product_name} na central ${item.ceasa_name}`,
+        });
+      }
+    }
+    return results.slice(0, 5);
+  } catch (err) {
+    console.error("Error searching ceasa_prices:", err);
+    return [];
+  }
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
+  const pathname = searchParams.get("path") || "";
   const query = searchParams.get("q") || "";
 
   if (!query.trim()) {
@@ -68,146 +210,29 @@ export async function GET(request: NextRequest) {
   const supabase = getSupabaseAdmin();
   const searchPromises: Promise<any[]>[] = [];
 
-  const formattedQuery = query
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .map(term => `${term}:*`)
-    .join(" & ");
-
-  const ilikeFilter = (col1: string, col2?: string) => {
-    const terms = [query, queryNorm].filter((v, i, arr) => arr.indexOf(v) === i);
-    const conditions = terms.flatMap(term =>
-      col2
-        ? [`${col1}.ilike.%${term}%`, `${col2}.ilike.%${term}%`]
-        : [`${col1}.ilike.%${term}%`]
-    );
-    return conditions.join(",");
-  };
-
-  searchPromises.push(
-    (async () => {
-      try {
-        const { data, error } = await supabase
-          .from("content_items")
-          .select("title, slug, short_description, type")
-          .eq("is_published", true)
-          .textSearch("search_vector", formattedQuery, {
-            config: "portuguese",
-            type: "plain",
-          })
-          .limit(5);
-
-        if (error) throw error;
-        return (data ?? []).map((item) => ({
-          name: item.title,
-          href: item.type === "news" ? `/noticias/${item.slug}` : `/conteudo-tecnico/${item.slug}`,
-          category: item.type === "news" ? "Notícias" : "Conteúdo Técnico",
-          description: item.short_description,
-        }));
-      } catch (err) {
-        console.error("Error searching content_items:", err);
-        try {
-          const { data } = await supabase
-            .from("content_items")
-            .select("title, slug, short_description, type")
-            .eq("is_published", true)
-            .or(ilikeFilter("title", "short_description"))
-            .limit(5);
-          return (data ?? []).map((item) => ({
-            name: item.title,
-            href: item.type === "news" ? `/noticias/${item.slug}` : `/conteudo-tecnico/${item.slug}`,
-            category: item.type === "news" ? "Notícias" : "Conteúdo Técnico",
-            description: item.short_description,
-          }));
-        } catch {
-          return [];
-        }
-      }
-    })()
-  );
-
-  searchPromises.push(
-    (async () => {
-      try {
-        const { data, error } = await supabase
-          .from("podcast_episodes")
-          .select("title, slug, description")
-          .eq("is_published", true)
-          .or(ilikeFilter("title", "description"))
-          .limit(5);
-
-        if (error) throw error;
-        return (data ?? []).map((item) => ({
-          name: item.title,
-          href: `/podcast/${item.slug}`,
-          category: "Podcasts",
-          description: item.description,
-        }));
-      } catch (err) {
-        console.error("Error searching podcast_episodes:", err);
-        return [];
-      }
-    })()
-  );
-
-  searchPromises.push(
-    (async () => {
-      try {
-        const { data, error } = await supabase
-          .from("classifieds")
-          .select("title, slug, short_description")
-          .eq("is_published", true)
-          .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
-          .or(ilikeFilter("title", "short_description"))
-          .limit(5);
-
-        if (error) throw error;
-        return (data ?? []).map((item) => ({
-          name: item.title,
-          href: `/classificados/${item.slug}`,
-          category: "Classificados",
-          description: item.short_description,
-        }));
-      } catch (err) {
-        console.error("Error searching classifieds:", err);
-        return [];
-      }
-    })()
-  );
-
-  searchPromises.push(
-    (async () => {
-      try {
-        const { data, error } = await supabase
-          .from("ceasa_prices")
-          .select("product_name, product_slug, ceasa_name")
-          .or(ilikeFilter("product_name", "ceasa_name"))
-          .limit(10);
-
-        if (error) throw error;
-
-        const seen = new Set<string>();
-        const results: any[] = [];
-        for (const item of (data ?? [])) {
-          const key = `${item.product_slug}-${item.ceasa_name}`;
-          if (!seen.has(key)) {
-            seen.add(key);
-            results.push({
-              name: item.product_name,
-              href: `/precos-ceasa?ceasa=${encodeURIComponent(item.ceasa_name)}&produto=${item.product_slug}`,
-              category: "Preços CEASA",
-              description: `Cotação de ${item.product_name} na central ${item.ceasa_name}`,
-            });
-          }
-        }
-        return results.slice(0, 5);
-      } catch (err) {
-        console.error("Error searching ceasa_prices:", err);
-        return [];
-      }
-    })()
-  );
+  switch (pathname) {
+    case "/conteudo-tecnico":
+      searchPromises.push(contentItemsSearch(supabase, query, "technical"));
+      break;
+    case "/noticias":
+      searchPromises.push(contentItemsSearch(supabase, query, "news"));
+      break;
+    case "/podcast":
+      searchPromises.push(podcastSearch(supabase, query));
+      break;
+    case "/classificados":
+      searchPromises.push(classifiedsSearch(supabase, query));
+      break;
+    case "/precos-ceasa":
+      searchPromises.push(ceasaPricesSearch(supabase, query));
+      break;
+    default:
+      searchPromises.push(contentItemsSearch(supabase, query, "all"));
+      searchPromises.push(podcastSearch(supabase, query));
+      searchPromises.push(classifiedsSearch(supabase, query));
+      searchPromises.push(ceasaPricesSearch(supabase, query));
+      break;
+  }
 
   const searchResults = await Promise.all(searchPromises);
 

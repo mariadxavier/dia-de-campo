@@ -59,3 +59,4 @@ export { default as WhatsappContactCard } from "./WhatsappContactCard";
 export { default as EmailContactCard } from "./EmailContactCard";
 export { default as FooterComercialContact } from "./FooterComercialContact";
 export { default as HeaderSearch } from "./HeaderSearch";
+export { default as SearchResultItem } from "./SearchResultItem";
