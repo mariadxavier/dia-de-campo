@@ -16,6 +16,13 @@ function normalize(str: string): string {
     .toLowerCase();
 }
 
+function sanitizeSearch(value: string) {
+  return value
+    .replace(/[(),]/g, "")
+    .replace(/"/g, "")
+    .trim();
+}
+
 const STATIC_PAGES: StaticPage[] = [
   {
     name: "Notícias - Portal Dia de Campo",
@@ -68,7 +75,7 @@ const formatQuery = (query: string) => query
   .join(" & ");
 
 const contentItemsSearch = async (supabase: SupabaseClient, query: string, type: "technical" | "news" | "all") => {
-  const formattedQuery = formatQuery(query)
+  const formattedQuery = formatQuery(normalize(query));
   try {
     let supabaseQuery = supabase
       .from("content_items")
@@ -79,7 +86,7 @@ const contentItemsSearch = async (supabase: SupabaseClient, query: string, type:
         type: "plain",
       })
       .limit(5);
-    
+
     if (type !== "all") {
       supabaseQuery = supabaseQuery.eq("type", type);
     }
@@ -95,11 +102,13 @@ const contentItemsSearch = async (supabase: SupabaseClient, query: string, type:
   } catch (err) {
     console.error("Error searching content_items:", err);
     try {
+      const safeQuery = sanitizeSearch(query);
+
       const { data } = await supabase
         .from("content_items")
         .select("title, slug, short_description, type")
         .eq("is_published", true)
-        .or(ilikeFilter(query, "title", "short_description"))
+        .or(ilikeFilter(safeQuery, "title", "short_description"))
         .limit(5);
       return (data ?? []).map((item) => ({
         name: item.title,
@@ -115,11 +124,13 @@ const contentItemsSearch = async (supabase: SupabaseClient, query: string, type:
 
 const podcastSearch = async (supabase: SupabaseClient, query: string) => {
   try {
+    const safeQuery = sanitizeSearch(query);
+
     const { data, error } = await supabase
       .from("podcast_episodes")
       .select("title, slug, description")
       .eq("is_published", true)
-      .or(ilikeFilter(query, "title", "description"))
+      .or(ilikeFilter(safeQuery, "title", "description"))
       .limit(5);
 
     if (error) throw error;
@@ -137,12 +148,14 @@ const podcastSearch = async (supabase: SupabaseClient, query: string) => {
 
 const classifiedsSearch = async (supabase: SupabaseClient, query: string) => {
   try {
+    const safeQuery = sanitizeSearch(query);
+
     const { data, error } = await supabase
       .from("classifieds")
       .select("title, slug, short_description")
       .eq("is_published", true)
       .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
-      .or(ilikeFilter(query, "title", "short_description"))
+      .or(ilikeFilter(safeQuery, "title", "short_description"))
       .limit(5);
 
     if (error) throw error;
@@ -160,16 +173,45 @@ const classifiedsSearch = async (supabase: SupabaseClient, query: string) => {
 
 const ceasaPricesSearch = async (supabase: SupabaseClient, query: string) => {
   try {
+    const safeQuery = sanitizeSearch(query);
+
     const { data, error } = await supabase
       .from("ceasa_prices")
       .select("product_name, product_slug, ceasa_name")
-      .or(ilikeFilter(query, "product_name", "ceasa_name"))
+      .or(ilikeFilter(safeQuery, "product_name", "ceasa_name"))
       .limit(10);
 
     if (error) throw error;
 
+    const queryNorm = normalize(query);
+
+    const matchedProduct = data?.find(item =>
+      normalize(item.product_name).includes(queryNorm)
+    );
+
+    const matchedCeasa = data?.find(item =>
+      normalize(item.ceasa_name).includes(queryNorm)
+    );
+
     const seen = new Set<string>();
     const results: any[] = [];
+
+    if (matchedProduct) {
+      results.push({
+        name: matchedProduct.product_name,
+        href: `/precos-ceasa?produto=${matchedProduct.product_slug}`,
+        category: "Preços CEASA",
+        description: `Cotação de ${matchedProduct.product_name} em todas as centrais`,
+      });
+    } else if (matchedCeasa) {
+      results.push({
+        name: matchedCeasa.ceasa_name,
+        href: `/precos-ceasa?ceasa=${encodeURIComponent(matchedCeasa.ceasa_name)}`,
+        category: "Preços CEASA",
+        description: `Todos os produtos da central ${matchedCeasa.ceasa_name}`,
+      });
+    }
+
     for (const item of (data ?? [])) {
       const key = `${item.product_slug}-${item.ceasa_name}`;
       if (!seen.has(key)) {
