@@ -12,8 +12,9 @@ export default function CeasaSelection({ items, selectedItem, searchParam, label
         const params = new URLSearchParams(searchParams.toString());
         params.set(searchParam, e.target.value);
         params.set("page", "1");
-        router.push(`?${params.toString()}`);
+        router.push(`?${params.toString()}`), { scroll: false };
     };
+
     return (
         <section className="flex flex-col px-5 w-full gap-4">
             <h1 className="font-bold text-lg">{label}</h1>

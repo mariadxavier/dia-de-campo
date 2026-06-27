@@ -1,6 +1,15 @@
 import { FeaturedPodcastSection, Pagination, PodcastList, PodcastPageHero } from "@/src/components";
 import { buildSeoMetadata } from "@/src/helpers/BuildSeoMetadata";
-import { countPodcastEpisodes, listPodcastEpisodes } from "@/src/server/services/podcastService";
+import PodcastCalcs from "@/src/helpers/PodcastCalcs";
+import { countPodcastEpisodes, findPodcastBySlug, listPodcastEpisodes } from "@/src/server/services/podcastService";
+
+type Props = {
+  searchParams: Promise<{
+    episode?: string;
+    page?: string;
+    playing?: boolean;
+  }>;
+};
 
 export async function generateMetadata() {
   const content = {
@@ -13,13 +22,10 @@ export async function generateMetadata() {
 
   return buildSeoMetadata(content)
 }
-export default async function PodcastPage({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
+
+export default async function PodcastPage({ searchParams }: Props) {
   const ITEMS_PER_PAGE = 6;
-  const pageStr = searchParams?.page;
+  const { episode: episodeSlug, page: pageStr } = await searchParams;
   const page = typeof pageStr === 'string' ? parseInt(pageStr, 10) : 1;
   const currentPage = isNaN(page) || page < 1 ? 1 : page;
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -28,22 +34,23 @@ export default async function PodcastPage({
     countPodcastEpisodes(),
   ]);
   const totalPages = Math.max(1, Math.ceil(totalCount / ITEMS_PER_PAGE));
-  const FEATURED_EPISODE = episodes[0];
-  const episodeList = episodes.slice(1);
-  
+  const featuredEpisodeResult = episodeSlug ? (await findPodcastBySlug(episodeSlug)) : null;
+  const FEATURED_EPISODE = featuredEpisodeResult || episodes[0];
+  const averageDuration =  PodcastCalcs.getPodcastAverageDuration(episodes);
+
   return (
     <div className="flex flex-col flex-1 bg-(--color-dark-blue) pb-10 md:pb-16">
       <PodcastPageHero
         featuredEpisode={FEATURED_EPISODE}
         stats={{
           totalEpisodes: totalCount.toString(),
-          avgDuration: "42 min",
+          avgDuration: `${averageDuration} min`,
           perWeek: "1x",
         }}
       />
       <FeaturedPodcastSection featuredEpisode={FEATURED_EPISODE} />
-      <PodcastList episodeList={episodeList} />
-      <Pagination currentPage={currentPage} totalPages={totalPages} colorTheme="--color-yellow"/>
+      <PodcastList episodeList={episodes} />
+      <Pagination hasScroll={false} hasLoadMoreButton={false} currentPage={currentPage} totalPages={totalPages} colorTheme="--color-yellow" />
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Image from './Image';
-import { PodcastEmbedKind } from '../types';
 import { Chip, PodcastAudioPlayer } from '@/src/components';
 
 type ArticleProps = {
@@ -8,7 +7,6 @@ type ArticleProps = {
   link: string;
   coverType: 'podcast' | 'image';
   src: string;
-  embedKind?: PodcastEmbedKind;
   mediaTitle?: string;
   badge: string | string[];
   bgColor?: `--color-${string}`;
@@ -22,7 +20,6 @@ export default function Article({
   link,
   coverType,
   src,
-  embedKind,
   mediaTitle,
   badge,
   bgColor = '--color-white',
@@ -32,7 +29,7 @@ export default function Article({
 }: ArticleProps) {
   return (
     <Link href={link}>
-      <article className={`flex flex-col rounded-xl shadow-md ${className} md:h-[380px] md:min-w-[232px]`}>
+      <article className={`flex flex-col rounded-xl shadow-md ${className} md:h-[380px] md:min-w-[232px] bg-(${bgColor})`}>
         {coverType === 'image' && (
           <Image
             src={src}
@@ -43,12 +40,11 @@ export default function Article({
           />
         )}
 
-        {coverType === 'podcast' && embedKind && (
+        {coverType === 'podcast' && src && (
           <PodcastAudioPlayer
-            src={src}
-            embedKind={embedKind}
+            embedUrl={src}
             mediaTitle={mediaTitle}
-            className="bg-(--color-gray) w-full rounded-t-xl"
+            className="bg-(--color-gray) w-full rounded-xl"
           />
         )}
 

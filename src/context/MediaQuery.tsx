@@ -8,7 +8,7 @@ export function useMediaQuery() {
 
   useEffect(() => {
     const smMediaQuery = window.matchMedia('(max-width: 700px)');
-    const mdMediaQuery = window.matchMedia('(min-width: 700px) and (max-width: 1024px)');
+    const mdMediaQuery = window.matchMedia('(min-width: 700px) and (max-width: 1023px)');
     const lgMediaQuery = window.matchMedia('(min-width: 1024px)');
 
     const update = () => {

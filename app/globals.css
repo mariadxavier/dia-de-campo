@@ -26,6 +26,28 @@
   --color-vibrant-blue: #1D4ED8;
   --color-baby-blue: #DBEAFE;
   --font-inter: var(--font-inter);
+
+ --animate-highlight: highlight 2000ms ease-out;
+
+  @keyframes highlight {
+    0% {
+      box-shadow:
+        0 0 0 0 rgb(250 204 21 / 0),
+        0 0 0 rgb(250 204 21 / 0);
+    }
+
+    20% {
+      box-shadow:
+        0 0 0 3px rgb(250 204 21 / 1),
+        0 0 24px rgb(250 204 21 / .45);
+    }
+
+    100% {
+      box-shadow:
+        0 0 0 0 rgb(250 204 21 / 0),
+        0 0 0 rgb(250 204 21 / 0);
+    }
+  }
 }
 
 * {
@@ -43,7 +65,7 @@ body {
   color: var(--foreground);
   scrollbar-width: 0;
   scrollbar-color: transparent;
-   -ms-overflow-style: none;
+  -ms-overflow-style: none;
 }
 
 

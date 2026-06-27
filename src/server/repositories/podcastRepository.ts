@@ -1,8 +1,5 @@
 import { getSupabaseAdmin } from "@/src/lib/supabase/server";
-import {
-  paginate,
-  sortByFeaturedThenPublished,
-} from "@/src/server/utils/sortWithFeatured";
+import { paginate, sortByFeaturedThenPublished } from "@/src/server/utils/sortWithFeatured";
 import type { PodcastEpisodeRow } from "@/src/types";
 import { findActiveFeaturedPriorityMapForContentType } from "./featuredPlacementRepository";
 
@@ -26,6 +23,25 @@ export async function findPublishedPodcastEpisodes(
   const sorted = sortByFeaturedThenPublished(rows, featuredPriorityById);
 
   return paginate(sorted, limit, offset);
+}
+
+export async function findPublishedPodcastBySlug(
+  slug: string,
+): Promise<PodcastEpisodeRow | null> {
+  const supabase = getSupabaseAdmin();
+
+  const { data, error } = await supabase
+    .from("podcast_episodes")
+    .select("*")
+    .eq("slug", slug)
+    .eq("is_published", true)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return (data as PodcastEpisodeRow) ?? null;
 }
 
 export async function countPublishedPodcastEpisodes(): Promise<number> {

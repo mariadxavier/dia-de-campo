@@ -11,8 +11,7 @@ export default function PodcastPreview({mainPodcast, podcastList}: {mainPodcast:
           link={mainPodcast.link}
           badge={`${mainPodcast.episode} - DESTAQUE`}
           coverType={'podcast'}
-          src={mainPodcast.embedUrl}
-          embedKind={mainPodcast.embedKind}
+          src={mainPodcast.spotifyUrl || mainPodcast.youtubeUrl || ''}
           themeColor="--color-yellow"
           footnote={`${mainPodcast.author}`}
           bgColor="--color-urain-blue"

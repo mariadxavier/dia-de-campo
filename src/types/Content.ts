@@ -2,8 +2,6 @@ export type ContentType = "news" | "technical" | "classified" | "podcast";
 
 export type SlotType = "content" | "hero";
 
-export type PodcastEmbedKind = "audio" | "spotify" | "youtube";
-
 export type ContentBlock = {
   type: "paragraph" | "image" | "quote" | "subtitle";
   content: string;
@@ -59,8 +57,8 @@ export type PodcastEpisodeRow = {
   title: string;
   slug: string;
   description: string;
-  embed_url: string;
-  embed_kind: PodcastEmbedKind;
+  spotify_url: string | null;
+  youtube_url: string | null;
   author: string | null;
   seo_title: string | null;
   seo_description: string | null;
@@ -146,8 +144,8 @@ export type PodcastEpisodeItem = {
   title: string;
   description: string;
   duration: `${string} min`
-  embedUrl: string;
-  embedKind: PodcastEmbedKind;
+  spotifyUrl: string | null;
+  youtubeUrl: string | null;
   author: string | null;
   link: string;
   publishedAt: string | null;
@@ -167,8 +165,8 @@ export type HomeFeaturedItem = {
   link: string;
   clientName: string | null;
   campaignName: string | null;
-  embedUrl?: string;
-  embedKind?: PodcastEmbedKind;
+  spotifyUrl?: string;
+  youtubeUrl?: string;
   episode?: string;
 };
 

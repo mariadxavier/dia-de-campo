@@ -13,6 +13,7 @@ export const cacheKeys = {
   ceasaProducts: (ceasaName: string) => `ceasa:products:${ceasaName}`,
   podcastList: (limit: number, offset: number) =>
     `podcast:list:${limit}:${offset}`,
+  podcastBySlug: (slug: string) => `podcast:slug:${slug}`,
   classifiedList: (limit: number, offset: number) =>
     `classified:list:${limit}:${offset}`,
   classifiedBySlug: (slug: string) => `classified:slug:${slug}`,

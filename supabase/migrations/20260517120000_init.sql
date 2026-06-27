@@ -10,12 +10,6 @@ CREATE TYPE content_slot AS ENUM (
   'content'
 );
 
-CREATE TYPE podcast_embed_kind AS ENUM (
-  'audio',
-  'spotify',
-  'youtube'
-);
-
 CREATE TABLE categories (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
@@ -75,8 +69,8 @@ CREATE TABLE podcast_episodes (
   title TEXT NOT NULL,
   slug TEXT NOT NULL UNIQUE,
   description TEXT NOT NULL DEFAULT '',
-  embed_url TEXT NOT NULL,
-  embed_kind podcast_embed_kind NOT NULL DEFAULT 'audio',
+  spotify_url TEXT,
+  youtube_url TEXT,
 
   author TEXT,
 
