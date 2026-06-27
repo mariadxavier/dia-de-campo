@@ -34,11 +34,6 @@ class FeaturedContent {
     return this.orderByFeaturedPriority(news);
   }
 
-  public async getCeasaPrices(): Promise<CeasaPriceItem[]> {
-    const ceasaPrices = await listCeasaPrices(5, 0);
-    return ceasaPrices;
-  }
-
   public async getPodcasts(): Promise<PodcastEpisodeItem[]> {
     const podcasts = await listPodcastEpisodes(3, 1);
     return this.orderByFeaturedPriority(podcasts);

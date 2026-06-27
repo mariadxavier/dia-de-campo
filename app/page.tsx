@@ -1,6 +1,6 @@
 import {
   CeasaPreview,
-  ClassifiedsPreview,
+  // ClassifiedsPreview,
   HomeHighlights,
   HomeSection,
   NewsPreview,
@@ -8,8 +8,11 @@ import {
   PodcastPreview,
   TechnicalContentPreview,
 } from '@/src/components';
+import UserLocation from '@/src/components/UserLocation';
 import { buildSeoMetadata } from '@/src/helpers/BuildSeoMetadata';
 import FeaturedContent from '@/src/helpers/FeaturedContent';
+import { listCeasaPrices } from '@/src/server/services/ceasaPricesService';
+import { cookies } from 'next/headers';
 
 export async function generateMetadata() {
   const content = {
@@ -26,14 +29,17 @@ export async function generateMetadata() {
 export default async function Home() {
   const heroItems = await FeaturedContent.getHomeHeros();
   const featuredNews = await FeaturedContent.getNews();
-  const ceasaItems = await FeaturedContent.getCeasaPrices();
   const podcastList = await FeaturedContent.getPodcasts();
   const mainPodcast = await FeaturedContent.getMainPodcast();
-  const featuredClassifieds = await FeaturedContent.getClassifieds();
+  // const featuredClassifieds = await FeaturedContent.getClassifieds();
   const technicalContent = await FeaturedContent.getTechnicalContent();
+  const cookieStore = await cookies();
+  const ceasaName = cookieStore.get("selected-ceasa")?.value;
+  const ceasaItems = await listCeasaPrices(7, 0, ceasaName ?? "Todas as centrais");
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center">
+      <UserLocation />
       <HomeHighlights heroItems={heroItems} />
       <HomeSection
         sectionTitle="Últimas do Mercado"
@@ -63,7 +69,7 @@ export default async function Home() {
       >
         <PodcastPreview mainPodcast={mainPodcast} podcastList={podcastList} />
       </HomeSection>
-      <HomeSection
+      {/* <HomeSection
         sectionTitle="Classificados"
         sectionLink="/classificados"
         sectionSubtitle="Compra, venda e oportunidades"
@@ -71,7 +77,7 @@ export default async function Home() {
         enableAutoScroll
       >
         <ClassifiedsPreview featuredClassifieds={featuredClassifieds} />
-      </HomeSection>
+      </HomeSection> */}
       <HomeSection
         sectionTitle="Conteúdo Técnico"
         sectionLink="/conteudo-tecnico"
