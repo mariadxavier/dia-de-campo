@@ -4,12 +4,16 @@ import { Formatter } from '../util/Formatter';
 import { useMediaQuery } from '../context/MediaQuery';
 import CeasaPriceTable from './CeasaPriceTable';
 import { CeasaPriceItem } from '../types';
+import Chip from './Chip';
 
-export default function CeasaPreview({ceasaItems}: {ceasaItems: CeasaPriceItem[]}) {
+export default function CeasaPreview({ ceasaItems, ceasaFilter }: { ceasaItems: CeasaPriceItem[], ceasaFilter?: string }) {
   const { isSmScreen, isMdScreen, isLgScreen } = useMediaQuery();
 
   return (
-    <>
+    <div className='flex flex-col w-full gap-6'>
+      {ceasaFilter &&
+        <Chip text={ceasaFilter} badgeColor='--color-green' />
+      }
       {isSmScreen &&
         ceasaItems.map((ceasaPrice, idx) => (
           <Link href={ceasaPrice.link} key={idx}>
@@ -34,6 +38,7 @@ export default function CeasaPreview({ceasaItems}: {ceasaItems: CeasaPriceItem[]
           <CeasaPriceTable tableRows={ceasaItems} />
         </div>
       )}
-    </>
+
+    </div>
   );
 }

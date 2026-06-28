@@ -54,10 +54,10 @@ export default async function Home() {
         sectionTitle="Preços CEASA"
         sectionLink="/precos-ceasa"
         sectionLinkTitle="Ver preços por região"
-        sectionSubtitle="Atualizado diariamente • CEASA-MG / SP / RJ"
+        sectionSubtitle={`Atualizado diariamente • ${ceasaName ? `Cotação para central mais próxima` : 'Cotação para todas as centrais'}`}
         bgColor="--color-light-green"
       >
-        <CeasaPreview ceasaItems={ceasaItems} />
+        <CeasaPreview ceasaItems={ceasaItems} ceasaFilter={ceasaName} />
       </HomeSection>
       <HomeSection
         sectionLink="/podcast"
