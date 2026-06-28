@@ -1,9 +1,9 @@
 import { cacheKeys } from "@/src/lib/cache/keys";
 import { getCached } from "@/src/lib/cache/withCache";
-import { countPublishedContentByType, findPublishedContentByCategory, findPublishedContentBySlug, findPublishedContentByType } from "@/src/server/repositories/contentRepository";
+import { countContentGroupedByCategory, countPublishedContentByType, countPublishedContentFiltered, findPublishedContentByCategory, findPublishedContentBySlug, findPublishedContentByType, findPublishedContentFiltered } from "@/src/server/repositories/contentRepository";
 import { findActiveFeaturedPriorityMapForContentType } from "@/src/server/repositories/featuredPlacementRepository";
 import { mapToNewsDetail, mapToNewsListItem } from "@/src/server/mappers/contentMapper";
-import type { TechnicalContentDetail, TechnicalContentListItem } from "@/src/types";
+import type { CategoryCount, ContentPeriod, TechnicalContentDetail, TechnicalContentListItem } from "@/src/types";
 
 export async function listTechnicalContent(
   limit: number,
@@ -43,5 +43,39 @@ export async function getTechnicalContentByCategory(category: string, limit: num
     const content = await findPublishedContentByCategory(category, "technical", limit, offset);
     return content.map(row => mapToNewsListItem(row));
   }); 
+}
+
+export async function listTechnicalContentFiltered(
+  limit: number,
+  offset: number,
+  categorySlug?: string,
+  period: ContentPeriod = 'tudo',
+): Promise<TechnicalContentListItem[]> {
+  return getCached(
+    cacheKeys.technicalListFiltered(limit, offset, categorySlug ?? 'todos', period),
+    async () => {
+      const rows = await findPublishedContentFiltered(limit, offset, categorySlug, period, 'technical');
+      return rows.map((row) => mapToNewsDetail(row));
+    },
+  );
+}
+
+export async function countTechnicalContentFiltered(
+  categorySlug?: string,
+  period: ContentPeriod = 'tudo',
+): Promise<number> {
+  return getCached(
+    cacheKeys.technicalCountFiltered(categorySlug ?? 'todos', period),
+    async () => countPublishedContentFiltered(categorySlug, period, 'technical'),
+  );
+}
+
+export async function getTechnicalContentCategoryCounts(
+  period: ContentPeriod = 'tudo',
+): Promise<CategoryCount[]> {
+  return getCached(
+    cacheKeys.technicalCategoryCounts(period),
+    async () => countContentGroupedByCategory(period, 'technical'),
+  );
 }
 

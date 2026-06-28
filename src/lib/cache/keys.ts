@@ -17,4 +17,16 @@ export const cacheKeys = {
   classifiedList: (limit: number, offset: number) =>
     `classified:list:${limit}:${offset}`,
   classifiedBySlug: (slug: string) => `classified:slug:${slug}`,
+  newsListFiltered: (limit: number, offset: number, category: string, period: string) =>
+    `news:list:filtered:${limit}:${offset}:${category}:${period}`,
+  newsCountFiltered: (category: string, period: string) =>
+    `news:count:filtered:${category}:${period}`,
+  newsCategoryCounts: (period: string) =>
+    `news:category-counts:${period}`,
+  technicalListFiltered: (limit: number, offset: number, category: string, period: string) =>
+    `technical:list:filtered:${limit}:${offset}:${category}:${period}`,
+  technicalCountFiltered: (category: string, period: string) =>
+    `technical:count:filtered:${category}:${period}`,
+  technicalCategoryCounts: (period: string) =>
+    `technical:category-counts:${period}`,
 };

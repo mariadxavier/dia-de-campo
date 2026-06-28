@@ -1,6 +1,6 @@
 'use client';
 import { Article, LinkButton } from '@/src/components';
-import NewsPageData, { getCategoryBadgeColor, formatPublishedDate } from '../helpers/NewsPageData';
+import { getCategoryBadgeColor, formatPublishedDate } from '../helpers/NewsPageData';
 import { useMediaQuery } from '../context/MediaQuery';
 import { NewsListItem } from '../types';
 

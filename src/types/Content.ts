@@ -213,3 +213,11 @@ export type PodcastListResponse =
 
 export type ClassifiedListResponse =
   PaginatedResponse<ClassifiedListItem>;
+
+export type CategoryCount = {
+  name: string;
+  slug: string;
+  count: number;
+};
+
+export type ContentPeriod = 'hoje' | 'esta-semana' | 'este-mes' | 'tudo'; 
