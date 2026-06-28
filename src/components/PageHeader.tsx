@@ -74,6 +74,16 @@ export default function PageHeader({
 
     fetchResults();
   }, [pesquisaInterna]);
+  
+  useEffect(
+    () => {
+      if (!searchQuery || searchQuery.length <= 0) {
+        onClose();
+        return;
+      }
+
+      handleSearch();
+    }, [searchQuery])
 
   return (
     <section className="size-full xl:h-[500px] bg-(--color-dark-green) text-(--color-white)">

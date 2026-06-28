@@ -86,6 +86,10 @@ export default function HeaderSearch() {
         };
     }, [isOpened]);
 
+    useEffect(() => {
+        handleSearch();
+    }, [searchQuery]);
+
     return (
         <div>
             {/* Desktop inline search bar */}
