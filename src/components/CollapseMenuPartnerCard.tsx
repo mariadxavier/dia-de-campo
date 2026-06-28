@@ -1,4 +1,5 @@
 export default function CollapseMenuPartnerCard() {
+  const comercialEmail = process.env.NEXT_PUBLIC_COMERCIAL_EMAIL_ADDRESS;
   return (
     <div className="flex flex-col gap-4">
       <section className="rounded-2xl bg-(--color-dark-blue) p-5">
@@ -33,10 +34,10 @@ export default function CollapseMenuPartnerCard() {
           </h3>
 
           <a
-            href="mailto:comercial@diadecampo.com.br"
+            href={`mailto:${comercialEmail}`}
             className="mt-1 block text-(--color-green)"
           >
-            comercial@diadecampo.com.br
+            {comercialEmail}
           </a>
         </div>
 

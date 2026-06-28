@@ -1,4 +1,5 @@
 export default function EmailContactCard() {
+    const email = process.env.NEXT_PUBLIC_COMERCIAL_EMAIL_ADDRESS;
     return (
         <section className="rounded-xl border border-gray-200 bg-(--color-white-shell) p-4 w-full">
             <div className="flex gap-3">
@@ -20,7 +21,7 @@ export default function EmailContactCard() {
             </div>
 
             <a
-                href="mailto:comercial@diadecampo.com.br"
+                href={`mailto:${email}`}
                 className="mt-4 flex h-11 w-full items-center justify-center rounded-full border border-(--color-dark-green) bg-white text-[13px] font-semibold text-(--color-dark-green) transition-colors hover:bg-(--color-light-green)"
             >
                 Enviar e-mail
