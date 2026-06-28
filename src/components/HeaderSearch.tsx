@@ -87,7 +87,11 @@ export default function HeaderSearch() {
     }, [isOpened]);
 
     useEffect(() => {
-        handleSearch();
+        if (searchQuery.length <= 0 || !searchQuery || !isOpened) {
+            clearSearch();
+        } else {
+            handleSearch();
+        }
     }, [searchQuery]);
 
     return (
