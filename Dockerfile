@@ -21,6 +21,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
+
 RUN \
   if [ -f package-lock.json ]; then npm run build; \
   elif [ -f yarn.lock ]; then yarn build; \
@@ -28,6 +29,9 @@ RUN \
   else echo "Lockfile não encontrado." && exit 1; \
   fi
 
+RUN npx esbuild scripts/sync-ceasa.ts --bundle --platform=node --target=node24 --outfile=dist/sync-ceasa.js
+
+RUN mkdir ./public
 
 #runner
 FROM node:24-alpine AS runner
@@ -44,12 +48,11 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/next.config.ts ./next.config.ts
+COPY --from=builder /app/dist/sync-ceasa.js ./scripts/sync-ceasa.js
 
 USER nextjs
 EXPOSE 3000
 ENV PORT=3000
 
 CMD ["node_modules/.bin/next", "start"]
-
-EXPOSE 8080
-CMD ["node", "server.js"]
