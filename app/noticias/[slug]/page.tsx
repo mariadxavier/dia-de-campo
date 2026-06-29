@@ -43,7 +43,9 @@ export default async function NewsDetailPage({ params }: PageProps) {
         imgUrl={newsDetail.coverImage}
         imgAlt={newsDetail.seoTitle || newsDetail.title}
       />
-      <NewsDetailContent content={newsDetail.content} />
+      <div className='flex flex-col items-center'>
+        <NewsDetailContent content={newsDetail.content} />
+      </div>
       {newsList &&
         <NewsDetailRecommendations recommended={newsList} />}
     </>
