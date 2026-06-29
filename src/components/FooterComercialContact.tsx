@@ -6,8 +6,9 @@ export default function FooterComercialContact({ className }: { className?: stri
         <p className="text-xs text-(--color-gray)">Mídia, publicidade, parcerias e soluções para marcas do agro</p>
         <Link
             href="?contato=true"
-            scroll={false} className="text-nowrap shrink-0 bg-(--color-green) text-(--color-white) text-sm rounded-lg w-fit px-5 py-2">
+            scroll={false} className="  text-nowrap shrink-0 bg-(--color-green) text-(--color-white) text-sm rounded-lg w-fit px-5 py-2">
             Falar com comercial
         </Link>
+        <p className="text-xs text-(--color-gray)">Resposta em horário comercial</p>
     </div>
 }

@@ -24,7 +24,7 @@ export default async function TechnicalContentDetailPage({ params }: PageProps) 
   if (!content) {
     return notFound();
   }
-  
+
   const contentList = await getTechnicalContentByCategory(content.categoryName, 3, 0);
 
   return (
@@ -42,7 +42,9 @@ export default async function TechnicalContentDetailPage({ params }: PageProps) 
         imgUrl={content.coverImage}
         imgAlt={content.seoTitle || content.title}
       />
-      <NewsDetailContent content={content.content} />
+      <div className='flex flex-col items-center'>
+        <NewsDetailContent content={content.content} />
+      </div>
       {contentList &&
         <NewsDetailRecommendations recommended={contentList} />}
     </>
