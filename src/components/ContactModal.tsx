@@ -9,6 +9,7 @@ export default function ContactModal() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const isOpened = searchParams.get('contato') === 'true';
+  const phoneNumber = process.env.NEXT_PUBLIC_COMERCIAL_PHONE_NUMBER;
 
   const onClose = () => {
     const params = new URLSearchParams(searchParams.toString());
@@ -67,12 +68,14 @@ export default function ContactModal() {
               </div>
             </div>
 
-            <button
-              type="button"
+            <a
+              href={`https://wa.me//${phoneNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="cursor-pointer shrink-0 rounded-full bg-(--color-yellow) px-4 py-2 text-sm font-semibold text-(--color-dark-green) w-full md:w-fit md:h-fit mt-2"
             >
               Falar no WhatsApp
-            </button>
+            </a>
           </section>
         </div>
       </div>

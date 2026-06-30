@@ -12,7 +12,7 @@ export default function PartnerPreview() {
           Alcance quem decide no agro brasileiro
         </h1>
         <p className="text-(--color-white) text-xs md:text-sm">
-          Mais de 50.000 produtores, distribuidores e compradores acessam nosso portal mensalmente.
+          Mais de 30.000 produtores, distribuidores e compradores acessam nosso portal mensalmente.
         </p>
         <Link
           href="?contato=true"
@@ -23,10 +23,10 @@ export default function PartnerPreview() {
         </Link>
       </div>
       <div className="grid grid-rows-2 grid-cols-2 gap-2.5 md:w-1/2">
-        <KPICard value="50k+" description="Visitantes/mês" />
-        <KPICard value="50k+" description="Visitantes/mês" />
-        <KPICard value="50k+" description="Visitantes/mês" />
-        <KPICard value="50k+" description="Visitantes/mês" />
+        <KPICard value="60+" description="Mercados atacadistas e centrais de abastecimento" />
+        <KPICard value="30k+" description="Visitantes/mês" />
+        <KPICard value="300+" description="Empresas e serviços cadastrados" />
+        <KPICard value="100+" description="Artigos técnicos e materiais educativos" />
       </div>
       <Link
         href="?contato=true"

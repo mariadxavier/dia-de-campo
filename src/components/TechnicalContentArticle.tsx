@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { TechnicalContentListItem } from '../types';
 import { Image } from '@/src/components';
+import { Formatter } from '../util/Formatter';
+import { DateHandler } from '../util/DateHandler';
 
 type TechnicalContentArticleProps = {
   content: TechnicalContentListItem;
@@ -14,14 +16,14 @@ export default function TechnicalContentArticle({ content }: TechnicalContentArt
           width={600}
           height={296}
           alt={content.title}
-          className="rounded-md lg:rounded-b-none w-[64px] h-[64px] lg:w-full lg:h-[296px]"
+          className="rounded-md lg:rounded-b-none min-w-[64px] min-h-[64px] h-[64px] w-[64px] lg:w-full lg:h-[296px]"
         />
         <div className="flex flex-col gap-1.5 text-xs lg:p-5 lg:gap-2.5">
           <p className="w-fit flex items-center justify-center py-1 px-2 text-(--color-green) bg-(--color-light-green) rounded-full font-bold text-[10px]">
             {content.categoryName?.toLocaleUpperCase()}
           </p>
           <h3 className="font-bold lg:text-sm text-(--color-dark-green) line-clamp-2">{content.title}</h3>
-          <p className="text-(--color-gray)">{`📅 Atualizado em ${content.publishedAt}`}</p>
+          <p className="text-(--color-gray)">{`📅 Atualizado em ${DateHandler.formatReleaseDate(content.publishedAt || '')}`}</p>
         </div>
       </article>
     </Link>
