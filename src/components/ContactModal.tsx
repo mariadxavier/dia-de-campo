@@ -37,8 +37,8 @@ export default function ContactModal() {
   }
 
   return (
-    <div className="fixed top-0 left-0 p-5 flex items-center justify-center z-999 w-screen h-dvh bg-black/50">
-      <div className={`flex flex-col gap-2 md:gap-6 w-full lg:w-3/4 xl:w-1/2 max-w-[800px] bg-(--color-white) p-4 md:p-6 lg:p-8 rounded-xl`}>
+    <div onClick={onClose} className="cursor-pointer fixed top-0 left-0 p-5 flex items-center justify-center z-999 w-screen h-dvh bg-black/50">
+      <div onClick={(e) => e.stopPropagation()} className={`cursor-default flex flex-col gap-2 md:gap-6 w-full lg:w-3/4 xl:w-1/2 max-w-[800px] bg-(--color-white) p-4 md:p-6 lg:p-8 rounded-xl`}>
         <div className="w-full flex justify-between">
           <Chip text="comercial" textColor="--color-dark-green" />
           <button className="text-(--color-dark-green) bg-(--color-light-gray) rounded-full w-7 h-7 cursor-pointer" onClick={onClose}>X</button>

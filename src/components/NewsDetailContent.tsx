@@ -7,7 +7,7 @@ type NewsDetailContentProps = {
 };
 export default function NewsDetailContent({ content }: NewsDetailContentProps) {
   return (
-    <section className="w-full flex flex-col gap-4 px-5 py-8 text-(--color-dark-blue) md:gap-6 md:px-10 md:py-14 lg:px-30 lg:py-24 xl:max-w-[1664px]">
+    <section className="w-full flex flex-col gap-4 px-5 py-8 text-(--color-dark-blue) md:gap-6 md:px-10 md:py-14 lg:px-30 lg:py-24 xl:max-w-[1440px]">
       {content &&
         content.map((elem, idx) => {
           switch (elem.type) {

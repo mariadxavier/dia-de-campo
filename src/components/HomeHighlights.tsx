@@ -4,6 +4,7 @@ import { Chip, Image, LinkButton } from '@/src/components';
 import ArrowLeft from '@/src/assets/icons/arrow-left-icon.svg';
 import Arrow from '@/src/assets/icons/arrow-icon.svg';
 import { NewsListItem } from '../types';
+import { useRouter } from 'next/navigation';
 
 type CarouselArrowProps = {
   direction: 'previous' | 'next';
@@ -64,6 +65,7 @@ export default function HomeHighligths({ heroItems }: { heroItems: NewsListItem[
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
+  const router = useRouter();
 
   function handleTouchStart(
     e: React.TouchEvent<HTMLDivElement>,
@@ -133,10 +135,13 @@ export default function HomeHighligths({ heroItems }: { heroItems: NewsListItem[
   return (
     <section className="size-full">
       <div
-        className="relative w-full"
+        className="relative w-full cursor-pointer"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        onClick={() => {
+          router.push(currentItem.link);
+        }}
       >
         <Image
           src={currentItem.coverImage}
@@ -149,8 +154,8 @@ export default function HomeHighligths({ heroItems }: { heroItems: NewsListItem[
         <div className="absolute flex flex-col w-full px-5 gap-3.5 md:gap-5 lg:gap-6 bottom-0 text-(--color-white)">
           <div className='flex flex-col gap-3.5 md:mx-14 md:w-2/3 lg:mx-26 lg:w-1/2'>
             <Chip text={currentItem.categoryName || 'Notícia'} textColor='--color-dark-green' />
-            <h3 className="text-3xl md:text-4xl lg:text-[52px] font-extrabold">{currentItem.title}</h3>
-            <p className="text-sm md:text-[17px]">{currentItem.shortDescription}</p>
+            <h3 className="text-3xl md:text-4xl lg:text-[52px] font-extrabold line-clamp-3">{currentItem.title}</h3>
+            <p className="text-sm md:text-[17px] line-clamp-3">{currentItem.shortDescription}</p>
             <LinkButton
               href={currentItem.link || ''}
               className="flex items-center gap-2.5 text-(--color-white) text-sm md:text-[15px]"

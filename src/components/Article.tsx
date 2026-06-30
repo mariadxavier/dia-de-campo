@@ -29,7 +29,7 @@ export default function Article({
 }: ArticleProps) {
   return (
     <Link href={link}>
-      <article className={`flex flex-col rounded-xl shadow-md ${className} md:h-[380px] md:min-w-[232px] bg-(${bgColor})`}>
+      <article className={`flex flex-col rounded-xl shadow-md h-[330px] max-h-[330px] ${className} md:max-h-[380px] md:h-[380px] md:min-w-[232px] bg-(${bgColor})`}>
         {coverType === 'image' && (
           <Image
             src={src}

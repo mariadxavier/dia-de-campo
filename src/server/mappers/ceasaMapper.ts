@@ -1,7 +1,7 @@
 import type { CeasaPriceItem, CeasaPriceRow } from '@/src/types';
 
 function getCeasaLink(productSlug: string, uf: string): string {
-  return `/ceasa/${uf.toLowerCase()}/${productSlug}`;
+  return `/precos-ceasa?produto=${productSlug}&page=1`;
 }
 
 export function mapToCeasaPriceItem(row: CeasaPriceRow): CeasaPriceItem {

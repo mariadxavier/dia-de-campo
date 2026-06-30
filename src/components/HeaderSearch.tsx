@@ -125,8 +125,8 @@ export default function HeaderSearch() {
             </Button>
 
 
-            <div className={`w-screen h-dvh absolute z-999 top-0 md:top-16 left-0 py-8 px-4 md:py-4 md:px-10 lg:px-16 xl:px-20 shadow-xl bg-(--color-white-shell) md:bg-black/50 transition-all duration-200 ease-out ${isOpened ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-95 pointer-events-none'}`}>
-                <div className="flex flex-col gap-3 bg-(--color-white-shell) md:p-5 md:rounded-lg">
+            <div onClick={onClose} className={`cursor-pointer w-screen h-dvh absolute z-999 top-0 md:top-16 left-0 py-8 px-4 md:py-4 md:px-10 lg:px-16 xl:px-20 shadow-xl bg-(--color-white-shell) md:bg-black/50 transition-all duration-200 ease-out ${isOpened ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-95 pointer-events-none'}`}>
+                <div onClick={(e) => e.stopPropagation()} className="cursor-default flex flex-col gap-3 bg-(--color-white-shell) md:p-5 md:rounded-lg">
                     {/* Mobile */}
                     <div className="flex items-center justify-between w-full md:hidden">
                         <div className="flex gap-2 items-center text-xs border border-(--color-green) rounded-lg p-2">

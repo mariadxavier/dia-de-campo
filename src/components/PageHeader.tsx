@@ -27,31 +27,34 @@ export default function PageHeader({
   searchTags,
   searchPlaceholder,
 }: PageHeaderProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [results, setResults] = useState<SearchResult[]>([]);
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const params = new URLSearchParams(searchParams.toString());
   const pesquisaInterna = searchParams.get('pesquisaInterna') || '';
+  const [searchQuery, setSearchQuery] = useState(pesquisaInterna);
+  const [results, setResults] = useState<SearchResult[]>([]);
 
   const onClose = () => {
+    const params = new URLSearchParams(searchParams.toString());
     params.delete("pesquisaInterna");
-    router.replace(`?${params.toString()}`, { scroll: false });
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     setResults([]);
     setSearchQuery('');
   }
 
   const handleRedirect = (href: string) => {
-    onClose();
+    setResults([]);
+    setSearchQuery('');
     router.push(href);
   }
 
   const handleSearch = () => {
-    params.set(
-      "pesquisaInterna",
-      searchQuery,
-    );
+    const params = new URLSearchParams(searchParams.toString());
+    if (searchQuery.trim()) {
+      params.set("pesquisaInterna", searchQuery);
+    } else {
+      params.delete("pesquisaInterna");
+    }
 
     router.replace(
       `${pathname}?${params.toString()}`,
@@ -60,30 +63,31 @@ export default function PageHeader({
   }
 
   useEffect(() => {
-    if (!pesquisaInterna || pesquisaInterna.length <= 0) {
+    setSearchQuery(pesquisaInterna);
+  }, [pesquisaInterna]);
+
+  useEffect(() => {
+    if (!searchQuery.trim()) {
       setResults([]);
-      setSearchQuery("");
       return;
     }
 
     const fetchResults = async () => {
-      const response = await fetch(`/api/search?q=${pesquisaInterna}&path=${pathname}`);
-      const data = await response.json();
-      setResults(data);
+      try {
+        const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}&path=${pathname}`);
+        const data = await response.json();
+        setResults(data);
+      } catch (error) {
+        console.error("Erro ao buscar:", error);
+      }
     };
 
-    fetchResults();
-  }, [pesquisaInterna]);
-  
-  useEffect(
-    () => {
-      if (!searchQuery || searchQuery.length <= 0) {
-        onClose();
-        return;
-      }
+    const delayDebounceFn = setTimeout(() => {
+      fetchResults();
+    }, 300);
 
-      handleSearch();
-    }, [searchQuery])
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery, pathname]);
 
   return (
     <section className="size-full xl:h-[500px] bg-(--color-dark-green) text-(--color-white)">
@@ -143,10 +147,10 @@ export default function PageHeader({
                 <p className="hidden md:block text-sm">Buscar</p>
               </button>
               {(hasSearch) && (
-                <div className={pesquisaInterna ? "absolute top-17 left-[-1] z-1 shadow-xl w-full max-w-[800px]" : "hidden"}>
+                <div className={searchQuery.trim() ? "absolute top-17 left-[-1] z-1 shadow-xl w-full max-w-[800px]" : "hidden"}>
                   <div className={`flex flex-col gap-2 w-full bg-(--color-white-shell) rounded-xl p-3`}>
                     <h2 className={"font-bold text-(--color-dark-blue) text-sm"}>Resultados em {breadcrumb.at(-1)?.label}</h2>
-                    <h3 className='text-(--color-gray) text-xs'>para "<span>{pesquisaInterna}</span>"</h3>
+                    <h3 className='text-(--color-gray) text-xs'>para "<span>{searchQuery}</span>"</h3>
                     <ul className="flex flex-col gap-2 ">
                       {results &&
                         results.map((item, idx) => (
@@ -156,7 +160,7 @@ export default function PageHeader({
                         ))}
 
                       <li key="empty" className={results && results.length > 0 ? 'hidden' : 'flex h-100 items-center justify-center'}>
-                        <p className="text-(--color-gray)">{(searchQuery && pesquisaInterna.length > 0) ? `Nenhum resultado encontrado para "${pesquisaInterna}"` : 'Realize uma busca para ver os resultados'}</p>
+                        <p className="text-(--color-gray)">{searchQuery.trim() ? `Nenhum resultado encontrado para "${searchQuery}"` : 'Realize uma busca para ver os resultados'}</p>
                       </li>
                     </ul>
                   </div>

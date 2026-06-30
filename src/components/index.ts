@@ -49,7 +49,6 @@ export { default as PodcastList } from "./PodcastList";
 export { default as EpisodeRow } from "./EpisodeRow";
 export { default as FeaturedPodcastSection } from "./FeaturedPodcastSection";
 export { default as CeasaCotation } from "./CeasaCotation";
-export { default as CeasaPageHeader } from "./CeasaPageHeader";
 export { default as CeasaSelection } from "./CeasaSelection";
 export { default as CeasaMobileItem } from "./CeasaMobileItem";
 export { default as CollapseMenuButton } from "./CollapseMenuButton";

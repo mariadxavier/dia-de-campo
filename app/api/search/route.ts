@@ -199,14 +199,14 @@ const ceasaPricesSearch = async (supabase: SupabaseClient, query: string) => {
     if (matchedProduct) {
       results.push({
         name: matchedProduct.product_name,
-        href: `/precos-ceasa?produto=${matchedProduct.product_slug}`,
+        href: `/precos-ceasa?produto=${matchedProduct.product_slug}&ceasa=Todas+as+centrais`,
         category: "Preços CEASA",
         description: `Cotação de ${matchedProduct.product_name} em todas as centrais`,
       });
     } else if (matchedCeasa) {
       results.push({
         name: matchedCeasa.ceasa_name,
-        href: `/precos-ceasa?ceasa=${encodeURIComponent(matchedCeasa.ceasa_name)}`,
+        href: `/precos-ceasa?produto=all&ceasa=${encodeURIComponent(matchedCeasa.ceasa_name)}`,
         category: "Preços CEASA",
         description: `Todos os produtos da central ${matchedCeasa.ceasa_name}`,
       });
