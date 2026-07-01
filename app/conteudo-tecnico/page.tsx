@@ -1,4 +1,5 @@
 import {
+  AdBanner,
   NewsFilterTabs,
   NewsList,
   Pagination,
@@ -60,6 +61,7 @@ export default async function TechnicalContentPage({
       />
       <NewsList newsList={technicalContent} />
       <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <AdBanner />
     </div>
   );
 }

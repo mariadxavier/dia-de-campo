@@ -1,4 +1,5 @@
 import {
+  AdBanner,
   NewsDetailContent,
   NewsDetailCoverImage,
   NewsDetailHeader,
@@ -47,6 +48,7 @@ export default async function TechnicalContentDetailPage({ params }: PageProps) 
       </div>
       {contentList &&
         <NewsDetailRecommendations recommended={contentList} />}
+      <AdBanner />
     </>
   );
 }

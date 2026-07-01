@@ -29,4 +29,5 @@ export const cacheKeys = {
     `technical:count:filtered:${category}:${period}`,
   technicalCategoryCounts: (period: string) =>
     `technical:category-counts:${period}`,
+  adBannersByPosition: (position: string) => `adBanners:position:${position}`
 };

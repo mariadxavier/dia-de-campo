@@ -1,4 +1,5 @@
 import {
+  AdBanner,
   CeasaPreview,
   // ClassifiedsPreview,
   HomeHighlights,
@@ -11,7 +12,9 @@ import {
 import UserLocation from '@/src/components/UserLocation';
 import { buildSeoMetadata } from '@/src/helpers/BuildSeoMetadata';
 import FeaturedContent from '@/src/helpers/FeaturedContent';
+import { listAdBannersByPosition } from '@/src/server/services/adBannersService';
 import { listCeasaPrices } from '@/src/server/services/ceasaPricesService';
+import { AdBannerItem } from '@/src/types';
 import { cookies } from 'next/headers';
 
 export async function generateMetadata() {
@@ -36,11 +39,13 @@ export default async function Home() {
   const cookieStore = await cookies();
   const ceasaName = cookieStore.get("selected-ceasa")?.value;
   const ceasaItems = await listCeasaPrices(7, 0, ceasaName ?? "Todas as centrais");
+  const headerAd: AdBannerItem[] = await listAdBannersByPosition('header');
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center">
       <UserLocation />
       <HomeHighlights heroItems={heroItems} />
+      <AdBanner adBanner={headerAd[0]} />
       <HomeSection
         sectionTitle="Últimas do Mercado"
         sectionLink="/noticias"
@@ -59,6 +64,7 @@ export default async function Home() {
       >
         <CeasaPreview ceasaItems={ceasaItems} ceasaFilter={ceasaName} />
       </HomeSection>
+      <AdBanner />
       <HomeSection
         sectionLink="/podcast"
         sectionLinkTitle="Ver todos os episódios"
@@ -75,7 +81,7 @@ export default async function Home() {
         sectionSubtitle="Compra, venda e oportunidades"
         sectionLinkTitle="Ver todos os classificados"
         enableAutoScroll
-      >
+        >
         <ClassifiedsPreview featuredClassifieds={featuredClassifieds} />
       </HomeSection> */}
       <HomeSection
@@ -90,6 +96,7 @@ export default async function Home() {
       </HomeSection>
 
       <PartnerPreview />
+      <AdBanner />
     </div>
   );
 }

@@ -2,7 +2,8 @@ import {
   NewsFilterTabs,
   NewsList,
   Pagination,
-  NewsPageHeader
+  NewsPageHeader,
+  AdBanner
 } from '@/src/components';
 import { buildSeoMetadata } from '@/src/helpers/BuildSeoMetadata';
 import { listNewsFiltered, countNewsFiltered, getNewsCategoryCounts } from '@/src/server/services/newsService';
@@ -59,6 +60,7 @@ export default async function NewsPage({
       />
       <NewsList newsList={news} />
       <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <AdBanner />
     </div>
   );
 }

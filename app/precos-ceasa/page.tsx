@@ -1,4 +1,4 @@
-import { BreadcrumbItem, CeasaCotation, CeasaSelection } from "@/src/components";
+import { AdBanner, BreadcrumbItem, CeasaCotation, CeasaSelection } from "@/src/components";
 import PageHeader from "@/src/components/PageHeader";
 import { buildSeoMetadata } from "@/src/helpers/BuildSeoMetadata";
 import { listCeasaNames, listCeasaPrices, listCeasaPricesByCeasaNameAndProductSlug, listCeasaProductNames } from "@/src/server/services/ceasaPricesService";
@@ -53,7 +53,7 @@ export default async function CeasaPricesPage({ searchParams }: Props) {
         <CeasaSelection items={finalProducts} selectedItem={produto || 'all'} searchParam="produto" label="Selecione o produto" />
       </div>
       <CeasaCotation ceasaName={ceasaSelection} items={prices} />
+      <AdBanner />
     </div>
-
   );
 }

@@ -1,4 +1,4 @@
-import { FeaturedPodcastSection, Pagination, PodcastList, PodcastPageHero } from "@/src/components";
+import { AdBanner, FeaturedPodcastSection, Pagination, PodcastList, PodcastPageHero } from "@/src/components";
 import { buildSeoMetadata } from "@/src/helpers/BuildSeoMetadata";
 import PodcastCalcs from "@/src/helpers/PodcastCalcs";
 import { countPodcastEpisodes, findPodcastBySlug, listPodcastEpisodes } from "@/src/server/services/podcastService";
@@ -36,7 +36,7 @@ export default async function PodcastPage({ searchParams }: Props) {
   const totalPages = Math.max(1, Math.ceil(totalCount / ITEMS_PER_PAGE));
   const featuredEpisodeResult = episodeSlug ? (await findPodcastBySlug(episodeSlug)) : null;
   const FEATURED_EPISODE = featuredEpisodeResult || episodes[0];
-  const averageDuration =  PodcastCalcs.getPodcastAverageDuration(episodes);
+  const averageDuration = PodcastCalcs.getPodcastAverageDuration(episodes);
 
   return (
     <div className="flex flex-col flex-1 bg-(--color-dark-blue) pb-10 md:pb-16">
@@ -48,9 +48,11 @@ export default async function PodcastPage({ searchParams }: Props) {
           perWeek: "1x",
         }}
       />
+      <AdBanner />
       <FeaturedPodcastSection featuredEpisode={FEATURED_EPISODE} />
       <PodcastList episodeList={episodes} />
       <Pagination hasScroll={false} hasLoadMoreButton={false} currentPage={currentPage} totalPages={totalPages} colorTheme="--color-yellow" />
+      <AdBanner />
     </div>
   );
 }
