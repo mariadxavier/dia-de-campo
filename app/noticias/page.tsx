@@ -14,7 +14,7 @@ export async function generateMetadata() {
     title: 'Notícias',
     seo_title: 'Notícias do Mercado Hortigranjeiro | Portal Dia de Campo',
     seo_description: 'Atualizações diárias sobre abastecimento, produção, comercialização e tendências que impactam o mercado hortigranjeiro e o agronegócio nacional.',
-    canonical_url: 'https://portaldiadecampo.com.br/noticias',
+    canonical_url: new URL("/noticias", process.env.NEXT_PUBLIC_APP_URL ?? "https://portaldiadecampo.com.br").toString(),
     og_image_url: '',
   }
 

@@ -10,37 +10,37 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticPages = [
     {
-      url: `${baseUrl}`,
+      url: new URL("/", baseUrl).toString(),
       lastModified: new Date(),
       changeFrequency: "daily" as const,
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/noticias`,
+      url: new URL("/noticias", baseUrl).toString(),
       lastModified: new Date(),
       changeFrequency: "daily" as const,
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/conteudo-tecnico`,
+      url: new URL("/conteudo-tecnico", baseUrl).toString(),
       lastModified: new Date(),
       changeFrequency: "daily" as const,
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/podcast`,
+      url: new URL("/podcast", baseUrl).toString(),
       lastModified: new Date(),
       changeFrequency: "daily" as const,
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/precos-ceasa`,
+      url: new URL("/precos-ceasa", baseUrl).toString(),
       lastModified: new Date(),
       changeFrequency: "daily" as const,
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/classificados`,
+      url: new URL("/classificados", baseUrl).toString(),
       lastModified: new Date(),
       changeFrequency: "daily" as const,
       priority: 0.6,
@@ -53,7 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     contentItems = publishedContents.map((item) => {
       const path = item.type === "news" ? "/noticias" : "/conteudo-tecnico";
       return {
-        url: `${baseUrl}${path}/${item.slug}`,
+        url: new URL(`${path}/${item.slug}`, baseUrl).toString(),
         lastModified: new Date(item.updated_at),
         changeFrequency: "weekly" as const,
         priority: 0.7,
@@ -68,7 +68,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const publishedClassifieds = await findAllPublishedClassifiedSlugs();
     classifiedItems = publishedClassifieds.map((item) => {
       return {
-        url: `${baseUrl}/classificados/${item.slug}`,
+        url: new URL(`/classificados/${item.slug}`, baseUrl).toString(),
         lastModified: new Date(item.updated_at),
         changeFrequency: "weekly" as const,
         priority: 0.6,
@@ -83,7 +83,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const publishedPodcasts = await findAllPublishedPodcastSlugs();
     podcastItems = publishedPodcasts.map((item) => {
       return {
-        url: `${baseUrl}/podcast/${item.slug}`,
+        url: new URL(`/podcast/${item.slug}`, baseUrl).toString(),
         lastModified: new Date(item.updated_at),
         changeFrequency: "weekly" as const,
         priority: 0.6,

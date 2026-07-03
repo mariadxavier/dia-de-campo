@@ -6,7 +6,7 @@ import {
 } from '@/src/components';
 import AdBanner from '@/src/components/AdBanner';
 import { buildSeoMetadata } from '@/src/helpers/BuildSeoMetadata';
-import { countTechnicalContent, getTechnicalContentCategoryCounts, listTechnicalContent, listTechnicalContentFiltered } from '@/src/server/services/technicalContentService';
+import { countTechnicalContent, getTechnicalContentCategoryCounts, listTechnicalContentFiltered } from '@/src/server/services/technicalContentService';
 import { ContentPeriod } from '@/src/types';
 
 export async function generateMetadata() {
@@ -14,7 +14,7 @@ export async function generateMetadata() {
     title: 'Conteúdo Técnico',
     seo_title: 'Conteúdo Técnico Especializado | Portal Dia de Campo',
     seo_description: 'Acesse conteúdos técnicos especializados, estudos de mercado e informações estratégicas para apoiar decisões e impulsionar resultados no setor hortigranjeiro.',
-    canonical_url: 'https://portaldiadecampo.com.br/conteudo-tecnico',
+    canonical_url: new URL("/conteudo-tecnico", process.env.NEXT_PUBLIC_APP_URL ?? "https://portaldiadecampo.com.br").toString(),
     og_image_url: '',
   }
 

@@ -18,7 +18,7 @@ export async function generateMetadata() {
     title: 'Preços CEASA',
     seo_title: 'Preços CEASA Atualizados | Cotações Hortigranjeiras',
     seo_description: 'Monitore os preços CEASA e acompanhe diariamente as cotações dos principais produtos hortigranjeiros comercializados no país.',
-    canonical_url: '/precos-ceasa',
+    canonical_url: new URL("/precos-ceasa", process.env.NEXT_PUBLIC_APP_URL ?? "https://portaldiadecampo.com.br").toString(),
     og_image_url: '',
   }
 

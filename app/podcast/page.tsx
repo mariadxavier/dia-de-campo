@@ -17,7 +17,7 @@ export async function generateMetadata() {
     title: 'Podcasts',
     seo_title: 'Podcasts do Agronegócio e Abastecimento | Portal Dia de Campo',
     seo_description: 'Ouça especialistas discutindo inovação, tecnologia, abastecimento, gestão e os principais desafios e oportunidades do agronegócio brasileiro.',
-    canonical_url: 'https://portaldiadecampo.com.br/podcast',
+    canonical_url: new URL("/podcast", process.env.NEXT_PUBLIC_APP_URL ?? "https://portaldiadecampo.com.br").toString(),
     og_image_url: '',
   }
 
