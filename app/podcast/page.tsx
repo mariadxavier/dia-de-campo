@@ -1,4 +1,5 @@
-import { AdBanner, FeaturedPodcastSection, Pagination, PodcastList, PodcastPageHero } from "@/src/components";
+import { FeaturedPodcastSection, Pagination, PodcastList, PodcastPageHero } from "@/src/components";
+import AdBanner from "@/src/components/AdBanner";
 import { buildSeoMetadata } from "@/src/helpers/BuildSeoMetadata";
 import PodcastCalcs from "@/src/helpers/PodcastCalcs";
 import { countPodcastEpisodes, findPodcastBySlug, listPodcastEpisodes } from "@/src/server/services/podcastService";
@@ -48,11 +49,11 @@ export default async function PodcastPage({ searchParams }: Props) {
           perWeek: "1x",
         }}
       />
-      <AdBanner />
+      <AdBanner position="mid-content" />
       <FeaturedPodcastSection featuredEpisode={FEATURED_EPISODE} />
       <PodcastList episodeList={episodes} />
       <Pagination hasScroll={false} hasLoadMoreButton={false} currentPage={currentPage} totalPages={totalPages} colorTheme="--color-yellow" />
-      <AdBanner />
+      <AdBanner position="footer" />
     </div>
   );
 }

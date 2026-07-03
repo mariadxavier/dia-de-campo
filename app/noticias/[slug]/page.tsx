@@ -1,10 +1,10 @@
 import {
-  AdBanner,
   NewsDetailContent,
   NewsDetailCoverImage,
   NewsDetailHeader,
   NewsDetailRecommendations,
 } from '@/src/components';
+import AdBanner from '@/src/components/AdBanner';
 import { generateContentMetadata } from '@/src/helpers/BuildSeoMetadata';
 import { getNewsByCategory, getNewsBySlug } from '@/src/server/services/newsService';
 import { notFound } from 'next/navigation';
@@ -49,7 +49,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
       </div>
       {newsList &&
         <NewsDetailRecommendations recommended={newsList} />}
-      <AdBanner />
+      <AdBanner position="footer" />
     </>
   );
 }

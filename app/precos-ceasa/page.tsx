@@ -1,4 +1,5 @@
-import { AdBanner, BreadcrumbItem, CeasaCotation, CeasaSelection } from "@/src/components";
+import { BreadcrumbItem, CeasaCotation, CeasaSelection } from "@/src/components";
+import AdBanner from "@/src/components/AdBanner";
 import PageHeader from "@/src/components/PageHeader";
 import { buildSeoMetadata } from "@/src/helpers/BuildSeoMetadata";
 import { listCeasaNames, listCeasaPrices, listCeasaPricesByCeasaNameAndProductSlug, listCeasaProductNames } from "@/src/server/services/ceasaPricesService";
@@ -48,12 +49,13 @@ export default async function CeasaPricesPage({ searchParams }: Props) {
         hasSearch
         searchPlaceholder="Buscar produto, ex: abacate"
       />
+      <AdBanner position="header" />
       <div className="flex flex-col md:flex-row gap-5 py-5 lg:max-w-2/3">
         <CeasaSelection items={finalBranches} selectedItem={ceasaSelection} searchParam="ceasa" label="Selecione a central" />
         <CeasaSelection items={finalProducts} selectedItem={produto || 'all'} searchParam="produto" label="Selecione o produto" />
       </div>
       <CeasaCotation ceasaName={ceasaSelection} items={prices} />
-      <AdBanner />
+      <AdBanner position="footer" />
     </div>
   );
 }

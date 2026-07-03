@@ -7,7 +7,6 @@ import Breadcrumb, { BreadcrumbItem } from './Breadcrumb';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { SearchResult } from '../types';
 import SearchResultItem from './SearchResultItem';
-import AdBanner from './AdBanner';
 
 type PageHeaderProps = {
   title: string;
@@ -190,7 +189,6 @@ export default function PageHeader({
         </div>
         {secondarySection}
       </section>
-      <AdBanner />
     </>
   );
 }

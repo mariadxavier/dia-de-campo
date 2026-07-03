@@ -1,6 +1,6 @@
 import { getSupabaseAdmin } from '@/src/lib/supabase/server';
 
-import type { AdBannerItem, AdBannerRow } from '@/src/types';
+import type { AdBannerRow } from '@/src/types';
 
 const ADBANNER_SELECT = `
   id,
@@ -20,13 +20,12 @@ const ADBANNER_SELECT = `
   updated_at
 `;
 
-export async function findAdBannersByPosition(position: string): Promise<AdBannerRow[]> {
+export async function findAllActiveAdBanners(): Promise<AdBannerRow[]> {
   const supabase = getSupabaseAdmin();
 
   const { data, error } = await supabase
     .from('ad_banners')
     .select(ADBANNER_SELECT)
-    .eq('position', position)
     .eq('is_active', true)
     .lt('starts_at', new Date().toISOString())
     .or(`ends_at.is.null,ends_at.gte.${new Date().toISOString()}`)

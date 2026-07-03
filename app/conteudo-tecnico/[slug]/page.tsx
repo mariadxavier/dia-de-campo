@@ -1,10 +1,10 @@
 import {
-  AdBanner,
   NewsDetailContent,
   NewsDetailCoverImage,
   NewsDetailHeader,
   NewsDetailRecommendations,
 } from '@/src/components';
+import AdBanner from '@/src/components/AdBanner';
 import { generateContentMetadata } from '@/src/helpers/BuildSeoMetadata';
 import { getTechnicalContentByCategory, getTechnicalContentBySlug } from '@/src/server/services/technicalContentService';
 import { notFound } from 'next/navigation';
@@ -48,7 +48,7 @@ export default async function TechnicalContentDetailPage({ params }: PageProps) 
       </div>
       {contentList &&
         <NewsDetailRecommendations recommended={contentList} />}
-      <AdBanner />
+      <AdBanner position="footer" />
     </>
   );
 }

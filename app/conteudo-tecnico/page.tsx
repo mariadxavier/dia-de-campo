@@ -1,10 +1,10 @@
 import {
-  AdBanner,
   NewsFilterTabs,
   NewsList,
   Pagination,
   TechnicalContentPageHeader
 } from '@/src/components';
+import AdBanner from '@/src/components/AdBanner';
 import { buildSeoMetadata } from '@/src/helpers/BuildSeoMetadata';
 import { countTechnicalContent, getTechnicalContentCategoryCounts, listTechnicalContent, listTechnicalContentFiltered } from '@/src/server/services/technicalContentService';
 import { ContentPeriod } from '@/src/types';
@@ -53,6 +53,7 @@ export default async function TechnicalContentPage({
   return (
     <div className="flex flex-col w-full flex-1 items-center justify-center bg-(--color-white-shell)">
       <TechnicalContentPageHeader />
+      <AdBanner position="header" />
       <NewsFilterTabs
         totalResults={totalCount}
         categoryList={categoryList}
@@ -61,7 +62,7 @@ export default async function TechnicalContentPage({
       />
       <NewsList newsList={technicalContent} />
       <Pagination currentPage={currentPage} totalPages={totalPages} />
-      <AdBanner />
+      <AdBanner position="footer" />
     </div>
   );
 }

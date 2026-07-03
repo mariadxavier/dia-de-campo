@@ -2,9 +2,9 @@ import {
   NewsFilterTabs,
   NewsList,
   Pagination,
-  NewsPageHeader,
-  AdBanner
+  NewsPageHeader
 } from '@/src/components';
+import AdBanner from '@/src/components/AdBanner';
 import { buildSeoMetadata } from '@/src/helpers/BuildSeoMetadata';
 import { listNewsFiltered, countNewsFiltered, getNewsCategoryCounts } from '@/src/server/services/newsService';
 import { ContentPeriod } from '@/src/types';
@@ -52,6 +52,7 @@ export default async function NewsPage({
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-(--color-white-shell)">
       <NewsPageHeader />
+      <AdBanner position="header" />
       <NewsFilterTabs
         totalResults={totalCount}
         categoryList={categoryList}
@@ -60,7 +61,7 @@ export default async function NewsPage({
       />
       <NewsList newsList={news} />
       <Pagination currentPage={currentPage} totalPages={totalPages} />
-      <AdBanner />
+      <AdBanner position="footer" />
     </div>
   );
 }

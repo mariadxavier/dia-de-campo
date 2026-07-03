@@ -6,7 +6,6 @@ export { default as SiteMap } from "./SiteMap";
 export { default as SocialMediaLink } from "./SocialMediaLink";
 export { default as NavLink } from "./CollapseMenu";
 export { default as Button } from "./Button";
-export { default as AdBanner } from "./AdBanner";
 export { default as HomeHighlights } from "./HomeHighlights";
 export { default as SectionTitle } from "./SectionTitle";
 export { default as HomeSection } from "./HomeSection";
