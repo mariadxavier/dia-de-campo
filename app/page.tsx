@@ -21,7 +21,7 @@ export async function generateMetadata() {
     seo_title: 'Portal Dia de Campo | Informação Estratégica para o Mercado Hortigranjeiro',
     seo_description: 'O Portal Dia de Campo conecta produtores, atacadistas, centrais de abastecimento e profissionais do setor hortigranjeiro com notícias, conteúdo técnico, análises de mercado, podcasts e indicadores estratégicos.',
     canonical_url: new URL("/", process.env.NEXT_PUBLIC_APP_URL ?? "https://portaldiadecampo.com.br").toString(),
-    og_image_url: '/logoPng.png',
+    og_image_url: '/og-image.png',
   }
 
   return buildSeoMetadata(content)

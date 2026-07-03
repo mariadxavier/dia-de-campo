@@ -10,7 +10,7 @@ type SeoEntity = {
   cover_image_url?: string | null;
 };
 
-export function buildSeoMetadata(content : SeoEntity): Metadata {
+export function buildSeoMetadata(content: SeoEntity): Metadata {
   return {
     title: content.seo_title ?? content.title,
 
@@ -25,22 +25,26 @@ export function buildSeoMetadata(content : SeoEntity): Metadata {
 
       description: content.seo_description ?? content.short_description,
 
-      images: [content.og_image_url ?? content.cover_image_url ?? ''],
+      images: [
+        {
+          url: content.og_image_url ?? content.cover_image_url ?? '',
+          width: 1200,
+          height: 630,
+          alt: content.title,
+        },
+      ],
     },
   };
 }
 
-export async function generateContentMetadata(
-    loader: () => Promise<any>,
-  ): Promise<Metadata> {
-  
-    const content = await loader();
-  
-    if (!content) {
-      return {
-        title: "Conteúdo não encontrado",
-      };
-    }
-  
-    return buildSeoMetadata(content);
+export async function generateContentMetadata(loader: () => Promise<any>): Promise<Metadata> {
+  const content = await loader();
+
+  if (!content) {
+    return {
+      title: 'Conteúdo não encontrado',
+    };
   }
+
+  return buildSeoMetadata(content);
+}
