@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+const storageUrl = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL!);
+const protocol = storageUrl.protocol === "https:" ? "https" : "http";
 
 const nextConfig: NextConfig = {
   images: {
@@ -15,6 +17,11 @@ const nextConfig: NextConfig = {
         hostname: "picsum.photos",
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: protocol,
+        hostname: storageUrl.hostname,
+        pathname: "/**",
       },
     ],
   },

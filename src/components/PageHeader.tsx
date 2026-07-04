@@ -91,7 +91,10 @@ export default function PageHeader({
 
   return (
     <>
-      <section className="size-full xl:h-[500px] bg-(--color-dark-green) text-(--color-white)">
+      <section
+        className="size-full xl:h-[500px] bg-cover bg-center text-(--color-white)"
+        style={{ backgroundImage: 'url(/bokeh-bg.png)' }}
+      >
         <div className="flex flex-col size-full xl:justify-between md:w-4/5 lg:w-2/3 py-10 px-5 md:py-14 md:px-12 lg:py-18 lg:px-20 gap-4 md:gap-6">
           <Breadcrumb items={breadcrumb} currentItemColor="--color-yellow" />
           <div className="flex flex-col gap-4">
@@ -151,7 +154,7 @@ export default function PageHeader({
                   <div className={searchQuery.trim() ? "absolute top-17 left-[-1] z-1 shadow-xl w-full max-w-[800px]" : "hidden"}>
                     <div className={`flex flex-col gap-2 w-full bg-(--color-white-shell) rounded-xl p-3`}>
                       <h2 className={"font-bold text-(--color-dark-blue) text-sm"}>Resultados em {breadcrumb.at(-1)?.label}</h2>
-                      <h3 className='text-(--color-gray) text-xs'>para "<span>{searchQuery}</span>"</h3>
+                      <h3 className='text-(--color-gray) text-xs'>para &quot;<span>{searchQuery}</span>&quot;</h3>
                       <ul className="flex flex-col gap-2 ">
                         {results &&
                           results.map((item, idx) => (

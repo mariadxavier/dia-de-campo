@@ -16,7 +16,7 @@ export default function NewsFeaturedCard({ article }: { article: NewsListItem | 
   return (
     <Link href={`/${article.type === 'news' ? 'noticias' : 'conteudo-tecnico'}/${article.slug}`} className="block group">
       <article className="flex flex-col md:flex-row rounded-2xl overflow-hidden bg-(--color-white) shadow-sm hover:shadow-md transition-shadow">
-        <div className="relative w-full md:w-2/3 lg:max-h-[400px] xl:w-1/2 aspect-[16/10] overflow-hidden">
+        <div className="relative w-full md:w-2/3 lg:min-w-[600px] lg:max-h-[400px] xl:w-1/2 aspect-[16/10] overflow-hidden">
           <Image
             src={article.coverImage}
             alt={article.title}
@@ -33,11 +33,11 @@ export default function NewsFeaturedCard({ article }: { article: NewsListItem | 
             <Chip text={categoryName} badgeColor={badgeColor} />
           </div>
 
-          <h2 className="text-lg md:text-2xl lg:text-4xl font-bold text-(--color-dark-blue) leading-snug group-hover:text-(--color-green) transition-colors">
+          <h2 className="text-lg md:text-2xl lg:text-4xl font-bold text-(--color-dark-blue) leading-snug group-hover:text-(--color-green) transition-colors line-clamp-3">
             {article.title}
           </h2>
 
-          <p className="text-sm text-(--color-gray) leading-relaxed line-clamp-3">
+          <p className="text-sm text-(--color-gray) leading-relaxed line-clamp-2">
             {article.shortDescription}
           </p>
           <div className="flex items-center gap-1.5 text-xs text-(--color-gray) pt-1">

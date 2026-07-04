@@ -24,10 +24,14 @@ function CarouselArrow({ direction, onClick }: CarouselArrowProps) {
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
       aria-label={label}
-      className={`hidden lg:block cursor-pointer absolute top-1/2 -translate-y-1/2 bg-(--color-faded-white) w-12 h-12 rounded-full border border-(--color-white)  ${isPrevious ? 'left-4' : 'right-4'
-        }`}
+      className={`hidden lg:block cursor-pointer absolute top-1/2 -translate-y-1/2 bg-(--color-faded-white) w-12 h-12 rounded-full border border-(--color-white)  ${
+        isPrevious ? 'left-4' : 'right-4'
+      }`}
     >
       <Image
         src={ArrowLeft.src}
@@ -47,10 +51,14 @@ function CarouselDots({ total, currentIndex, onSelect }: CarouselDotsProps) {
         <button
           key={index}
           type="button"
-          onClick={() => onSelect(index)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect(index);
+          }}
           aria-label={`Ir para destaque ${index + 1}`}
-          className={`h-0.75 rounded-full ${index === currentIndex ? 'w-7 bg-(--color-yellow)' : 'w-2 bg-(--color-gray)'
-            }`}
+          className={`h-0.75 rounded-full ${
+            index === currentIndex ? 'w-7 bg-(--color-yellow)' : 'w-2 bg-(--color-gray)'
+          }`}
         />
       ))}
     </div>
@@ -67,23 +75,16 @@ export default function HomeHighligths({ heroItems }: { heroItems: NewsListItem[
   const touchEndX = useRef<number | null>(null);
   const router = useRouter();
 
-  function handleTouchStart(
-    e: React.TouchEvent<HTMLDivElement>,
-  ) {
+  function handleTouchStart(e: React.TouchEvent<HTMLDivElement>) {
     touchStartX.current = e.touches[0].clientX;
   }
 
-  function handleTouchMove(
-    e: React.TouchEvent<HTMLDivElement>,
-  ) {
+  function handleTouchMove(e: React.TouchEvent<HTMLDivElement>) {
     touchEndX.current = e.touches[0].clientX;
   }
 
   function handleTouchEnd() {
-    if (
-      touchStartX.current === null ||
-      touchEndX.current === null
-    ) {
+    if (touchStartX.current === null || touchEndX.current === null) {
       return;
     }
 
@@ -152,9 +153,11 @@ export default function HomeHighligths({ heroItems }: { heroItems: NewsListItem[
         />
 
         <div className="absolute flex flex-col w-full px-5 gap-3.5 md:gap-5 lg:gap-6 bottom-0 text-(--color-white)">
-          <div className='flex flex-col gap-3.5 md:mx-14 md:w-2/3 lg:mx-26 lg:w-1/2'>
-            <Chip text={currentItem.categoryName || 'Notícia'} textColor='--color-dark-green' />
-            <h3 className="text-3xl md:text-4xl lg:text-[52px] font-extrabold line-clamp-3">{currentItem.title}</h3>
+          <div className="flex flex-col gap-3.5 md:mx-14 md:w-2/3 lg:mx-26 lg:w-1/2">
+            <Chip text={currentItem.categoryName || 'Notícia'} textColor="--color-dark-green" />
+            <h3 className="text-3xl md:text-4xl lg:text-[52px] font-extrabold line-clamp-3">
+              {currentItem.title}
+            </h3>
             <p className="text-sm md:text-[17px] line-clamp-3">{currentItem.shortDescription}</p>
             <LinkButton
               href={currentItem.link || ''}
