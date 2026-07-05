@@ -1,5 +1,5 @@
-export default function EmailContactCard() {
-    const email = process.env.NEXT_PUBLIC_COMERCIAL_EMAIL_ADDRESS;
+export default function EmailContactCard({ contact }: { contact?: string }) {
+    const email = contact ?? process.env.NEXT_PUBLIC_COMERCIAL_EMAIL_ADDRESS;
     return (
         <section className="rounded-xl border border-gray-200 bg-(--color-white-shell) p-4 w-full">
             <div className="flex gap-3">
@@ -11,11 +11,11 @@ export default function EmailContactCard() {
 
                 <div>
                     <h2 className="text-sm font-bold text-(--color-dark-blue)">
-                        E-mail comercial
+                        {contact ? `E-mail de ${contact}` : 'E-mail comercial'}
                     </h2>
 
                     <p className="mt-1 text-xs leading-5 text-(--color-gray)">
-                        Envie briefing, proposta ou dúvidas para o time comercial.
+                        {contact ? 'Entre em contato para mais informações' : 'Envie briefing, proposta ou dúvidas para o time comercial.'}
                     </p>
                 </div>
             </div>

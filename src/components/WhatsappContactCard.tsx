@@ -1,5 +1,5 @@
-export default function WhatsAppContactCard() {
-  const phoneNumber = process.env.NEXT_PUBLIC_COMERCIAL_PHONE_NUMBER;
+export default function WhatsAppContactCard({ contact, contactName }: { contact?: string, contactName?: string }) {
+  const phoneNumber = contact ?? process.env.NEXT_PUBLIC_COMERCIAL_PHONE_NUMBER;
 
   return (
     <section className="rounded-xl border border-green-100 bg-(--color-light-green) p-4 w-full">
@@ -10,11 +10,12 @@ export default function WhatsAppContactCard() {
 
         <div>
           <h2 className="text-sm font-bold text-(--color-dark-blue)">
-            WhatsApp comercial
+            {contact ? `Conversar com ${contactName}` : 'WhatsApp comercial'}
+
           </h2>
 
           <p className="mt-1 text-xs leading-5 text-(--color-gray)">
-            Atendimento para anúncios, mídia e destaque editorial.
+            {contact ? 'Entre em contato para mais informações' : 'Atendimento para anúncios, mídia e destaque editorial.'}
           </p>
         </div>
       </div>

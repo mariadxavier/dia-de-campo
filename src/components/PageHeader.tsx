@@ -13,7 +13,6 @@ type PageHeaderProps = {
   description: string;
   breadcrumb: BreadcrumbItem[];
   hasSearch?: boolean;
-  searchTags?: string[];
   secondarySection?: ReactNode;
   searchPlaceholder?: string;
 };
@@ -24,19 +23,16 @@ export default function PageHeader({
   breadcrumb,
   hasSearch,
   secondarySection,
-  searchTags,
   searchPlaceholder,
 }: PageHeaderProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const pesquisaInterna = searchParams.get('pesquisaInterna') || '';
-  const [searchQuery, setSearchQuery] = useState(pesquisaInterna);
+  const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
 
   const onClose = () => {
     const params = new URLSearchParams(searchParams.toString());
-    params.delete("pesquisaInterna");
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     setResults([]);
     setSearchQuery('');
@@ -47,24 +43,6 @@ export default function PageHeader({
     setSearchQuery('');
     router.push(href);
   }
-
-  const handleSearch = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (searchQuery.trim()) {
-      params.set("pesquisaInterna", searchQuery);
-    } else {
-      params.delete("pesquisaInterna");
-    }
-
-    router.replace(
-      `${pathname}?${params.toString()}`,
-      { scroll: false }
-    );
-  }
-
-  useEffect(() => {
-    setSearchQuery(pesquisaInterna);
-  }, [pesquisaInterna]);
 
   useEffect(() => {
     if (!searchQuery.trim()) {
@@ -109,7 +87,6 @@ export default function PageHeader({
                 onSubmit={(e) => {
                   e.preventDefault();
                   if (!searchQuery.trim()) return;
-                  handleSearch();
                 }}
                 className="relative flex items-center gap-3 border border-(--color-gray)/30 rounded-lg p-1.5 bg-(--color-white)"
               >
@@ -171,22 +148,6 @@ export default function PageHeader({
                   </div>
                 )}
               </form>
-
-              {searchTags && (
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="text-[11px] text-(--color-gray)">Mais buscados:</span>
-                  {searchTags.map((tag) => (
-                    <button
-                      key={tag}
-                      type="button"
-                      onClick={() => setSearchQuery(tag)}
-                      className="text-[11px] px-2.5 py-1 rounded-full border border-(--color-white) bg-(--color-faded-white) hover:bg-(--color-green) transition-colors cursor-pointer"
-                    >
-                      {tag}
-                    </button>
-                  ))}
-                </div>
-              )}
             </>
           )}
         </div>

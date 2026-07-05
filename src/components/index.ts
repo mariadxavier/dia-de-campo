@@ -58,3 +58,9 @@ export { default as EmailContactCard } from "./EmailContactCard";
 export { default as FooterComercialContact } from "./FooterComercialContact";
 export { default as HeaderSearch } from "./HeaderSearch";
 export { default as SearchResultItem } from "./SearchResultItem";
+export { default as EmptyList } from "./EmptyList";
+export { default as ClassifiedsList } from "./ClassifiedsList";
+export { default as ClassifiedsPageArticle } from "./ClassifiedsPageArticle";
+export { default as ClassifiedsFilters } from "./ClassifiedsFilters";
+export { default as ClassifiedModal } from "./ClassifiedModal";
+

@@ -1,5 +1,7 @@
 export type ContentType = "news" | "technical" | "classified" | "podcast";
 
+export type ClassifiedCategories =  "vagas" | "insumos" | "servicos" | "produtos" | "maquinas" | 'todos';
+
 export type SlotType = "content" | "hero";
 
 export type ContentBlock = {
@@ -89,8 +91,8 @@ export type ClassifiedRow = {
   id: string;
   title: string;
   slug: string;
-  short_description: string;
-  content: ContentJson;
+  category: ClassifiedCategories;
+  description: string;
   price: number | null;
   contact_name: string | null;
   contact_email: string | null;
@@ -153,28 +155,12 @@ export type PodcastEpisodeItem = {
   featuredPriority: number | null;
 };
 
-export type HomeFeaturedItem = {
-  placementId: string;
-  resourceType: ContentType;
-  resourceId: string;
-  priority: number;
-  title: string;
-  description: string;
-  imageSrc: string;
-  categoryName: string | null;
-  link: string;
-  clientName: string | null;
-  campaignName: string | null;
-  spotifyUrl?: string;
-  youtubeUrl?: string;
-  episode?: string;
-};
-
 export type ClassifiedListItem = {
   id: string;
   title: string;
   slug: string;
-  shortDescription: string;
+  category: ClassifiedCategories;
+  description: string;
   coverImage: string;
   city: string | null;
   state: string | null;
@@ -183,14 +169,9 @@ export type ClassifiedListItem = {
   publishedAt: string | null;
   isFeatured: boolean;
   featuredPriority: number | null;
-};
-
-export type ClassifiedDetail = ClassifiedListItem & {
-  content: ContentJson;
   contactName: string | null;
   contactEmail: string | null;
   contactPhone: string | null;
-  expiresAt: string | null;
   seoTitle: string | null;
   seoDescription: string | null;
   canonicalUrl: string | null;

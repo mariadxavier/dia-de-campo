@@ -1,12 +1,13 @@
 import { getSupabaseAdmin } from "@/src/lib/supabase/server";
-import type { ClassifiedRow } from "@/src/types";
+import type { ClassifiedCategories, ClassifiedRow } from "@/src/types";
+import { UF } from "@/src/types/Location";
 
 const CLASSIFIED_SELECT = `
   id,
   title,
   slug,
-  short_description,
-  content,
+  category,
+  description,
   price,
   contact_name,
   contact_email,
@@ -30,21 +31,33 @@ const CLASSIFIED_SELECT = `
 export async function findPublishedClassifieds(
   limit: number,
   offset: number,
+  category: ClassifiedCategories,
+  state: UF
 ): Promise<ClassifiedRow[]> {
   const supabase = getSupabaseAdmin();
 
-  const { data, error } = await supabase
-    .from("classifieds")
-    .select(CLASSIFIED_SELECT)
-    .eq("is_published", true)
-    .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
-    .order("is_featured", {
-      ascending: false,
-    })
-    .order("published_at", {
-      ascending: false,
-    })
-    .range(offset, offset + limit - 1);
+  let query = supabase
+  .from("classifieds")
+  .select(CLASSIFIED_SELECT)
+  .eq("is_published", true)
+  .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
+  .order("is_featured", {
+    ascending: false,
+  })
+  .order("published_at", {
+    ascending: false,
+  })
+  .range(offset, offset + limit - 1);
+
+  if ( category !== 'todos') {
+    query = query.eq("category", category);
+  }
+
+  if ( state !== 'Todo o Brasil') {
+    query = query.eq("state", state);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     throw new Error(error.message);
@@ -53,9 +66,7 @@ export async function findPublishedClassifieds(
   return (data ?? []) as ClassifiedRow[];
 }
 
-export async function findPublishedClassifiedBySlug(
-  slug: string,
-): Promise<ClassifiedRow | null> {
+export async function findPublishedClassifiedBySlug(slug: string): Promise<ClassifiedRow | null> {
   const supabase = getSupabaseAdmin();
 
   const { data, error } = await supabase
@@ -64,36 +75,13 @@ export async function findPublishedClassifiedBySlug(
     .eq("slug", slug)
     .eq("is_published", true)
     .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
-    .maybeSingle();
+    .single();
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return (data as ClassifiedRow | null) ?? null;
-}
-
-export async function findFeaturedClassifieds(
-  limit = 10,
-): Promise<ClassifiedRow[]> {
-  const supabase = getSupabaseAdmin();
-
-  const { data, error } = await supabase
-    .from("classifieds")
-    .select(CLASSIFIED_SELECT)
-    .eq("is_published", true)
-    .eq("is_featured", true)
-    .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
-    .order("published_at", {
-      ascending: false,
-    })
-    .limit(limit);
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  return (data ?? []) as ClassifiedRow[];
+  return data ?? null;
 }
 
 export async function findClassifiedsByCity(
@@ -144,6 +132,22 @@ export async function findClassifiedsByState(
   return (data ?? []) as ClassifiedRow[];
 }
 
+export async function countClassifieds(): Promise<number> {
+  const supabase = getSupabaseAdmin();
+
+  const { count, error } = await supabase
+    .from("classifieds")
+    .select("*", { count: "exact", head: true })
+    .eq("is_published", true)
+    .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return count ?? 0;
+}
+
 export async function findAllPublishedClassifiedSlugs(): Promise<Array<{ slug: string; updated_at: string }>> {
   const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
@@ -157,4 +161,4 @@ export async function findAllPublishedClassifiedSlugs(): Promise<Array<{ slug: s
   }
 
   return (data ?? []) as Array<{ slug: string; updated_at: string }>;
-}
+}

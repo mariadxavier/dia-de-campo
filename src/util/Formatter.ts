@@ -5,7 +5,7 @@ const currencyFormatter = new Intl.NumberFormat("pt-BR", {
 
 class Formatter {
   static currency(value: number | string): string {
-    let numericValue = typeof value === "string" ? parseFloat(value.replace(',', '.')) : value;
+    const numericValue = typeof value === "string" ? parseFloat(value.replace(',', '.')) : value;
     let cents: number;
 
     if (typeof numericValue === "number" && Number.isFinite(numericValue)) {

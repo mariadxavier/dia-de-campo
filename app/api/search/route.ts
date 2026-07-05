@@ -152,18 +152,18 @@ const classifiedsSearch = async (supabase: SupabaseClient, query: string) => {
 
     const { data, error } = await supabase
       .from("classifieds")
-      .select("title, slug, short_description")
+      .select("title, slug, description")
       .eq("is_published", true)
       .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
-      .or(ilikeFilter(safeQuery, "title", "short_description"))
+      .or(ilikeFilter(safeQuery, "title", "description"))
       .limit(5);
 
     if (error) throw error;
     return (data ?? []).map((item) => ({
       name: item.title,
-      href: `/classificados/${item.slug}`,
+      href: `/classificados?anuncio=${item.slug}`,
       category: "Classificados",
-      description: item.short_description,
+      description: item.description,
     }));
   } catch (err) {
     console.error("Error searching classifieds:", err);

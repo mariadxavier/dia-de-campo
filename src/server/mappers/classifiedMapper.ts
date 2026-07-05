@@ -1,11 +1,10 @@
 import type {
-    ClassifiedDetail,
     ClassifiedListItem,
     ClassifiedRow,
   } from "@/src/types";
   
   function getClassifiedLink(slug: string): string {
-    return `/classificados/${slug}`;
+    return `/classificados?anuncio=${slug}`;
   }
   
   export function mapToClassifiedListItem(
@@ -18,7 +17,8 @@ import type {
       id: row.id,
       title: row.title,
       slug: row.slug,
-      shortDescription: row.short_description,
+      category: row.category,
+      description: row.description,
       coverImage: row.cover_image_url,
       city: row.city,
       state: row.state,
@@ -27,27 +27,9 @@ import type {
       publishedAt: row.published_at,
       isFeatured: priority !== undefined,
       featuredPriority: priority ?? null,
-    };
-  }
-  
-  export function mapToClassifiedDetail(
-    row: ClassifiedRow,
-    featuredPriorityById?: Map<string, number>,
-  ): ClassifiedDetail {
-    return {
-      ...mapToClassifiedListItem(
-        row,
-        featuredPriorityById,
-      ),
-  
-      content: row.content,
-  
       contactName: row.contact_name,
       contactEmail: row.contact_email,
       contactPhone: row.contact_phone,
-  
-      expiresAt: row.expires_at,
-  
       seoTitle: row.seo_title,
       seoDescription: row.seo_description,
       canonicalUrl: row.canonical_url,

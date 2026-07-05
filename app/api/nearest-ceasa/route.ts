@@ -42,6 +42,11 @@ export async function POST(request: NextRequest) {
             ceasa.name
         );
 
+        response.cookies.set(
+            "uf",
+            ceasa.uf
+        );
+
         return response;
     } catch (error) {
         console.error("Erro inesperado na rota /api/nearest-ceasa:", error);

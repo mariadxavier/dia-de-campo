@@ -14,8 +14,8 @@ export const cacheKeys = {
   podcastList: (limit: number, offset: number) =>
     `podcast:list:${limit}:${offset}`,
   podcastBySlug: (slug: string) => `podcast:slug:${slug}`,
-  classifiedList: (limit: number, offset: number) =>
-    `classified:list:${limit}:${offset}`,
+  classifiedList: (limit: number, offset: number, category: string, state: string) =>
+    `classified:list:${limit}:${offset}:${category}:${state}`,
   classifiedBySlug: (slug: string) => `classified:slug:${slug}`,
   newsListFiltered: (limit: number, offset: number, category: string, period: string) =>
     `news:list:filtered:${limit}:${offset}:${category}:${period}`,

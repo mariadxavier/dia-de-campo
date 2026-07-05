@@ -1,6 +1,6 @@
 import {
   CeasaPreview,
-  // ClassifiedsPreview,
+  ClassifiedsPreview,
   HomeHighlights,
   HomeSection,
   NewsPreview,
@@ -32,7 +32,7 @@ export default async function Home() {
   const featuredNews = await FeaturedContent.getNews();
   const podcastList = await FeaturedContent.getPodcasts();
   const mainPodcast = await FeaturedContent.getMainPodcast();
-  // const featuredClassifieds = await FeaturedContent.getClassifieds();
+  const featuredClassifieds = await FeaturedContent.getClassifieds();
   const technicalContent = await FeaturedContent.getTechnicalContent();
   const cookieStore = await cookies();
   const ceasaName = cookieStore.get("selected-ceasa")?.value;
@@ -72,7 +72,7 @@ export default async function Home() {
       >
         <PodcastPreview mainPodcast={mainPodcast} podcastList={podcastList} />
       </HomeSection>
-      {/* <HomeSection
+      <HomeSection
         sectionTitle="Classificados"
         sectionLink="/classificados"
         sectionSubtitle="Compra, venda e oportunidades"
@@ -80,7 +80,7 @@ export default async function Home() {
         enableAutoScroll
         >
         <ClassifiedsPreview featuredClassifieds={featuredClassifieds} />
-      </HomeSection> */}
+      </HomeSection>
       <HomeSection
         sectionTitle="Conteúdo Técnico"
         sectionLink="/conteudo-tecnico"

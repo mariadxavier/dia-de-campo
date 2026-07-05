@@ -35,7 +35,7 @@ class PageDefinitions {
       type: "main",
       href: "/classificados",
       name: "Classificados",
-      showOnMenu: false,
+      showOnMenu: true,
     },
     {
       type: "institutional",
