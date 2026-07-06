@@ -31,8 +31,6 @@ RUN \
 
 RUN npx esbuild scripts/sync-ceasa.ts --bundle --platform=node --target=node24 --outfile=dist/sync-ceasa.js
 
-RUN mkdir ./public
-
 #runner
 FROM node:24-alpine AS runner
 

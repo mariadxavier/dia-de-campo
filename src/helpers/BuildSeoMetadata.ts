@@ -10,7 +10,16 @@ type SeoEntity = {
   cover_image_url?: string | null;
 };
 
+function toAbsoluteUrl(url: string | null | undefined): string {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://portaldiadecampo.com.br';
+  return `${base.replace(/\/$/, '')}${url}`;
+}
+
 export function buildSeoMetadata(content: SeoEntity): Metadata {
+  const ogImageUrl = toAbsoluteUrl(content.og_image_url ?? content.cover_image_url);
+
   return {
     title: content.seo_title ?? content.title,
 
@@ -25,14 +34,16 @@ export function buildSeoMetadata(content: SeoEntity): Metadata {
 
       description: content.seo_description ?? content.short_description,
 
-      images: [
-        {
-          url: content.og_image_url ?? content.cover_image_url ?? '',
-          width: 1200,
-          height: 630,
-          alt: content.title,
-        },
-      ],
+      images: ogImageUrl
+        ? [
+            {
+              url: ogImageUrl,
+              width: 1200,
+              height: 630,
+              alt: content.title,
+            },
+          ]
+        : [],
     },
   };
 }
