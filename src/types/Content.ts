@@ -50,6 +50,7 @@ export type ContentItemRow = {
   created_at: string;
   updated_at: string;
   categories?: CategoryRow | null;
+  source: string;
 };
 
 export type PodcastEpisodeRow = {
@@ -134,6 +135,7 @@ export type NewsDetail = NewsListItem & {
   seoDescription: string | null;
   canonicalUrl: string | null;
   ogImageUrl: string | null;
+  source: string;
 };
 
 export type TechnicalContentListItem = NewsListItem;

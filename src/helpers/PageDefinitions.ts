@@ -32,13 +32,13 @@ class PageDefinitions {
       showOnMenu: true,
     },
     {
-      type: "main",
+      type: "institutional",
       href: "/classificados",
       name: "Classificados",
       showOnMenu: true,
     },
     {
-      type: "institutional",
+      type: "main",
       href: "/conteudo-tecnico",
       name: "Conteúdo Técnico",
       showOnMenu: true,

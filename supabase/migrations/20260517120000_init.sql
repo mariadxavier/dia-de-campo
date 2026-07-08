@@ -42,6 +42,7 @@ CREATE TABLE content_items (
   seo_description TEXT,
   canonical_url TEXT,
   og_image_url TEXT,
+  source TEXT NOT NULL,
 
   search_vector tsvector,
 

@@ -63,4 +63,5 @@ export { default as ClassifiedsList } from "./ClassifiedsList";
 export { default as ClassifiedsPageArticle } from "./ClassifiedsPageArticle";
 export { default as ClassifiedsFilters } from "./ClassifiedsFilters";
 export { default as ClassifiedModal } from "./ClassifiedModal";
-
+export { default as NewsAuthorInfo } from "./NewsAuthorInfo";
+export { default as NewsReferences } from "./NewsReferences";

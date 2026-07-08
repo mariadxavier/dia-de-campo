@@ -4,10 +4,11 @@ import NewsContentQuote from './NewsContentQuote';
 
 type NewsDetailContentProps = {
   content: ContentJson;
+  className?: string;
 };
-export default function NewsDetailContent({ content }: NewsDetailContentProps) {
+export default function NewsDetailContent({ content, className }: NewsDetailContentProps) {
   return (
-    <section className="w-full flex flex-col gap-4 px-5 py-8 text-(--color-dark-blue) md:gap-6 md:px-10 md:py-14 lg:px-30 lg:py-24 xl:max-w-[1440px]">
+    <section className={`w-full flex flex-col gap-4 text-(--color-dark-blue) md:gap-6 xl:max-w-[1440px] ${className}`}>
       {content &&
         content.map((elem, idx) => {
           switch (elem.type) {

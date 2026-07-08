@@ -43,6 +43,7 @@ export function mapToNewsDetail(
     seoTitle: row.seo_title,
     seoDescription: row.seo_description,
     canonicalUrl: row.canonical_url,
-    ogImageUrl: row.og_image_url
+    ogImageUrl: row.og_image_url,
+    source: row.source,
   };
 }
