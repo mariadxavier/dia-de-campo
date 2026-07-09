@@ -2,7 +2,7 @@ FROM node:24-alpine AS deps
 
 WORKDIR /app
 
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./ 
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 
 #Instalacao dependencias
 RUN \
