@@ -14,7 +14,7 @@ export default function SocialMediaLink() {
         {socialMedias &&
           socialMedias.map((socialMedia, idx) => (
             <li key={idx} className="flex items-center justify-center rounded-full bg-(--color-dark-blue) w-9 h-9 md:w-9 md:h-9">
-              <Link href={socialMedia.link} >
+              <Link href={socialMedia.link} target="_blank" rel="noopener noreferrer">
                 <Image src={socialMedia.icon.src} width={20} height={20} alt={socialMedia.name} />
               </Link>
             </li>

@@ -9,6 +9,8 @@ type PodcastListProps = {
 
 export default function PodcastList({ episodeList }: PodcastListProps) {
     if (!episodeList || episodeList.length === 0) return null;
+    const youtubeLink = process.env.NEXT_PUBLIC_SOCIAL_YOUTUBE || '/podcast';
+    const spotifyLink = process.env.NEXT_PUBLIC_SOCIAL_SPOTIFY || '/podcast';
 
     return (
         <section id="podcastList" className="w-full flex flex-col md:flex-row md:items-center gap-4 p-5 md:p-10 lg:p-16 md:gap-8">
@@ -26,9 +28,8 @@ export default function PodcastList({ episodeList }: PodcastListProps) {
                 <h1 className="text-xl font-bold">Ouça no seu app favorito</h1>
                 <p className="text-xs text-(--color-gray)">Assine o Podcast Dia de Campo e receba novos episódios assim que forem publicados</p>
                 <div className="flex gap-2 items-center">
-                    {/* TODO: COLOCAR LINK DOS CANAIS OFICIAIS DO PODCAST */}
-                    <Link href={'/podcast'} className="w-full text-center font-semibold text-sm p-2 rounded-lg border border-(--color-faded-white) bg-(--color-green)">Spotify</Link>
-                    <Link href={'/podcast'} className="w-full text-center font-semibold text-sm p-2 rounded-lg border border-(--color-faded-white) bg-(--color-red)">Youtube</Link>
+                    <Link href={spotifyLink} target="_blank" rel="noopener noreferrer" className="w-full text-center font-semibold text-sm p-2 rounded-lg border border-(--color-faded-white) bg-(--color-green)">Spotify</Link>
+                    <Link href={youtubeLink} target="_blank" rel="noopener noreferrer" className="w-full text-center font-semibold text-sm p-2 rounded-lg border border-(--color-faded-white) bg-(--color-red)">Youtube</Link>
                 </div>
 
             </div>
