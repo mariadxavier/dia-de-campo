@@ -11,7 +11,7 @@ export function isPlacementActive(
   return current >= start && current <= end;
 }
 
-export function sortByFeaturedThenPublished<T extends { id: string; published_at?: string | null }>(
+export function sortByFeaturedThenPublished<T extends { id: string; published_at?: string | null; sort_order?: number | null }>(
   items: T[],
   featuredPriorityById: FeaturedPriorityMap,
 ): T[] {
@@ -28,6 +28,17 @@ export function sortByFeaturedThenPublished<T extends { id: string; published_at
     } else if (aFeatured) {
       return -1;
     } else if (bFeatured) {
+      return 1;
+    }
+
+    const aOrder = a.sort_order ?? null;
+    const bOrder = b.sort_order ?? null;
+
+    if (aOrder !== null && bOrder !== null) {
+      if (aOrder !== bOrder) return aOrder - bOrder;
+    } else if (aOrder !== null) {
+      return -1;
+    } else if (bOrder !== null) {
       return 1;
     }
 
