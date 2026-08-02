@@ -37,7 +37,7 @@ export default function CollapseMenu({ items }: NavLinkProps) {
 
   return (
     <div className="lg:hidden flex items-center">
-      <CollapseMenuButton onClick={toggleMenuExpanded} />
+      <CollapseMenuButton onClick={toggleMenuExpanded} isOpen={isMenuExpanded} />
       {isMenuExpanded &&
         <div className="flex flex-col gap-3 w-screen h-dvh absolute z-999 bg-(--color-white-shell) top-16 left-0 p-5 shadow-xl">
           <h1 className="text-(--color-bg-blue) text-2xl font-bold">Menu</h1>
@@ -47,7 +47,7 @@ export default function CollapseMenu({ items }: NavLinkProps) {
               {items &&
                 items.map((item, idx) => (
                   <li key={idx} >
-                    <Link className="flex items-center gap-4  justify-between font-bold text-(--color-green) text-sm" href={item.href}>
+                    <Link className="flex items-center gap-4  justify-between font-bold text-(--color-green) text-sm" href={item.href} onClick={() => setIsMenuExpanded(false)}>
                       <div className="flex items-center gap-4">
 
                         <p className="bg-(--color-yellow) w-7 h-7 rounded-full flex items-center justify-center text-(--color-green) text-xs">{item.name.toUpperCase().slice(0, 2)}</p>

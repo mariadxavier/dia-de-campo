@@ -14,7 +14,7 @@ export default function FeaturedPodcastSection({ featuredEpisode }: FeaturedPodc
 
 
     return (
-        <section className="w-full flex flex-col gap-6 px-5 md:px-10 lg:px-16">
+        <section className="w-full flex flex-col gap-6 px-5 py-8 md:px-10 lg:px-16">
             <h1 className="text-(--color-white) text-2xl font-bold md:text-4xl">Episódio em destaque</h1>
 
             <article className="rounded-2xl overflow-hidden bg-(--color-urain-blue) border border-(--color-faded-white) flex flex-col xl:flex-row md:items-center md:gap-6 md:p-5 lg:p-12">

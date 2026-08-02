@@ -1,22 +1,9 @@
 "use client";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
-export default function CollapseMenuButton({ onClick }: { onClick: () => void }) {
-    const pathname = usePathname();
-    const [isOpen, setIsOpen] = useState(false);
-
-    const handleClick = () => {
-        setIsOpen(!isOpen);
-        onClick();
-    }
-
-    useEffect(() => {
-        setIsOpen(false);
-    }, [pathname]);
+export default function CollapseMenuButton({ onClick, isOpen }: { onClick: () => void; isOpen: boolean }) {
 
     return <button
-        onClick={handleClick}
+        onClick={onClick}
         className="relative flex h-10 w-10 items-center justify-center cursor-pointer"
         aria-label="Menu"
     >

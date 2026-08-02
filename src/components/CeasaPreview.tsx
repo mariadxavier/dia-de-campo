@@ -21,6 +21,7 @@ export default function CeasaPreview({ ceasaItems, ceasaFilter }: { ceasaItems: 
               <div className="flex flex-col gap-0.5 w-full">
                 <h3 className="font-bold text-sm">{ceasaPrice.productName}</h3>
                 <p className="text-(--color-gray) text-xs">{ceasaPrice.unity}</p>
+                <p className="text-(--color-gray) text-xs">{ceasaPrice.ceasaName}</p>
               </div>
               <h2 className="font-bold text-(--color-dark-green)">
                 {Formatter.currency(ceasaPrice.dailyPrice)}
@@ -28,7 +29,7 @@ export default function CeasaPreview({ ceasaItems, ceasaFilter }: { ceasaItems: 
               <p
                 className={`flex justify-center text-xs font-bold px-4 py-2 bg-(--color-light-green) text-(--color-green) rounded-full min-w-13`}
               >
-                {ceasaPrice.priceVariation}
+                {`${ceasaPrice.priceVariation}%`}
               </p>
             </article>
           </Link>
