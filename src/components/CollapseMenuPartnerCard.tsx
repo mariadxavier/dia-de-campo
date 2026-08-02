@@ -1,5 +1,7 @@
 export default function CollapseMenuPartnerCard() {
   const comercialEmail = process.env.NEXT_PUBLIC_COMERCIAL_EMAIL_ADDRESS;
+  const phoneNumber = process.env.NEXT_PUBLIC_COMERCIAL_PHONE_NUMBER;
+
   return (
     <div className="flex flex-col gap-4">
       <section className="rounded-2xl bg-(--color-dark-blue) p-5">
@@ -18,12 +20,14 @@ export default function CollapseMenuPartnerCard() {
             </p>
           </div>
 
-          <button
-            type="button"
+          <a
+            href={`https://wa.me//${phoneNumber}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="shrink-0 rounded-full bg-(--color-yellow) p-3 text-sm font-semibold text-(--color-dark-green)"
           >
             WhatsApp
-          </button>
+          </a>
         </div>
       </section>
 
@@ -41,12 +45,12 @@ export default function CollapseMenuPartnerCard() {
           </a>
         </div>
 
-        <button
-          type="button"
+        <a
+          href={`mailto:${comercialEmail}`}
           className="rounded-full bg-(--color-light-green) px-5 py-2.5 text-sm font-semibold text-(--color-green)"
         >
           Enviar
-        </button>
+        </a>
       </section>
     </div>
   );

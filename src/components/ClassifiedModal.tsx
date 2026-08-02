@@ -11,7 +11,6 @@ export default function ClassifiedModal({ classifiedData }: { classifiedData: Cl
     const searchParams = useSearchParams();
     const router = useRouter();
     const isOpened = searchParams.get('anuncio');
-    const phoneNumber = process.env.NEXT_PUBLIC_COMERCIAL_PHONE_NUMBER;
 
     const onClose = () => {
         const params = new URLSearchParams(searchParams.toString());
