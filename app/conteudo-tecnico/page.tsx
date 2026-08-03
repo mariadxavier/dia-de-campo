@@ -31,7 +31,7 @@ export default async function TechnicalContentPage({
   const pageStr = params?.page;
   const page = typeof pageStr === 'string' ? parseInt(pageStr, 10) : 1;
   const currentPage = isNaN(page) || page < 1 ? 1 : page;
-  const ITEMS_PER_PAGE = 10;
+  const ITEMS_PER_PAGE = 9;
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   const rawCategory = typeof params?.category === 'string' ? params.category : 'todos';
