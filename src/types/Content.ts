@@ -51,6 +51,8 @@ export type ContentItemRow = {
   updated_at: string;
   categories?: CategoryRow | null;
   source: string;
+  cover_image_source_credits: string | null;
+  has_ai_content: boolean | null;
 };
 
 export type PodcastEpisodeRow = {
@@ -136,6 +138,8 @@ export type NewsDetail = NewsListItem & {
   canonicalUrl: string | null;
   ogImageUrl: string | null;
   source: string;
+  coverImageSourceCredits: string | null;
+  hasAiContent: boolean | null;
 };
 
 export type TechnicalContentListItem = NewsListItem;

@@ -45,5 +45,7 @@ export function mapToNewsDetail(
     canonicalUrl: row.canonical_url,
     ogImageUrl: row.og_image_url,
     source: row.source,
+    coverImageSourceCredits: row.cover_image_source_credits,
+    hasAiContent: row.has_ai_content,
   };
 }

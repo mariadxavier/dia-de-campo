@@ -42,6 +42,8 @@ export default async function TechnicalContentDetailPage({ params }: PageProps) 
         releaseDate={content.publishedAt}
       />
       <NewsDetailCoverImage
+        imgIsAi={content.hasAiContent}
+        imgCredits={content.coverImageSourceCredits}
         imgUrl={content.coverImage}
         imgAlt={content.seoTitle || content.title}
       />

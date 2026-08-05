@@ -43,6 +43,8 @@ export default async function NewsDetailPage({ params }: PageProps) {
         releaseDate={newsDetail.publishedAt}
       />
       <NewsDetailCoverImage
+        imgCredits={newsDetail.coverImageSourceCredits}
+        imgIsAi={newsDetail.hasAiContent ?? false}
         imgUrl={newsDetail.coverImage}
         imgAlt={newsDetail.seoTitle || newsDetail.title}
       />
