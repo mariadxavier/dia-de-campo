@@ -1,5 +1,7 @@
 import type { PodcastEpisodeItem } from "@/src/types";
 import { EpisodeRow } from "@/src/components";
+import EmptyList from "./EmptyList";
+import { EMPTY_CONTENT_MESSAGE } from "@/src/helpers/EmptyMessages";
 import Link from "next/link";
 
 
@@ -8,9 +10,9 @@ type PodcastListProps = {
 };
 
 export default function PodcastList({ episodeList }: PodcastListProps) {
-    if (!episodeList || episodeList.length === 0) return null;
     const youtubeLink = process.env.NEXT_PUBLIC_SOCIAL_YOUTUBE || '/podcast';
     const spotifyLink = process.env.NEXT_PUBLIC_SOCIAL_SPOTIFY || '/podcast';
+    const hasEpisodes = episodeList && episodeList.length > 0;
 
     return (
         <section id="podcastList" className="w-full flex flex-col md:flex-row md:items-center gap-4 p-5 md:p-10 lg:p-16 md:gap-8">
@@ -18,11 +20,15 @@ export default function PodcastList({ episodeList }: PodcastListProps) {
                 <h2 className="text-2xl font-bold text-(--color-white)">
                     Todos os episódios
                 </h2>
-                <ul className="flex flex-col gap-4">
-                    {episodeList.map((episode) => (
-                        <EpisodeRow key={episode.id} episode={episode} />
-                    ))}
-                </ul>
+                {hasEpisodes ? (
+                    <ul className="flex flex-col gap-4">
+                        {episodeList.map((episode) => (
+                            <EpisodeRow key={episode.id} episode={episode} />
+                        ))}
+                    </ul>
+                ) : (
+                    <EmptyList message={EMPTY_CONTENT_MESSAGE} />
+                )}
             </div>
             <div className="flex flex-col text-(--color-white) gap-4 p-4 md:gap-6 group border border-(--color-faded-white) rounded-xl bg-(--color-urain-blue)">
                 <h1 className="text-xl font-bold">Ouça no seu app favorito</h1>

@@ -3,6 +3,7 @@ import AdBanner from "@/src/components/AdBanner";
 import PageHeader from "@/src/components/PageHeader";
 import { buildSeoMetadata } from "@/src/helpers/BuildSeoMetadata";
 import { listCeasaNames, listCeasaPrices, listCeasaPricesByCeasaNameAndProductSlug, listCeasaProductNames } from "@/src/server/services/ceasaPricesService";
+import { CeasaPriceItem } from "@/src/types";
 import { cookies } from "next/headers";
 
 type Props = {
@@ -30,11 +31,25 @@ export default async function CeasaPricesPage({ searchParams }: Props) {
   const ceasaName = cookieStore.get("selected-ceasa")?.value;
   const { ceasa, produto } = await searchParams;
   const ceasaSelection = ceasa || ceasaName || 'Todas as centrais';
-  const branches = await listCeasaNames();
-  const products = await listCeasaProductNames(ceasaSelection);
+
+  let branches: string[] = [];
+  let products: Awaited<ReturnType<typeof listCeasaProductNames>> = [];
+  let prices: CeasaPriceItem[] = [];
+
+  try {
+    branches = await listCeasaNames();
+    products = await listCeasaProductNames(ceasaSelection);
+    prices = produto
+      ? await listCeasaPricesByCeasaNameAndProductSlug(210, 0, ceasaSelection, produto)
+      : await listCeasaPrices(210, 0, ceasaSelection);
+  } catch {
+    branches = [];
+    products = [];
+    prices = [];
+  }
+
   const finalProducts = [{ product_name: 'Todos os Produtos', product_slug: 'all' }, ...products]
   const finalBranches = ['Todas as centrais', ...branches];
-  const prices = produto ? await listCeasaPricesByCeasaNameAndProductSlug(210, 0, ceasaSelection, produto) : await listCeasaPrices(210, 0, ceasaSelection);
   const BREADCRUMB: BreadcrumbItem[] = [
     { label: "Home", href: "/" },
     { label: "Preços CEASA", href: "/precos-ceasa" }

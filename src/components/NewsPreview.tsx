@@ -1,11 +1,17 @@
 'use client';
 import { Article, LinkButton } from '@/src/components';
+import EmptyList from './EmptyList';
+import { EMPTY_CONTENT_MESSAGE } from '@/src/helpers/EmptyMessages';
 import { getCategoryBadgeColor, formatPublishedDate } from '../helpers/NewsPageData';
 import { useMediaQuery } from '../context/MediaQuery';
 import { NewsListItem } from '../types';
 
 export default function NewsPreview({ articles }: { articles: NewsListItem[] }) {
   const { isLgScreen } = useMediaQuery();
+
+  if (articles.length === 0) {
+    return <EmptyList message={EMPTY_CONTENT_MESSAGE} />;
+  }
 
   return (
     <>

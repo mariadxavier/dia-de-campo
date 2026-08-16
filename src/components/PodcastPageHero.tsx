@@ -3,7 +3,7 @@ import { Breadcrumb, Chip, FeaturedEpisodeCard, KPICard } from '@/src/components
 import type { PodcastEpisodeItem } from '@/src/types';
 
 type PodcastPageHeroProps = {
-  featuredEpisode: PodcastEpisodeItem;
+  featuredEpisode?: PodcastEpisodeItem | null;
   stats: {
     totalEpisodes: string;
     avgDuration: string;
@@ -29,12 +29,14 @@ export default function PodcastPageHero({ featuredEpisode, stats }: PodcastPageH
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3">
-          <Link
-            href={featuredEpisode.link}
-            className="flex items-center justify-center text-nowrap px-6 py-3.5 rounded-xl bg-(--color-yellow) text-(--color-dark-blue) font-semibold text-sm hover:brightness-95 active:scale-95 transition-all duration-150 w-full sm:w-auto"
-          >
-            Ouvir episódio em destaque
-          </Link>
+          {featuredEpisode && (
+            <Link
+              href={featuredEpisode.link}
+              className="flex items-center justify-center text-nowrap px-6 py-3.5 rounded-xl bg-(--color-yellow) text-(--color-dark-blue) font-semibold text-sm hover:brightness-95 active:scale-95 transition-all duration-150 w-full sm:w-auto"
+            >
+              Ouvir episódio em destaque
+            </Link>
+          )}
           <Link
             href="/podcast#podcastList"
             className="text-nowrap flex items-center justify-center px-6 py-3.5 rounded-xl border border-(--color-gray)/30 text-(--color-white) font-semibold text-sm hover:bg-white/5 active:scale-95 transition-all duration-150 w-full sm:w-auto"
@@ -67,9 +69,11 @@ export default function PodcastPageHero({ featuredEpisode, stats }: PodcastPageH
           />
         </div>
       </div>
-      <div className='lg:w-2/5'>
-        <FeaturedEpisodeCard episode={featuredEpisode} />
-      </div>
+      {featuredEpisode && (
+        <div className='lg:w-2/5'>
+          <FeaturedEpisodeCard episode={featuredEpisode} />
+        </div>
+      )}
     </section>
   );
 }

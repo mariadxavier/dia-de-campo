@@ -1,7 +1,21 @@
 import { Article, LinkButton, PodcastSimpleViewer } from '@/src/components';
+import EmptyList from './EmptyList';
+import { EMPTY_CONTENT_MESSAGE } from '@/src/helpers/EmptyMessages';
 import { PodcastEpisodeItem } from '../types';
 
-export default function PodcastPreview({mainPodcast, podcastList}: {mainPodcast: PodcastEpisodeItem, podcastList: PodcastEpisodeItem[]}) {
+export default function PodcastPreview({
+  mainPodcast,
+  podcastList,
+}: {
+  mainPodcast?: PodcastEpisodeItem | null;
+  podcastList: PodcastEpisodeItem[];
+}) {
+  const hasContent = mainPodcast || (podcastList && podcastList.length > 0);
+
+  if (!hasContent) {
+    return <EmptyList message={EMPTY_CONTENT_MESSAGE} />;
+  }
+
   return (
     <div className='flex flex-col items-center w-full m-auto max-w-[480px] lg:max-w-none lg:items-start gap-5 lg:gap-8 lg:flex-row'>
 

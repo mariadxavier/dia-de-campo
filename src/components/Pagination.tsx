@@ -8,10 +8,9 @@ type PaginationProps = {
   totalPages: number;
   colorTheme?: string;
   hasScroll?: boolean;
-  hasLoadMoreButton?: boolean;
 };
 
-export default function Pagination({ currentPage, totalPages, colorTheme = '--color-green', hasScroll = true, hasLoadMoreButton = true }: PaginationProps) {
+export default function Pagination({ currentPage, totalPages, colorTheme = '--color-green', hasScroll = true }: PaginationProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -45,26 +44,6 @@ export default function Pagination({ currentPage, totalPages, colorTheme = '--co
 
   return (
     <div className="flex flex-col items-center gap-4 py-8 px-5">
-      {((currentPage < totalPages) && hasLoadMoreButton) && (
-        <button
-          id="news-load-more"
-          type="button"
-          onClick={() => goToPage(currentPage + 1)}
-          className={`w-fit px-5 flex items-center justify-center gap-2 py-3.5 rounded-full border-2 border-(${colorTheme}) text-(${colorTheme}) text-sm font-semibold hover:bg-(${colorTheme}) hover:text-(--color-white) transition-colors cursor-pointer`}
-        >
-          Carregar mais
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="mt-0.5">
-            <path
-              d="M7 2v10M2 7l5 5 5-5"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-      )}
-
       <nav className="flex items-center gap-1" aria-label="Paginação">
         <button
           type="button"

@@ -19,12 +19,16 @@ export async function generateMetadata() {
   const content = {
     title: 'Portal Dia de Campo',
     seo_title: 'Portal Dia de Campo | Informação Estratégica para o Mercado Hortigranjeiro',
-    seo_description: 'O Portal Dia de Campo conecta produtores, atacadistas, centrais de abastecimento e profissionais do setor hortigranjeiro com notícias, conteúdo técnico, análises de mercado, podcasts e indicadores estratégicos.',
-    canonical_url: new URL("/", process.env.NEXT_PUBLIC_APP_URL ?? "https://portaldiadecampo.com.br").toString(),
+    seo_description:
+      'O Portal Dia de Campo conecta produtores, atacadistas, centrais de abastecimento e profissionais do setor hortigranjeiro com notícias, conteúdo técnico, análises de mercado, podcasts e indicadores estratégicos.',
+    canonical_url: new URL(
+      '/',
+      process.env.NEXT_PUBLIC_APP_URL ?? 'https://portaldiadecampo.com.br',
+    ).toString(),
     og_image_url: '/og-image.png',
-  }
+  };
 
-  return buildSeoMetadata(content)
+  return buildSeoMetadata(content);
 }
 
 export default async function Home() {
@@ -35,62 +39,73 @@ export default async function Home() {
   const featuredClassifieds = await FeaturedContent.getClassifieds();
   const technicalContent = await FeaturedContent.getTechnicalContent();
   const cookieStore = await cookies();
-  const ceasaName = cookieStore.get("selected-ceasa")?.value;
-  const ceasaItems = await listCeasaPrices(7, 0, ceasaName ?? "Todas as centrais");
+  const ceasaName = cookieStore.get('selected-ceasa')?.value;
+  const ceasaItems = await listCeasaPrices(7, 0, ceasaName ?? 'Todas as centrais');
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center">
       <UserLocation />
       <HomeHighlights heroItems={heroItems} />
       <AdBanner position="header" />
-      <HomeSection
-        sectionTitle="Últimas do Mercado"
-        sectionLink="/noticias"
-        sectionSubtitle="Cobertura editorial do setor"
-        sectionLinkTitle="Ver todas as notícias"
-        enableAutoScroll
-      >
-        <NewsPreview articles={featuredNews} />
-      </HomeSection>
-      <HomeSection
-        sectionTitle="Preços CEASA"
-        sectionLink="/precos-ceasa"
-        sectionLinkTitle="Ver preços por região"
-        sectionSubtitle={`Atualizado diariamente • ${ceasaName ? `Cotação para central mais próxima` : 'Cotação para todas as centrais'}`}
-        bgColor="--color-light-green"
-      >
-        <CeasaPreview ceasaItems={ceasaItems} ceasaFilter={ceasaName} />
-      </HomeSection>
-      <AdBanner position="mid-content" />
-      <HomeSection
-        sectionLink="/podcast"
-        sectionLinkTitle="Ver todos os episódios"
-        sectionTitle="Podcasts"
-        sectionSubtitle="Entrevistas com especialistas do agro"
-        bgColor="--color-bg-blue"
-        sectionColor="--color-yellow"
-      >
-        <PodcastPreview mainPodcast={mainPodcast} podcastList={podcastList} />
-      </HomeSection>
-      <HomeSection
-        sectionTitle="Classificados"
-        sectionLink="/classificados"
-        sectionSubtitle="Compra, venda e oportunidades"
-        sectionLinkTitle="Ver todos os classificados"
-        enableAutoScroll
+      {featuredNews.length > 0 && (
+        <HomeSection
+          sectionTitle="Últimas do Mercado"
+          sectionLink="/noticias"
+          sectionSubtitle="Cobertura editorial do setor"
+          sectionLinkTitle="Ver todas as notícias"
+          enableAutoScroll
         >
-        <ClassifiedsPreview featuredClassifieds={featuredClassifieds} />
-      </HomeSection>
-      <HomeSection
-        sectionTitle="Conteúdo Técnico"
-        sectionLink="/conteudo-tecnico"
-        sectionSubtitle="Guias, artigos e materiais de apoio"
-        sectionLinkTitle="Ver biblioteca completa"
-        bgColor="--color-light-green"
-        enableAutoScroll
-      >
-        <TechnicalContentPreview technicalContent={technicalContent} />
-      </HomeSection>
+          <NewsPreview articles={featuredNews} />
+        </HomeSection>
+      )}
+      {ceasaItems.length > 0 && (
+        <HomeSection
+          sectionTitle="Preços CEASA"
+          sectionLink="/precos-ceasa"
+          sectionLinkTitle="Ver preços por região"
+          sectionSubtitle={`Atualizado diariamente • ${ceasaName ? `Cotação para central mais próxima` : 'Cotação para todas as centrais'}`}
+          bgColor="--color-light-green"
+        >
+          <CeasaPreview ceasaItems={ceasaItems} ceasaFilter={ceasaName} />
+        </HomeSection>
+      )}
+      <AdBanner position="mid-content" />
+
+      {podcastList.length > 0 && (
+        <HomeSection
+          sectionLink="/podcast"
+          sectionLinkTitle="Ver todos os episódios"
+          sectionTitle="Podcasts"
+          sectionSubtitle="Entrevistas com especialistas do agro"
+          bgColor="--color-bg-blue"
+          sectionColor="--color-yellow"
+        >
+          <PodcastPreview mainPodcast={mainPodcast} podcastList={podcastList} />
+        </HomeSection>
+      )}
+      {featuredClassifieds.length > 0 && (
+        <HomeSection
+          sectionTitle="Classificados"
+          sectionLink="/classificados"
+          sectionSubtitle="Compra, venda e oportunidades"
+          sectionLinkTitle="Ver todos os classificados"
+          enableAutoScroll
+        >
+          <ClassifiedsPreview featuredClassifieds={featuredClassifieds} />
+        </HomeSection>
+      )}
+      {technicalContent.length > 0 && (
+        <HomeSection
+          sectionTitle="Conteúdo Técnico"
+          sectionLink="/conteudo-tecnico"
+          sectionSubtitle="Guias, artigos e materiais de apoio"
+          sectionLinkTitle="Ver biblioteca completa"
+          bgColor="--color-light-green"
+          enableAutoScroll
+        >
+          <TechnicalContentPreview technicalContent={technicalContent} />
+        </HomeSection>
+      )}
 
       <PartnerPreview />
       <AdBanner position="footer" />

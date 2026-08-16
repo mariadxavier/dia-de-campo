@@ -3,11 +3,17 @@ import Link from 'next/link';
 import { Formatter } from '../util/Formatter';
 import { useMediaQuery } from '../context/MediaQuery';
 import CeasaPriceTable from './CeasaPriceTable';
+import EmptyList from './EmptyList';
+import { EMPTY_CONTENT_MESSAGE } from '@/src/helpers/EmptyMessages';
 import { CeasaPriceItem } from '../types';
 import Chip from './Chip';
 
 export default function CeasaPreview({ ceasaItems, ceasaFilter }: { ceasaItems: CeasaPriceItem[], ceasaFilter?: string }) {
   const { isSmScreen, isMdScreen, isLgScreen } = useMediaQuery();
+
+  if (!ceasaItems || ceasaItems.length === 0) {
+    return <EmptyList message={EMPTY_CONTENT_MESSAGE} />;
+  }
 
   return (
     <div className='flex flex-col w-full gap-6'>

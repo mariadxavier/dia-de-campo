@@ -9,6 +9,7 @@ class PodcastCalcs {
     }
 
     getPodcastAverageDuration = (episodes: PodcastEpisodeItem[]) => {
+        if (episodes.length === 0) return "—";
         return this.calcAverageTime(episodes);
     }
 }

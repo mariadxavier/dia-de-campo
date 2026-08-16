@@ -30,19 +30,35 @@ export default async function PodcastPage({ searchParams }: Props) {
   const page = typeof pageStr === 'string' ? parseInt(pageStr, 10) : 1;
   const currentPage = isNaN(page) || page < 1 ? 1 : page;
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-  const [episodes, totalCount] = await Promise.all([
-    listPodcastEpisodes(ITEMS_PER_PAGE, offset),
-    countPodcastEpisodes(),
-  ]);
+
+  let episodes: Awaited<ReturnType<typeof listPodcastEpisodes>> = [];
+  let totalCount = 0;
+  let featuredEpisodeResult: Awaited<ReturnType<typeof findPodcastBySlug>> = null;
+
+  try {
+    [episodes, totalCount] = await Promise.all([
+      listPodcastEpisodes(ITEMS_PER_PAGE, offset),
+      countPodcastEpisodes(),
+    ]);
+
+    if (episodeSlug) {
+      featuredEpisodeResult = await findPodcastBySlug(episodeSlug);
+    }
+  } catch {
+    episodes = [];
+    totalCount = 0;
+    featuredEpisodeResult = null;
+  }
+
+  const hasEpisodes = episodes.length > 0;
+  const featuredEpisode = featuredEpisodeResult ?? (hasEpisodes ? episodes[0] : null);
   const totalPages = Math.max(1, Math.ceil(totalCount / ITEMS_PER_PAGE));
-  const featuredEpisodeResult = episodeSlug ? (await findPodcastBySlug(episodeSlug)) : null;
-  const FEATURED_EPISODE = featuredEpisodeResult || episodes[0];
   const averageDuration = PodcastCalcs.getPodcastAverageDuration(episodes);
 
   return (
     <div className="flex flex-col flex-1 bg-(--color-dark-blue) pb-10 md:pb-16">
       <PodcastPageHero
-        featuredEpisode={FEATURED_EPISODE}
+        featuredEpisode={featuredEpisode}
         stats={{
           totalEpisodes: totalCount.toString(),
           avgDuration: `${averageDuration} min`,
@@ -50,9 +66,11 @@ export default async function PodcastPage({ searchParams }: Props) {
         }}
       />
       <AdBanner position="mid-content" />
-      <FeaturedPodcastSection featuredEpisode={FEATURED_EPISODE} />
+      {featuredEpisode && <FeaturedPodcastSection featuredEpisode={featuredEpisode} />}
       <PodcastList episodeList={episodes} />
-      <Pagination hasScroll={false} hasLoadMoreButton={false} currentPage={currentPage} totalPages={totalPages} colorTheme="--color-yellow" />
+      {totalCount > ITEMS_PER_PAGE && (
+        <Pagination hasScroll={false} currentPage={currentPage} totalPages={totalPages} colorTheme="--color-yellow" />
+      )}
       <AdBanner position="footer" />
     </div>
   );

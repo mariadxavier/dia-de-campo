@@ -1,6 +1,7 @@
 "use client";
 import { CeasaPriceItem } from "../types/Ceasa";
-import { CeasaMobileItem, CeasaPriceTable, Pagination } from "@/src/components";
+import { CeasaMobileItem, CeasaPriceTable, EmptyList, Pagination } from "@/src/components";
+import { EMPTY_CONTENT_MESSAGE, EMPTY_FILTER_MESSAGE } from "@/src/helpers/EmptyMessages";
 import { useSearchParams } from "next/navigation";
 
 export default function CeasaCotation({ ceasaName, items }: { ceasaName: string, items: CeasaPriceItem[] }) {
@@ -13,6 +14,21 @@ export default function CeasaCotation({ ceasaName, items }: { ceasaName: string,
     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
     const totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
     const paginatedItems = items.slice(offset, offset + ITEMS_PER_PAGE);
+
+    const produto = params.get('produto');
+    const ceasa = params.get('ceasa');
+    const hasActiveFilters = (produto && produto !== 'all') || (ceasa && ceasa !== 'Todas as centrais');
+
+    if (items.length === 0) {
+        return (
+            <section className="flex flex-col gap-4 px-5 py-8 bg-(--color-white-dust)">
+                <h1 className="font-bold text-2xl">
+                    Cotações em {ceasaName}
+                </h1>
+                <EmptyList message={hasActiveFilters ? EMPTY_FILTER_MESSAGE : EMPTY_CONTENT_MESSAGE} />
+            </section>
+        );
+    }
 
     return (
         <section className="flex flex-col gap-4 px-5 py-8 bg-(--color-white-dust)">
@@ -39,7 +55,7 @@ export default function CeasaCotation({ ceasaName, items }: { ceasaName: string,
                 }
 
             </div>
-            <Pagination currentPage={currentPage} totalPages={totalPages} hasScroll={false} hasLoadMoreButton={false} />
+            <Pagination currentPage={currentPage} totalPages={totalPages} hasScroll={false} />
         </section>
     );
 }
