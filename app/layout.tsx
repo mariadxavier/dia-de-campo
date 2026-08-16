@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Header, Footer } from '@/src/components';
+import CookieConsentBanner from '@/src/components/CookieConsentBanner';
 import type { Metadata } from 'next';
 
 const inter = Inter({
@@ -29,6 +30,7 @@ export default function RootLayout({
         <Header />
         <main className="mt-15">{children}</main>
         <Footer />
+        <CookieConsentBanner />
       </body>
     </html>
   );

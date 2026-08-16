@@ -45,6 +45,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily" as const,
       priority: 0.6,
     },
+    {
+      url: new URL("/politica-privacidade", baseUrl).toString(),
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.3,
+    },
+    {
+      url: new URL("/termos-uso", baseUrl).toString(),
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.3,
+    },
   ];
 
   let contentItems: Array<{ url: string; lastModified: Date; changeFrequency: "weekly"; priority: number }> = [];
