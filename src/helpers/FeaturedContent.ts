@@ -50,7 +50,7 @@ class FeaturedContent {
   }
 
   public async getTechnicalContent(): Promise<TechnicalContentListItem[]> {
-    const technicalContents = await listTechnicalContent(10, 0);
+    const technicalContents = await listTechnicalContent(5, 0);
     return this.orderByFeaturedPriority(technicalContents);
   }
 }
